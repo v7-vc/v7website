@@ -1,0 +1,213 @@
+---
+const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
+const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
+---
+<section class="contact" id="contact">
+  <div class="contact__panel">
+    <video class="contact__video" src={video} autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+    <div class="contact__scrim" aria-hidden="true"></div>
+
+    <div class="container contact__inner">
+      <div class="contact__grid">
+        <form class="cform" action={ZAP} method="post">
+          <img class="cform__logo" src="/assets/images/logo-v7.png" alt="V7" width="80" height="33" />
+          <div class="field">
+            <label for="name">Your name*</label>
+            <input id="name" name="name" type="text" placeholder="John Doe" required autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="email">E-mail*</label>
+            <input id="email" name="email" type="email" placeholder="hello@site.com" required autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="3" placeholder="Your message"></textarea>
+          </div>
+          <button type="submit" class="cform__submit">Submit</button>
+          <p class="cform__status" data-form-status role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="contact__info">
+          <h2 class="contact__title" data-reveal>Let&rsquo;s talk.</h2>
+          <p class="contact__lead" data-reveal style="--reveal-delay:120ms">
+            We&rsquo;re not just looking for ideas,<br />we&rsquo;re looking for great CEOs.
+          </p>
+
+          <hr class="contact__divider" />
+
+          <div class="contact__cols">
+            <div class="contact__col" data-reveal>
+              <span class="contact__tag">&#8627; For Founders</span>
+              <p>Submit your project for our review and potential investment.</p>
+            </div>
+            <div class="contact__col" data-reveal style="--reveal-delay:100ms">
+              <span class="contact__tag">&#8627; For CEOs</span>
+              <p>We&rsquo;re looking for exceptional CEOs. Lead a venture with us.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const form = document.querySelector('.cform');
+    if (!form) return;
+    const status = form.querySelector('[data-form-status]');
+    const btn = form.querySelector('.cform__submit');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      btn.disabled = true;
+      const original = btn.textContent;
+      btn.textContent = 'Sending…';
+      try {
+        await fetch(form.action, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(data) });
+        form.reset();
+        status.textContent = 'Thanks — we’ll be in touch soon.';
+      } catch {
+        status.textContent = 'Something went wrong. Email hello@v7.vc instead.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = original;
+      }
+    });
+  })();
+</script>
+
+<style>
+  .contact {
+    background: var(--surface);
+    padding: 0 var(--gutter) clamp(40px, 6vw, 80px);
+  }
+  .contact__panel {
+    position: relative;
+    max-width: var(--container);
+    margin-inline: auto;
+    border-radius: 40px;
+    overflow: hidden;
+    background: #0a0a0a;
+    isolation: isolate;
+    padding: clamp(40px, 6vw, 80px);
+  }
+  .contact__video {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) brightness(0.5) contrast(1.05);
+    z-index: 0;
+  }
+  .contact__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(to right, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.5) 55%, rgba(10,10,10,0.75) 100%);
+  }
+  .contact__inner { position: relative; z-index: 2; padding: 0; }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: minmax(300px, 388px) 1fr;
+    gap: clamp(40px, 7vw, 120px);
+    align-items: start;
+  }
+
+  /* form card */
+  .cform {
+    background: #fff;
+    border-radius: 14px;
+    padding: clamp(24px, 2.5vw, 34px);
+    display: grid;
+    gap: 18px;
+  }
+  .cform__logo { width: 80px; height: auto; margin-bottom: 6px; }
+  .field { display: grid; gap: 8px; }
+  .field label { font-size: 0.9rem; color: var(--muted); }
+  .field input, .field textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    resize: vertical;
+    transition: border-color 0.3s var(--ease-out), background 0.3s var(--ease-out);
+  }
+  .field input::placeholder, .field textarea::placeholder { color: #b3b3b3; }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--ink); background: #fff; }
+  .cform__submit {
+    margin-top: 4px;
+    height: 58px;
+    border-radius: 50px;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--font-display-curved);
+    font-size: 1.125rem;
+    letter-spacing: -0.03em;
+    transition: filter 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+  }
+  .cform__submit:hover { filter: brightness(1.06); transform: translateY(-2px); }
+  .cform__submit:disabled { opacity: 0.6; }
+  .cform__status:empty { display: none; }
+  .cform__status { font-size: 0.85rem; color: var(--ink); }
+
+  /* info */
+  .contact__info { color: #fff; padding-top: 8px; }
+  .contact__title {
+    font-family: var(--font-display-curved);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 4.4vw, 3.875rem);
+    line-height: 0.92;
+    letter-spacing: -0.06em;
+    color: #fff;
+  }
+  .contact__lead {
+    margin-top: clamp(24px, 4vw, 48px);
+    font-family: var(--font-display-curved);
+    font-size: clamp(1.4rem, 2.2vw, 2rem);
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    color: #fff;
+  }
+  .contact__divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin: clamp(28px, 4vw, 44px) 0;
+  }
+  .contact__cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(24px, 4vw, 56px);
+  }
+  .contact__tag {
+    display: block;
+    margin-bottom: 14px;
+    font-family: var(--font-display-curved);
+    font-size: 1.625rem;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+  }
+  .contact__col p {
+    font-family: var(--font-display-curved);
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: #fff;
+    max-width: 22ch;
+  }
+
+  @media (max-width: 860px) {
+    .contact__grid { grid-template-columns: 1fr; }
+    .contact__cols { grid-template-columns: 1fr; gap: 28px; }
+    .contact__panel { padding: clamp(24px, 6vw, 40px); border-radius: 28px; }
+  }
+  /* Skip the heavy background video on phones (saves ~30 MB); keep the dark panel + scrim. */
+  @media (max-width: 640px) {
+    .contact__video { display: none; }
+    .contact__scrim {
+      background: linear-gradient(to bottom, #141414 0%, #0a0a0a 100%);
+    }
+  }
+</style>

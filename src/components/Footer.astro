@@ -1,0 +1,33 @@
+---
+const year = 2025;
+---
+<footer class="footer">
+  <div class="footer__main">
+    <div class="container">
+      <img class="footer__logo" src="/assets/images/logo-v7.png" alt="" width="600" height="251" />
+    </div>
+  </div>
+  <div class="footer__bar">
+    <div class="container">
+      <span>&copy; {year} v7.vc. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--surface); }
+  .footer__main {
+    padding-block: clamp(80px, 12vw, 180px) clamp(60px, 8vw, 120px);
+  }
+  .footer__main .container { display: flex; justify-content: flex-end; }
+  .footer__logo {
+    width: clamp(110px, 22vw, 320px);
+    height: auto;
+  }
+  .footer__bar {
+    background: #0a0a0a;
+    color: rgba(255, 255, 255, 0.85);
+    padding-block: 22px;
+  }
+  .footer__bar span { font-size: 0.875rem; }
+</style>

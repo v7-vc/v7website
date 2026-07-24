@@ -1,0 +1,12 @@
+{
+  "projects": [
+    { "slug": "zeely", "name": "Zeely", "category": "Digital", "card": "/assets/images/e7LsMUNDr5WdmPtjNoFnXCEWTmM.png", "url": "https://zeely.ai" },
+    { "slug": "elephants-inc.", "name": "Elephants", "category": "Payments", "card": "/assets/images/rToBhvUR9rgAAC51V2sUptO0Zf0.png", "url": "https://elephants.inc" },
+    { "slug": "umai", "name": "Umai", "category": "Hospitality", "card": "/assets/images/LVPf4A9dBBwtYiUeQfTPBnie2ek.png", "url": "https://www.umai.io" },
+    { "slug": "blossom", "name": "Blossom", "category": "Digital Health", "card": "/assets/images/q0ehGyd9f9lptfGTFnZKgfGmdA.png", "url": "https://www.joinblossomhealth.com" },
+    { "slug": "e-gamers-world", "name": "E Gamers World", "category": "Esports", "card": "/assets/images/WSLfWHk4fnrXiWhhJBDMwO0nIX4.png", "url": "https://egamersworld.com" },
+    { "slug": "leafio", "name": "Leafio", "category": "AI", "card": "/assets/images/84UMjUfB0RAykPmyswB06Q6nSs.png", "url": "https://www.leafio.ai" },
+    { "slug": "mental-health-supplements", "name": "Present Perfect", "category": "Mental Health", "card": "/assets/images/ruQfjITiDk98qPadjXxPZff8v0.png", "url": "https://present-perfect.com" },
+    { "slug": "alice-technologies", "name": "Alice Technologies", "category": "ConTech", "card": "/assets/images/gwRtRKTiddN5HeBp5I2cD1A.png", "url": "https://www.alicetechnologies.com" }
+  ]
+}

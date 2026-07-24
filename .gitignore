@@ -1,5 +1,7 @@
 node_modules/
 dist/
+.astro/
+.context/
 .DS_Store
 .env
 .env.local

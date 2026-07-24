@@ -1,0 +1,93 @@
+---
+---
+<section class="about">
+  <div class="container">
+    <div class="about__head">
+      <span class="about__eyebrow" data-reveal>
+        <span class="about__plus" aria-hidden="true">+</span>
+        About us
+      </span>
+
+      <div class="about__content">
+        <img class="about__logo" src="/assets/images/logo-v7.png" alt="" width="87" height="36" data-reveal />
+        <h2 class="about__title" data-reveal style="--reveal-delay:80ms">
+          <span class="about__ink">Traditional funds move slow.</span>
+          <span class="about__muted">We don&rsquo;t.</span>
+        </h2>
+        <span class="about__underline" data-reveal style="--reveal-delay:220ms"></span>
+        <p class="about__para" data-reveal style="--reveal-delay:300ms">
+          We break from outdated models that fear risk and avoid speed. Our model thrives
+          on momentum, iteration, and founder-first thinking.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    background: var(--surface);
+    color: var(--ink);
+    padding-block: clamp(80px, 12vw, 170px);
+  }
+  .about__head { position: relative; }
+  .about__eyebrow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display-curved);
+    font-size: 1.25rem;
+    line-height: 1.3;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+  .about__plus {
+    display: inline-grid;
+    place-items: center;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 1rem; line-height: 1;
+    font-family: var(--font-body);
+  }
+  .about__content { margin-left: clamp(0px, 26%, 380px); }
+  .about__logo { width: 87px; height: auto; margin-bottom: 26px; }
+  .about__title {
+    font-family: var(--font-display-curved);
+    font-weight: 400;
+    font-size: clamp(2.1rem, 4.1vw, 3.75rem);
+    line-height: 1.1;
+    letter-spacing: -0.06em;
+    max-width: 16ch;
+  }
+  .about__ink { color: #090909; }
+  .about__muted { color: rgba(0, 0, 0, 0.6); }
+  .about__underline {
+    display: block;
+    width: 230px;
+    max-width: 40vw;
+    height: 3px;
+    background: var(--accent);
+    margin-top: 30px;
+  }
+  .about__para {
+    margin-top: 40px;
+    max-width: 62ch;
+    text-indent: 90px;
+    font-family: var(--font-display-curved);
+    font-size: 1.25rem;
+    line-height: 1.3;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+
+  @media (max-width: 860px) {
+    .about__eyebrow { position: static; margin-bottom: 22px; }
+    .about__content { margin-left: 0; margin-top: 0; }
+    .about__para { text-indent: 0; }
+  }
+</style>

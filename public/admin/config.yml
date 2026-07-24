@@ -1,0 +1,48 @@
+# Sveltia CMS configuration (Decap-compatible).
+# Docs: https://github.com/sveltia/sveltia-cms
+#
+# Auth: GitHub. Only accounts with WRITE access to the repo below can log in and
+# save changes — that is the "admin only" rule. No database, no server of ours.
+
+backend:
+  name: github
+  repo: kostenkoelena500-prog/v7website
+  branch: main
+  # After deploy, set base_url to your free Cloudflare Workers OAuth proxy:
+  # base_url: https://YOUR-WORKER.workers.dev
+
+# Where images uploaded through the CMS are stored (committed to the repo).
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: content
+    label: Site content
+    files:
+      - name: projects
+        label: Projects
+        file: "src/data/projects.json"
+        format: json
+        description: "The portfolio projects shown on the homepage grid."
+        fields:
+          - name: projects
+            label: Projects
+            label_singular: Project
+            widget: list
+            summary: "{{fields.name}} — {{fields.category}}"
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: category, label: Category, widget: string }
+              - {
+                  name: slug,
+                  label: "Slug (URL id)",
+                  widget: string,
+                  hint: "lowercase with dashes, e.g. my-startup",
+                }
+              - { name: url, label: "Website URL", widget: string, required: false }
+              - {
+                  name: card,
+                  label: "Card image",
+                  widget: image,
+                  hint: "Wide branded image, ~1600×900px",
+                }

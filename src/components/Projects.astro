@@ -1,0 +1,129 @@
+---
+import { projects } from '../data/projects';
+---
+<section class="projects" id="projects">
+  <div class="container">
+    <div class="projects__head">
+      <span class="projects__index" data-reveal>(8)</span>
+      <h2 class="projects__title" data-reveal>Projects.</h2>
+      <p class="projects__lead" data-reveal style="--reveal-delay:120ms">
+        We back visionaries bold enough to reshape entire industries. Our founders
+        don&rsquo;t just build companies, they spark revolutions. From daring ideas to
+        market-leading ventures, we invest where others won&rsquo;t.
+      </p>
+    </div>
+
+    <ul class="projects__grid" data-reveal-group="">
+      {projects.map((p) => (
+        <li class="project" data-reveal-child>
+          <a
+            class="project__link"
+            href={p.url ?? '#projects'}
+            target={p.url ? '_blank' : undefined}
+            rel={p.url ? 'noopener noreferrer' : undefined}
+          >
+            <span class="project__pill">{p.name}</span>
+            <span class="project__tile">
+              <img src={p.card} alt={`${p.name} — ${p.category}`} loading="lazy" width="1060" height="596" />
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .projects {
+    background: var(--surface);
+    padding-block: clamp(64px, 8vw, 110px) clamp(6px, 1vw, 10px);
+  }
+
+  /* ---- head ---- */
+  .projects__head {
+    position: relative;
+    min-height: 200px;
+    margin-bottom: 40px;
+  }
+  .projects__index {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: var(--font-display-curved);
+    font-size: 1.25rem;
+    line-height: 1.3;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+  .projects__title {
+    text-align: center;
+    font-family: var(--font-display-curved);
+    font-weight: 400;
+    font-size: clamp(2.4rem, 4.2vw, 3.875rem);
+    line-height: 0.92;
+    letter-spacing: -0.06em;
+    color: var(--ink);
+    padding-top: 4px;
+  }
+  .projects__lead {
+    position: absolute;
+    top: 128px;
+    right: 0;
+    width: min(310px, 80%);
+    font-family: var(--font-display-curved);
+    font-weight: 400;
+    font-size: 1.125rem;
+    line-height: 1.4;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+
+  /* ---- grid ---- */
+  .projects__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+  .project__link { display: grid; gap: 4px; }
+  .project__pill {
+    display: flex;
+    align-items: center;
+    height: 58px;
+    padding: 0 24px;
+    background: #ffffff;
+    border-radius: 14px;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+  .project__tile {
+    display: block;
+    aspect-ratio: 689 / 502;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .project__tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s var(--ease-out), filter 0.5s var(--ease-out);
+    will-change: filter, transform;
+  }
+  @media (hover: hover) {
+    .project__link:hover .project__tile img {
+      transform: scale(1.06);
+      filter: blur(9px);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .projects__head { min-height: 0; margin-bottom: 32px; }
+    .projects__index { position: static; display: block; margin-bottom: 8px; }
+    .projects__title { text-align: left; }
+    .projects__lead { position: static; width: 100%; margin-top: 20px; }
+    .projects__grid { grid-template-columns: 1fr; }
+  }
+</style>

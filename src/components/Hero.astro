@@ -1,0 +1,99 @@
+---
+const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
+---
+<section class="hero" id="top">
+  <div class="hero__panel">
+    <video
+      class="hero__video"
+      src={video}
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      aria-hidden="true"
+    ></video>
+    <div class="hero__scrim" aria-hidden="true"></div>
+
+    <div class="hero__content">
+      <h1 class="hero__title">
+        <span class="reveal-line" style="--reveal-delay:80ms"><span>Turning improbable</span></span>
+        <span class="reveal-line" style="--reveal-delay:200ms"><span>visions into</span></span>
+        <span class="reveal-line hero__accent" style="--reveal-delay:320ms"><span>(unstoppable ventures)</span></span>
+      </h1>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const panel = document.querySelector('.hero__panel');
+    const header = document.querySelector('.header');
+    if (!panel) return;
+    const fit = () => {
+      const h = (header ? header.offsetHeight : 62);
+      panel.style.setProperty('--hero-h', (window.innerHeight - h - 6) + 'px');
+    };
+    fit();
+    window.addEventListener('resize', fit, { passive: true });
+    window.addEventListener('orientationchange', fit);
+  })();
+</script>
+
+<style>
+  .hero {
+    padding: 6px 6px 0;
+    background: var(--surface);
+  }
+  .hero__panel {
+    position: relative;
+    height: var(--hero-h, calc(100svh - 68px));
+    min-height: 560px;
+    border-radius: 25px;
+    overflow: hidden;
+    background: #0a0a0a;
+    isolation: isolate;
+  }
+  .hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 42%),
+      linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 45%);
+  }
+  .hero__content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    padding: clamp(28px, 4vw, 60px);
+  }
+  .hero__title {
+    font-family: var(--font-display-curved);
+    font-weight: 400;
+    font-size: clamp(1.75rem, 6vw, 3.375rem);
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+  }
+  .hero__accent > span {
+    font-family: var(--font-display-curved);
+    color: #f55397;
+  }
+
+  /* Tablet: original centers the hero heading (phone & desktop stay left) */
+  @media (min-width: 810px) and (max-width: 1199px) {
+    .hero__content { justify-content: center; }
+    .hero__title { width: 100%; text-align: center; }
+  }
+</style>

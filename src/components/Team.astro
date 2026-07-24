@@ -1,0 +1,140 @@
+---
+import { team } from '../data/team';
+---
+<section class="team">
+  <div class="team__panel">
+    <div class="container">
+      <h2 class="team__title" data-reveal>
+        <span class="team__ink">The faces</span> <span class="team__muted">behind the projects.</span>
+      </h2>
+      <span class="team__underline" data-reveal style="--reveal-delay:180ms"></span>
+
+      <ul class="team__grid" data-reveal-group="">
+        {team.map((m, i) => {
+          const Tag = m.linkedin ? 'a' : 'div';
+          return (
+            <li class="member" data-reveal-child style={`--reveal-delay:${i * 70}ms`}>
+              <Tag
+                class="member__link"
+                {...(m.linkedin ? { href: m.linkedin, target: '_blank', rel: 'noopener' } : {})}
+              >
+                <img class="member__photo" src={m.photo} alt={m.name} loading="lazy" />
+                <span class="member__scrim" aria-hidden="true"></span>
+                <span class="member__li" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                    <path d="M6.94 5A1.94 1.94 0 1 1 3.06 5a1.94 1.94 0 0 1 3.88 0ZM3.4 8.4h3.1V21H3.4V8.4Zm5.03 0h2.97v1.72h.04c.41-.78 1.42-1.6 2.93-1.6 3.13 0 3.71 2.06 3.71 4.74V21h-3.09v-5.55c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.44-2.12 2.93V21H8.43V8.4Z"/>
+                  </svg>
+                </span>
+                <span class="member__role">{m.role}</span>
+                <span class="member__name">{m.name}</span>
+              </Tag>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .team { background: var(--surface); }
+  .team__panel {
+    background: #ffffff;
+    border-radius: 40px 40px 0 0;
+    padding-block: clamp(48px, 7vw, 88px) clamp(48px, 7vw, 80px);
+  }
+  .team__title {
+    font-family: var(--font-display-curved);
+    font-weight: 400;
+    font-size: clamp(2.1rem, 4.1vw, 3.75rem);
+    line-height: 1.1;
+    letter-spacing: -0.06em;
+    max-width: 14ch;
+  }
+  .team__ink { color: #090909; }
+  .team__muted { color: rgba(10, 10, 10, 0.6); }
+  .team__underline {
+    display: block;
+    width: 230px;
+    max-width: 40vw;
+    height: 3px;
+    background: var(--accent);
+    margin-top: 26px;
+  }
+
+  .team__grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin-top: clamp(40px, 5vw, 64px);
+  }
+  .member__link {
+    position: relative;
+    display: block;
+    aspect-ratio: 163 / 241;
+    border-radius: 18px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .member__photo {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s var(--ease-out);
+  }
+  @media (hover: hover) {
+    .member__link:hover .member__photo { transform: scale(1.05); }
+  }
+  .member__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 30%),
+      linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 45%);
+  }
+  .member__li {
+    position: absolute;
+    top: 12px; left: 12px;
+    display: grid; place-items: center;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    z-index: 2;
+  }
+  .member__role {
+    position: absolute;
+    top: 14px; right: 14px;
+    max-width: 60%;
+    text-align: right;
+    font-family: var(--font-display-curved);
+    font-size: 1.125rem;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #fff;
+    z-index: 2;
+  }
+  .member__name {
+    position: absolute;
+    left: 14px; bottom: 14px;
+    right: 14px;
+    font-family: var(--font-display-curved);
+    font-size: 1.125rem;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #fff;
+    z-index: 2;
+  }
+
+  @media (max-width: 1000px) {
+    .team__grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 620px) {
+    .team__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 400px) {
+    .team__grid { grid-template-columns: 1fr; gap: 16px; }
+  }
+</style>

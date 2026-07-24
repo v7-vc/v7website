@@ -1,0 +1,150 @@
+---
+const categories = ['SaaS', 'iGaming', 'Healthtech', 'Fintech', 'DeepTech'];
+const grain = '/assets/images/grain.png';
+---
+<section class="inv" style={`--grain:url(${grain})`}>
+  <div class="container">
+    <div class="inv__grid">
+      <span class="inv__eyebrow" data-reveal>
+        <span class="inv__plus" aria-hidden="true">+</span>
+        What we do
+      </span>
+
+      <div class="inv__main">
+        <h2 class="inv__title" data-reveal>Investments.</h2>
+        <p class="inv__lead" data-reveal style="--reveal-delay:120ms">
+          Looking for teams with early revenue traction and unstoppable ambition.
+        </p>
+        <p class="inv__stage" data-reveal style="--reveal-delay:200ms">From Seed Stage to Series A</p>
+        <a href="#contact" class="inv__cta" data-reveal style="--reveal-delay:280ms">Get started</a>
+      </div>
+
+      <div class="inv__cats" data-reveal style="--reveal-delay:160ms">
+        <span class="inv__catsLabel">Categories</span>
+        <ul class="inv__chips">
+          {categories.map((c) => <li class="chip">{c}</li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .inv {
+    position: relative;
+    background: #0a0a0a;
+    color: #fff;
+    border-radius: 25px 25px 0 0;
+    overflow: hidden;
+    padding-block: clamp(64px, 8vw, 104px) clamp(80px, 12vw, 150px);
+  }
+  .inv::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--grain);
+    background-repeat: repeat;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .inv .container { position: relative; z-index: 1; }
+
+  .inv__grid {
+    display: grid;
+    grid-template-columns: minmax(160px, 0.8fr) minmax(0, 1.5fr) minmax(240px, 1fr);
+    column-gap: clamp(24px, 5vw, 90px);
+    align-items: start;
+  }
+
+  .inv__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display-curved);
+    font-size: 1.25rem;
+    line-height: 1.3;
+    letter-spacing: -0.04em;
+    color: #fff;
+  }
+  .inv__plus {
+    display: inline-grid;
+    place-items: center;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 1rem; line-height: 1;
+    font-family: var(--font-body);
+  }
+
+  .inv__main { display: flex; flex-direction: column; }
+  .inv__title {
+    font-family: var(--font-display-curved);
+    font-weight: 400;
+    font-size: clamp(2.4rem, 4.2vw, 3.875rem);
+    line-height: 0.92;
+    letter-spacing: -0.06em;
+    color: #fff;
+  }
+  .inv__lead {
+    margin-top: clamp(90px, 12vw, 150px);
+    max-width: 15ch;
+    font-family: var(--font-display-curved);
+    font-weight: 400;
+    font-size: clamp(1.6rem, 2.4vw, 2rem);
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    color: #fff;
+  }
+  .inv__stage {
+    margin-top: 22px;
+    font-family: var(--font-display-curved);
+    font-size: 1.125rem;
+    letter-spacing: -0.04em;
+    color: rgba(255, 255, 255, 0.45);
+  }
+  .inv__cta {
+    align-self: flex-start;
+    margin-top: clamp(64px, 10vw, 150px);
+    padding: 18px 30px;
+    border-radius: 50px;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1.125rem;
+    letter-spacing: -0.01em;
+    transition: transform 0.3s var(--ease-out), filter 0.3s var(--ease-out);
+  }
+  .inv__cta:hover { transform: translateY(-2px); filter: brightness(1.06); }
+
+  .inv__cats { margin-top: clamp(90px, 12vw, 150px); }
+  .inv__catsLabel {
+    display: block;
+    margin-bottom: 22px;
+    font-family: var(--font-display-curved);
+    font-size: 1.125rem;
+    letter-spacing: -0.04em;
+    color: rgba(255, 255, 255, 0.45);
+  }
+  .inv__chips { display: flex; flex-wrap: wrap; gap: 12px; }
+  .chip {
+    padding: 9px 24px;
+    border-radius: 50px;
+    background: #d9d9d9;
+    color: #000;
+    font-family: var(--font-display-curved);
+    font-size: 1rem;
+    letter-spacing: -0.03em;
+    transition: background 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+  }
+  .chip:hover { background: #fff; transform: translateY(-2px); }
+
+  @media (max-width: 900px) {
+    .inv__grid { grid-template-columns: 1fr; row-gap: 40px; }
+    .inv__lead { margin-top: 40px; }
+    .inv__cta { margin-top: 40px; }
+    .inv__cats { margin-top: 0; }
+  }
+</style>
