@@ -17,9 +17,9 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
 
     <div class="hero__content">
       <h1 class="hero__title">
-        <span class="reveal-line" style="--reveal-delay:80ms"><span>Turning improbable</span></span>
-        <span class="reveal-line" style="--reveal-delay:200ms"><span>visions into</span></span>
-        <span class="reveal-line hero__accent" style="--reveal-delay:320ms"><span>(unstoppable ventures)</span></span>
+        <span class="reveal-line" style="--reveal-delay:500ms"><span>Turning improbable</span></span>
+        <span class="reveal-line" style="--reveal-delay:640ms"><span>visions into</span></span>
+        <span class="reveal-line hero__accent" style="--reveal-delay:740ms"><span>(unstoppable ventures)</span></span>
       </h1>
     </div>
   </div>
@@ -32,7 +32,8 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     if (!panel) return;
     const fit = () => {
       const h = (header ? header.offsetHeight : 62);
-      panel.style.setProperty('--hero-h', (window.innerHeight - h - 6) + 'px');
+      // 6px top gap + 6px bottom gap so the rounded bottom corners stay visible
+      panel.style.setProperty('--hero-h', (window.innerHeight - h - 12) + 'px');
     };
     fit();
     window.addEventListener('resize', fit, { passive: true });
@@ -91,9 +92,7 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     color: #f55397;
   }
 
-  /* Tablet: original centers the hero heading (phone & desktop stay left) */
-  @media (min-width: 810px) and (max-width: 1199px) {
-    .hero__content { justify-content: center; }
-    .hero__title { width: 100%; text-align: center; }
-  }
+  /* Staggered heading lines (left-anchored staircase), like the original */
+  .hero__title .reveal-line:nth-child(2) { margin-left: 1.3em; }
+  .hero__title .reveal-line:nth-child(3) { margin-left: 3em; }
 </style>

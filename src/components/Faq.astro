@@ -3,46 +3,80 @@ import { faqGroups } from '../data/faq';
 ---
 <section class="faq" id="faq">
   <div class="container">
-    {faqGroups.map((group, gi) => (
-      <div class="faq__group">
-        <aside class="faq__aside">
-          {gi === 0 && <h2 class="faq__title" data-reveal>FAQ.</h2>}
-          <h3 class="faq__group-title" data-reveal style="--reveal-delay:80ms">{group.title}</h3>
-          <span class="faq__underline" data-reveal style="--reveal-delay:180ms"></span>
-        </aside>
-
-        <div class="faq__items">
-          {group.items.map((item, ii) => (
-            <div class={`faq__item${gi === 0 && ii === 0 ? ' is-open' : ''}`} data-faq-item data-reveal>
-              <button class="faq__trigger" data-faq-trigger aria-expanded={gi === 0 && ii === 0 ? 'true' : 'false'}>
-                <span class="faq__q">{item.q}</span>
-                <span class="faq__icon" aria-hidden="true"><span></span><span></span></span>
-              </button>
-              <div class="faq__panel" data-faq-panel>
-                <p>{item.a}</p>
-              </div>
-            </div>
+    <!-- Desktop: one pinned aside for the whole section, label swaps in place -->
+    <div class="faq__layout" data-faq-layout>
+      <aside class="faq__aside">
+        <h2 class="faq__title" data-reveal>FAQ.</h2>
+        <div class="faq__labels">
+          {faqGroups.map((group, gi) => (
+            <h3 class={`faq__group-title${gi === 0 ? ' is-active' : ''}`} data-faq-label={gi}>
+              {group.title}
+            </h3>
           ))}
         </div>
+      </aside>
+
+      <div class="faq__items">
+        {faqGroups.map((group, gi) => (
+          <div class="faq__list" data-faq-list={gi}>
+            {group.items.map((item, ii) => (
+              <div class={`faq__item${gi === 0 && ii === 0 ? ' is-open' : ''}`} data-faq-item data-reveal>
+                <button class="faq__trigger" data-faq-trigger aria-expanded={gi === 0 && ii === 0 ? 'true' : 'false'}>
+                  <span class="faq__q">{item.q}</span>
+                  <span class="faq__icon" aria-hidden="true"><span></span><span></span></span>
+                </button>
+                <div class="faq__panel" data-faq-panel>
+                  <p>{item.a}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
-    ))}
+    </div>
   </div>
 </section>
+
+<script is:inline>
+  (() => {
+    const layout = document.querySelector('[data-faq-layout]');
+    if (!layout) return;
+    const labels = [...layout.querySelectorAll('[data-faq-label]')];
+    const lists = [...layout.querySelectorAll('[data-faq-list]')];
+    if (!labels.length || !lists.length) return;
+
+    let active = 0;
+    const update = () => {
+      const probe = window.innerHeight * 0.4;
+      let idx = 0;
+      lists.forEach((list, i) => {
+        if (list.getBoundingClientRect().top <= probe) idx = i;
+      });
+      if (idx !== active) {
+        active = idx;
+        labels.forEach((l, i) => l.classList.toggle('is-active', i === idx));
+      }
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+  })();
+</script>
 
 <style>
   .faq {
     background: var(--surface);
     padding-block: clamp(64px, 9vw, 120px);
   }
-  .faq__group {
+  .faq__layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: clamp(32px, 5vw, 80px);
     align-items: start;
   }
-  .faq__group + .faq__group { margin-top: clamp(48px, 6vw, 80px); }
 
-  .faq__aside { position: static; }
+  /* Pinned for the entire FAQ section */
+  .faq__aside { position: sticky; top: 90px; align-self: start; }
   .faq__title {
     font-family: var(--font-display-curved);
     font-weight: 400;
@@ -52,16 +86,26 @@ import { faqGroups } from '../data/faq';
     color: var(--ink);
     margin-bottom: 28px;
   }
+  .faq__labels { position: relative; min-height: clamp(5.5rem, 9vw, 8.2rem); }
   .faq__group-title {
+    position: absolute;
+    inset: 0 auto auto 0;
     font-family: var(--font-display-curved);
     font-weight: 400;
     font-size: clamp(1.6rem, 2.6vw, 2.375rem);
     line-height: 1.1;
     letter-spacing: -0.05em;
     color: #090909;
-    max-width: 12ch;
+    max-width: 14ch;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+    pointer-events: none;
   }
-  .faq__underline {
+  .faq__group-title.is-active { opacity: 1; transform: none; }
+  /* underline sits right under the active label */
+  .faq__group-title::after {
+    content: '';
     display: block;
     width: 100%;
     max-width: 270px;
@@ -70,7 +114,10 @@ import { faqGroups } from '../data/faq';
     margin-top: 22px;
   }
 
-  .faq__items { display: flex; flex-direction: column; gap: 12px; }
+  .faq__items { display: flex; flex-direction: column; }
+  .faq__list { display: flex; flex-direction: column; gap: 12px; }
+  .faq__list + .faq__list { margin-top: clamp(48px, 6vw, 80px); }
+
   .faq__item {
     background: #fff;
     border-radius: 14px;
@@ -115,10 +162,6 @@ import { faqGroups } from '../data/faq';
     overflow: hidden;
     transition: max-height 0.45s var(--ease-out);
   }
-  /* No-JS fallback: keep the pre-opened item readable */
-  @media (scripting: none) {
-    .faq__item.is-open .faq__panel { max-height: none; }
-  }
   .faq__panel p {
     padding: 0 30px 30px;
     max-width: 52ch;
@@ -130,7 +173,12 @@ import { faqGroups } from '../data/faq';
   }
 
   @media (max-width: 860px) {
-    .faq__group { grid-template-columns: 1fr; }
+    .faq__layout { grid-template-columns: 1fr; }
     .faq__aside { position: static; }
+    .faq__labels { min-height: 0; }
+    /* on mobile both labels shown inline, one under another is confusing —
+       show only the active one, stacked flow */
+    .faq__group-title { position: static; }
+    .faq__group-title:not(.is-active) { display: none; }
   }
 </style>

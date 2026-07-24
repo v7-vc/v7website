@@ -36,9 +36,16 @@ function initSmoothScroll() {
 
 /* ---------- Reveal on scroll ---------- */
 function initReveal() {
-  const items = document.querySelectorAll<HTMLElement>('[data-reveal], .reveal-line');
+  const items = document.querySelectorAll<HTMLElement>(
+    '[data-reveal], [data-reveal-group], .reveal-line'
+  );
   if (reduceMotion) {
-    items.forEach((el) => el.classList.add('is-visible'));
+    items.forEach((el) => {
+      el.classList.add('is-visible');
+      el.querySelectorAll<HTMLElement>('[data-reveal-child]').forEach((k) =>
+        k.classList.add('is-visible')
+      );
+    });
     return;
   }
 
@@ -60,13 +67,19 @@ function initReveal() {
         }
       });
     },
-    { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+    { threshold: 0.01, rootMargin: '0px 0px -8% 0px' }
   );
 
   // Reveal anything already in (or near) the viewport on load — e.g. the hero.
   const vh = window.innerHeight;
   items.forEach((el) => {
     if (el.getBoundingClientRect().top < vh * 0.92) {
+      if (el.dataset.revealGroup !== undefined) {
+        el.querySelectorAll<HTMLElement>('[data-reveal-child]').forEach((kid, i) => {
+          kid.style.setProperty('--reveal-delay', `${i * 90}ms`);
+          kid.classList.add('is-visible');
+        });
+      }
       el.classList.add('is-visible');
     } else {
       io.observe(el);

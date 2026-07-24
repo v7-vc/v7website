@@ -79,7 +79,10 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* old Edge */
 }
+html::-webkit-scrollbar { width: 0; height: 0; display: none; } /* WebKit */
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
@@ -133,39 +136,58 @@ ul { list-style: none; }
   color: var(--muted);
 }
 
-/* ---------- Reveal-on-scroll base ---------- */
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(30px);
-  filter: blur(8px);
-  transition:
-    opacity 0.9s var(--ease-out),
-    transform 0.9s var(--ease-out),
-    filter 0.9s var(--ease-out);
-  transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform, filter;
+/* ---------- Reveal animations (exact Framer physics) ----------
+   Extracted from the published site's __framer__appearAnimationsContent:
+   spring { stiffness: 121, damping: 27, mass: 0.3 }, opacity .001→1,
+   y offsets 90/100/170/250px. The spring is overdamped → rendered here as a
+   precomputed linear() easing (settles in ~1.15s). */
+:root {
+  --spring-duration: 1.15s;
+  --spring: linear(
+    0, 0.165 4.3%, 0.34 8.7%, 0.479 13%, 0.589 17.4%, 0.676 21.7%,
+    0.744 26.1%, 0.798 30.4%, 0.84 34.8%, 0.9 43.5%, 0.938 52.2%,
+    0.961 60.9%, 0.976 69.6%, 0.985 78.3%, 0.991 87%, 1 100%
+  );
 }
-[data-reveal].is-visible {
-  opacity: 1;
-  transform: none;
-  filter: none;
+@supports not (transition-timing-function: linear(0, 1)) {
+  :root { --spring: cubic-bezier(0.16, 1, 0.3, 1); }
 }
 
-/* line-by-line hero reveal */
-.reveal-line { display: block; overflow: hidden; }
+[data-reveal],
+[data-reveal-child] {
+  opacity: 0.001;
+  transform: translateY(var(--reveal-y, 100px));
+  transition:
+    opacity var(--spring-duration) var(--spring),
+    transform var(--spring-duration) var(--spring);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+[data-reveal].is-visible,
+[data-reveal-child].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* hero heading lines: slide up 170px (250px for the accent line), as in Framer */
+.reveal-line { display: block; }
 .reveal-line > span {
   display: inline-block;
-  transform: translateY(110%);
-  transition: transform 1s var(--ease-out);
+  opacity: 0.001;
+  transform: translateY(170px);
+  transition:
+    opacity var(--spring-duration) var(--spring),
+    transform var(--spring-duration) var(--spring);
   transition-delay: var(--reveal-delay, 0ms);
-  will-change: transform;
+  will-change: opacity, transform;
 }
+.reveal-line:nth-child(3) > span { transform: translateY(250px); }
 .is-visible .reveal-line > span,
-.reveal-line.is-visible > span { transform: none; }
+.reveal-line.is-visible > span { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  [data-reveal], .reveal-line > span {
+  [data-reveal], [data-reveal-child], .reveal-line > span {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;

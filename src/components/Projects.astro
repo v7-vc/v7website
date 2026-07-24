@@ -112,6 +112,12 @@ import { projects } from '../data/projects';
     transition: transform 0.7s var(--ease-out), filter 0.5s var(--ease-out);
     will-change: filter, transform;
   }
+  /* scroll-in: card image resolves from blur (as on the original) */
+  .project:not(.is-visible) .project__tile img { filter: blur(14px); }
+  .project.is-visible .project__tile img {
+    filter: blur(0);
+    transition: filter var(--spring-duration) var(--spring), transform 0.7s var(--ease-out);
+  }
   @media (hover: hover) {
     .project__link:hover .project__tile img {
       transform: scale(1.06);
