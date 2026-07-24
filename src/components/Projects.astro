@@ -16,12 +16,7 @@ import { projects } from '../data/projects';
     <ul class="projects__grid" data-reveal-group="">
       {projects.map((p) => (
         <li class="project" data-reveal-child>
-          <a
-            class="project__link"
-            href={p.url ?? '#projects'}
-            target={p.url ? '_blank' : undefined}
-            rel={p.url ? 'noopener noreferrer' : undefined}
-          >
+          <a class="project__link" href={`/projects/${p.slug}`}>
             <span class="project__pill">{p.name}</span>
             <span class="project__tile">
               <img src={p.card} alt={`${p.name} — ${p.category}`} loading="lazy" width="1060" height="596" />
@@ -42,7 +37,6 @@ import { projects } from '../data/projects';
   /* ---- head ---- */
   .projects__head {
     position: relative;
-    min-height: 200px;
     margin-bottom: 40px;
   }
   .projects__index {
@@ -66,10 +60,9 @@ import { projects } from '../data/projects';
     padding-top: 4px;
   }
   .projects__lead {
-    position: absolute;
-    top: 128px;
-    right: 0;
     width: min(310px, 80%);
+    margin-left: auto;
+    margin-top: 14px;
     font-family: var(--font-display-curved);
     font-weight: 400;
     font-size: 1.125rem;
