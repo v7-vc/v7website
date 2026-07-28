@@ -156,7 +156,7 @@ ul { list-style: none; }
 [data-reveal],
 [data-reveal-child] {
   opacity: 0.001;
-  transform: translateY(var(--reveal-y, 100px));
+  transform: translateY(var(--reveal-y, 170px));
   transition:
     opacity var(--spring-duration) var(--spring),
     transform var(--spring-duration) var(--spring);
