@@ -13,7 +13,7 @@ import Footer from '../components/Footer.astro';
 ---
 <Base>
   <Header />
-  <main>
+  <main class="stack">
     <Hero />
     <Projects />
     <WhyChooseUs />
@@ -25,3 +25,31 @@ import Footer from '../components/Footer.astro';
   </main>
   <Footer />
 </Base>
+
+<style is:global>
+  /* ---- Layered panels: each section overlaps the previous with a rounded top
+     and a soft top-shadow, so the page reads as a deck of stacking cards that
+     fold over one another while scrolling. Cheap (no sticky/repaint), and it
+     never freezes tall sections. ---- */
+  @media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
+    .stack > section {
+      position: relative;
+      background-clip: padding-box;
+    }
+    .stack > section + section {
+      margin-top: -34px;
+      border-top-left-radius: 34px;
+      border-top-right-radius: 34px;
+      box-shadow: 0 -6px 16px rgba(10, 10, 10, 0.07);
+    }
+    /* stack later panels above earlier ones so the fold direction is correct */
+    .stack > .hero { z-index: 1; }
+    .stack > .projects { z-index: 2; }
+    .stack > .why { z-index: 3; }
+    .stack > .inv { z-index: 4; }
+    .stack > .about { z-index: 5; }
+    .stack > .team { z-index: 6; }
+    .stack > .faq { z-index: 7; }
+    .stack > .contact { z-index: 8; }
+  }
+</style>
