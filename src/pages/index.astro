@@ -66,7 +66,8 @@ import Footer from '../components/Footer.astro';
            i.e. while the following section is sliding up over it */
         animation-range: cover 45% cover 100%;
       }
-      /* last section shouldn't shrink under the footer */
+      /* first (hero) and last (contact) sections don't recede */
+      .stack > .hero { animation: none; }
       .stack > .contact { animation: none; }
     }
   }
