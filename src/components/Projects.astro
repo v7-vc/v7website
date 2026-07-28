@@ -38,15 +38,22 @@ const { standalone = false } = Astro.props;
     background: var(--surface);
     padding-block: clamp(64px, 8vw, 110px) clamp(6px, 1vw, 10px);
   }
-  /* standalone /projects page: big left-aligned title, no index, no lead */
+  /* standalone /projects page: big left-aligned title, no index, no lead.
+     Original <main> has padding-top:340px with a 62px fixed header; our header
+     is in-flow (62px) so we use 278px to land the title at the same 340px. */
   .projects--standalone {
-    padding-block: clamp(120px, 18vw, 260px) clamp(6px, 1vw, 10px);
+    padding-block: clamp(140px, 19.3vw, 278px) clamp(6px, 1vw, 10px);
   }
   .projects--standalone .projects__head { margin-bottom: clamp(40px, 6vw, 72px); }
   .projects--standalone .projects__title {
     margin-left: 0;
     text-align: left;
+    /* original keeps the title at a fixed 62px across all breakpoints */
+    font-size: 3.875rem;
   }
+  /* On /projects the original hides the category tag at rest (revealed on hover
+     inside the pill), so it is not shown as a persistent overlay here. */
+  /* category hover-reveal behavior is shared with the homepage grid */
 
   /* ---- head ---- */
   .projects__head {
@@ -102,21 +109,23 @@ const { standalone = false } = Astro.props;
     height: 58px;
     padding: 0 24px;
     background: #ffffff;
-    border-radius: 14px;
+    border-radius: 18px;
     font-family: var(--font-display);
     font-size: 1.125rem;
     font-weight: 400;
     line-height: 1.2;
     letter-spacing: -0.04em;
-    color: var(--ink);
+    color: #000;
   }
+  /* image tile = white frame with the image inset 4px (matches original) */
   .project__tile {
     position: relative;
     display: block;
-    aspect-ratio: 689 / 502;
-    border-radius: 14px;
+    aspect-ratio: 682 / 499.32;
+    border-radius: 18px;
+    padding: 4px;
     overflow: hidden;
-    background: var(--surface);
+    background: #ffffff;
   }
   .project__cat {
     position: absolute;
@@ -129,11 +138,18 @@ const { standalone = false } = Astro.props;
     letter-spacing: -0.02em;
     color: #fff;
     pointer-events: none;
+    /* original hides the category at rest; it fades in on hover */
+    opacity: 0;
+    transition: opacity 0.35s var(--ease-out);
+  }
+  @media (hover: hover) {
+    .project__link:hover .project__cat { opacity: 1; }
   }
   .project__tile img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 16px;
     transition: transform 0.7s var(--ease-out), filter 0.5s var(--ease-out);
     will-change: filter, transform;
   }
@@ -156,5 +172,11 @@ const { standalone = false } = Astro.props;
     .projects__title { text-align: left; margin-left: 0; padding-top: 0; }
     .projects__lead { position: static; width: 100%; max-width: 100%; margin-top: 20px; }
     .projects__grid { grid-template-columns: 1fr; }
+    /* original mobile: title stays 62px, top gap ~140px, pill/tile radius 14px */
+    .projects--standalone { padding-block: 78px clamp(6px, 1vw, 10px); }
+    .projects--standalone .projects__head { margin-bottom: 32px; }
+    .project__pill { border-radius: 14px; }
+    .project__tile { border-radius: 14px; }
+    .project__tile img { border-radius: 11px; }
   }
 </style>
