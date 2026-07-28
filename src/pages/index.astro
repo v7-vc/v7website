@@ -27,22 +27,24 @@ import Footer from '../components/Footer.astro';
 </Base>
 
 <style is:global>
-  /* ---- Layered panels: each section overlaps the previous with a rounded top
-     and a soft top-shadow, so the page reads as a deck of stacking cards that
-     fold over one another while scrolling. Cheap (no sticky/repaint), and it
-     never freezes tall sections. ---- */
+  /* ---- Scroll "folding" stack ----
+     Each section overlaps the previous with a rounded top + shadow (the card
+     look), and — on browsers with scroll-driven animations — physically
+     RECEDES (scales down + sinks) as the next section slides up over it, so it
+     feels like a deck of cards folding together while you scroll. No sticky
+     pinning, so tall sections (Projects/FAQ) never freeze or hide content. */
   @media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
     .stack > section {
       position: relative;
       background-clip: padding-box;
     }
     .stack > section + section {
-      margin-top: -34px;
-      border-top-left-radius: 34px;
-      border-top-right-radius: 34px;
-      box-shadow: 0 -6px 16px rgba(10, 10, 10, 0.07);
+      margin-top: -64px;
+      border-top-left-radius: 42px;
+      border-top-right-radius: 42px;
+      box-shadow: 0 -16px 44px rgba(10, 10, 10, 0.15);
     }
-    /* stack later panels above earlier ones so the fold direction is correct */
+    /* later panels stack above earlier ones so the fold direction is correct */
     .stack > .hero { z-index: 1; }
     .stack > .projects { z-index: 2; }
     .stack > .why { z-index: 3; }
@@ -51,5 +53,24 @@ import Footer from '../components/Footer.astro';
     .stack > .team { z-index: 6; }
     .stack > .faq { z-index: 7; }
     .stack > .contact { z-index: 8; }
+  }
+
+  /* The motion: sections recede as they exit the top (get covered). */
+  @supports (animation-timeline: view()) {
+    @media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
+      .stack > section {
+        transform-origin: 50% 0%;
+        animation: stackRecede linear both;
+        animation-timeline: view();
+        /* animate over the last stretch of the section's time on screen,
+           i.e. while the following section is sliding up over it */
+        animation-range: cover 55% cover 100%;
+      }
+      /* last section shouldn't shrink under the footer */
+      .stack > .contact { animation: none; }
+    }
+  }
+  @keyframes stackRecede {
+    to { transform: scale(0.9) translateY(-24px); filter: brightness(0.86); }
   }
 </style>
