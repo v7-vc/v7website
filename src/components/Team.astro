@@ -42,6 +42,8 @@ import { team } from '../data/team';
     background: #ffffff;
     border-radius: 40px 40px 0 0;
     padding-block: clamp(48px, 7vw, 88px) clamp(48px, 7vw, 80px);
+    /* original insets the panel content ~70px from the container edge */
+    padding-inline: clamp(20px, 5vw, 70px);
   }
   .team__title {
     font-family: var(--font-display-curved);
@@ -64,8 +66,10 @@ import { team } from '../data/team';
 
   .team__grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 12px;
+    /* original: 6 fixed ~163px cards, left-packed (empty space on the right) */
+    grid-template-columns: repeat(6, minmax(0, 163px));
+    justify-content: start;
+    gap: 10px;
     margin-top: clamp(40px, 5vw, 64px);
   }
   .member__link {
