@@ -82,7 +82,7 @@ const grain = '/assets/images/grain.png';
   .inv__title {
     font-family: var(--font-display-curved);
     font-weight: 400;
-    font-size: clamp(2.4rem, 4.2vw, 3.875rem);
+    font-size: clamp(2.4rem, 4.31vw, 3.875rem);
     line-height: 0.92;
     letter-spacing: -0.06em;
     color: #fff;
@@ -101,8 +101,9 @@ const grain = '/assets/images/grain.png';
     margin-top: 22px;
     font-family: var(--font-display-curved);
     font-size: 1.125rem;
+    line-height: 1.4;
     letter-spacing: -0.04em;
-    color: rgba(255, 255, 255, 0.45);
+    color: #ffffff;
   }
   .inv__cta {
     align-self: flex-start;
@@ -114,7 +115,8 @@ const grain = '/assets/images/grain.png';
     font-family: var(--font-body);
     font-weight: 600;
     font-size: 1.125rem;
-    letter-spacing: -0.01em;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
     transition: transform 0.3s var(--ease-out), filter 0.3s var(--ease-out);
   }
   .inv__cta:hover { transform: translateY(-2px); filter: brightness(1.06); }
@@ -125,18 +127,20 @@ const grain = '/assets/images/grain.png';
     margin-bottom: 22px;
     font-family: var(--font-display-curved);
     font-size: 1.125rem;
+    line-height: 1.4;
     letter-spacing: -0.04em;
-    color: rgba(255, 255, 255, 0.45);
+    color: #ffffff;
   }
   .inv__chips { display: flex; flex-wrap: wrap; gap: 12px; }
   .chip {
-    padding: 9px 24px;
+    padding: 12px 24px;
     border-radius: 50px;
     background: #d9d9d9;
     color: #000;
     font-family: var(--font-display-curved);
     font-size: 1rem;
-    letter-spacing: -0.03em;
+    line-height: 1;
+    letter-spacing: -0.04em;
     transition: background 0.3s var(--ease-out), transform 0.3s var(--ease-out);
   }
   .chip:hover { background: #fff; transform: translateY(-2px); }

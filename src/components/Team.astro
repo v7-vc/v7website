@@ -46,7 +46,7 @@ import { team } from '../data/team';
   .team__title {
     font-family: var(--font-display-curved);
     font-weight: 400;
-    font-size: clamp(2.1rem, 4.1vw, 3.75rem);
+    font-size: clamp(2.1rem, 4.17vw, 3.75rem);
     line-height: 1.1;
     letter-spacing: -0.06em;
     max-width: 14ch;
@@ -110,20 +110,22 @@ import { team } from '../data/team';
     max-width: 60%;
     text-align: right;
     font-family: var(--font-display-curved);
-    font-size: 1.125rem;
-    line-height: 1.15;
-    letter-spacing: -0.03em;
+    font-size: 1rem;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
     color: #fff;
     z-index: 2;
   }
+  /* original renders the founder's role tag larger (18px vs 16px) */
+  .member:first-child .member__role { font-size: 1.125rem; }
   .member__name {
     position: absolute;
     left: 14px; bottom: 14px;
     right: 14px;
     font-family: var(--font-display-curved);
     font-size: 1.125rem;
-    line-height: 1.15;
-    letter-spacing: -0.03em;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
     color: #fff;
     z-index: 2;
   }

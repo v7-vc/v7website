@@ -80,7 +80,7 @@ const next = Array.from({ length: 5 }, (_, i) => projects[(idx + 1 + i) % projec
   .pj__title {
     font-family: var(--font-display-curved);
     font-weight: 400;
-    font-size: clamp(3.4rem, 9.6vw, 9.25rem);
+    font-size: clamp(3.4rem, 10.28vw, 9.25rem);
     line-height: 0.96;
     letter-spacing: -0.06em;
     color: var(--ink);
@@ -122,14 +122,14 @@ const next = Array.from({ length: 5 }, (_, i) => projects[(idx + 1 + i) % projec
     letter-spacing: -0.04em;
     color: var(--ink);
   }
-  .pj__industry { font-size: 1.125rem; }
+  .pj__industry { font-size: 1.125rem; line-height: 1.4; }
 
   .pj__aboutCol { display: flex; flex-direction: column; gap: clamp(28px, 4vw, 48px); }
   .pj__logo { width: clamp(120px, 12vw, 170px); height: auto; object-fit: contain; align-self: flex-start; }
   .pj__about {
     font-family: var(--font-display-curved);
-    font-size: clamp(1.5rem, 2.6vw, 2.375rem);
-    line-height: 1.25;
+    font-size: clamp(1.5rem, 2.23vw, 2rem);
+    line-height: 1.2;
     letter-spacing: -0.04em;
     color: var(--ink);
   }
@@ -138,14 +138,16 @@ const next = Array.from({ length: 5 }, (_, i) => projects[(idx + 1 + i) % projec
     display: inline-flex;
     align-items: center;
     gap: 14px;
-    padding: 15px 26px;
+    height: 40px;
+    padding: 9px 21px;
     border-radius: 50px;
     background: var(--accent);
     color: #fff;
     font-family: var(--font-body);
     font-weight: 600;
-    font-size: 0.875rem;
-    letter-spacing: -0.02em;
+    font-size: 0.75rem;
+    line-height: 1;
+    letter-spacing: -0.04em;
     transition: transform 0.3s var(--ease-out), filter 0.3s var(--ease-out);
   }
   .pj__site:hover { transform: translateY(-2px); filter: brightness(1.06); }
@@ -163,18 +165,22 @@ const next = Array.from({ length: 5 }, (_, i) => projects[(idx + 1 + i) % projec
   .pjnext__title {
     font-family: var(--font-display-curved);
     font-weight: 400;
-    font-size: clamp(2.4rem, 4.2vw, 3.875rem);
+    font-size: clamp(2.4rem, 4.31vw, 3.875rem);
     line-height: 0.92;
     letter-spacing: -0.06em;
     color: var(--ink);
   }
   .pjnext__all {
-    padding: 14px 24px;
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 9px 21px;
     border-radius: 50px;
-    background: #0a0a0a;
+    background: var(--accent);
     color: #fff;
     font-weight: 600;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
+    line-height: 1;
     letter-spacing: -0.04em;
     transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
   }
@@ -193,8 +199,10 @@ const next = Array.from({ length: 5 }, (_, i) => projects[(idx + 1 + i) % projec
     padding: 0 24px;
     background: #ffffff;
     border-radius: 14px;
-    font-size: 1.25rem;
-    letter-spacing: -0.02em;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
     color: var(--ink);
   }
   .project__tile {

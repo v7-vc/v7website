@@ -80,7 +80,7 @@ import { faqGroups } from '../data/faq';
   .faq__title {
     font-family: var(--font-display-curved);
     font-weight: 400;
-    font-size: clamp(2.4rem, 4.2vw, 3.875rem);
+    font-size: clamp(2.4rem, 4.31vw, 3.875rem);
     line-height: 0.92;
     letter-spacing: -0.06em;
     color: var(--ink);
@@ -92,7 +92,7 @@ import { faqGroups } from '../data/faq';
     inset: 0 auto auto 0;
     font-family: var(--font-display-curved);
     font-weight: 400;
-    font-size: clamp(1.6rem, 2.6vw, 2.375rem);
+    font-size: clamp(1.6rem, 2.64vw, 2.375rem);
     line-height: 1.1;
     letter-spacing: -0.05em;
     color: #090909;
@@ -148,14 +148,17 @@ import { faqGroups } from '../data/faq';
     border-radius: 50%;
     background: #0a0a0a;
   }
+  .faq__icon {
+    transition: transform 0.35s var(--ease-out);
+  }
   .faq__icon span {
     position: absolute;
     width: 14px; height: 1.6px;
     background: #fff;
-    transition: transform 0.35s var(--ease-out), opacity 0.35s var(--ease-out);
   }
   .faq__icon span:last-child { transform: rotate(90deg); }
-  .is-open .faq__icon span:last-child { transform: rotate(0); opacity: 0; }
+  /* open: the plus rotates into an × (never a minus) */
+  .is-open .faq__icon { transform: rotate(45deg); }
 
   .faq__panel {
     max-height: 0;
