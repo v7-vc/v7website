@@ -50,7 +50,7 @@ const next = Array.from({ length: 5 }, (_, i) => projects[(idx + 1 + i) % projec
       <div class="container">
         <div class="pjnext__head" data-reveal>
           <h2 class="pjnext__title">Next projects.</h2>
-          <a class="pjnext__all" href="/projects">All projects</a>
+          <a class="pjnext__all" href="/projects">All projects<span class="pjnext__dot" aria-hidden="true"></span></a>
         </div>
         <ul class="pjnext__grid" data-reveal-group="">
           {next.map((p) => (
@@ -58,6 +58,7 @@ const next = Array.from({ length: 5 }, (_, i) => projects[(idx + 1 + i) % projec
               <a class="project__link" href={`/projects/${p.slug}`}>
                 <span class="project__pill">{p.name}</span>
                 <span class="project__tile">
+                  <span class="project__cat">{p.category}</span>
                   <img src={p.card} alt={`${p.name} — ${p.category}`} loading="lazy" width="1060" height="772" />
                 </span>
               </a>
@@ -139,7 +140,7 @@ const next = Array.from({ length: 5 }, (_, i) => projects[(idx + 1 + i) % projec
     align-items: center;
     gap: 14px;
     height: 40px;
-    padding: 9px 21px;
+    padding: 9px 11px 9px 21px;
     border-radius: 50px;
     background: var(--accent);
     color: #fff;
@@ -151,7 +152,7 @@ const next = Array.from({ length: 5 }, (_, i) => projects[(idx + 1 + i) % projec
     transition: transform 0.3s var(--ease-out), filter 0.3s var(--ease-out);
   }
   .pj__site:hover { transform: translateY(-2px); filter: brightness(1.06); }
-  .pj__dot { width: 7px; height: 7px; border-radius: 50%; background: #fff; }
+  .pj__dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; flex: none; }
 
   /* ---- next projects ---- */
   .pjnext { background: var(--surface); padding-block: clamp(48px, 7vw, 100px) clamp(6px, 1vw, 10px); }
@@ -173,8 +174,9 @@ const next = Array.from({ length: 5 }, (_, i) => projects[(idx + 1 + i) % projec
   .pjnext__all {
     display: inline-flex;
     align-items: center;
+    gap: 14px;
     height: 40px;
-    padding: 9px 21px;
+    padding: 9px 11px 9px 21px;
     border-radius: 50px;
     background: var(--accent);
     color: #fff;
@@ -184,6 +186,7 @@ const next = Array.from({ length: 5 }, (_, i) => projects[(idx + 1 + i) % projec
     letter-spacing: -0.04em;
     transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
   }
+  .pjnext__dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; flex: none; }
   .pjnext__all:hover { transform: translateY(-2px); opacity: 0.9; }
 
   .pjnext__grid {
@@ -206,11 +209,24 @@ const next = Array.from({ length: 5 }, (_, i) => projects[(idx + 1 + i) % projec
     color: var(--ink);
   }
   .project__tile {
+    position: relative;
     display: block;
     aspect-ratio: 689 / 502;
     border-radius: 14px;
     overflow: hidden;
     background: var(--surface);
+  }
+  .project__cat {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 2;
+    font-family: var(--font-display);
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #fff;
+    pointer-events: none;
   }
   .project__tile img {
     width: 100%;

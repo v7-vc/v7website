@@ -12,32 +12,37 @@ const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
       <div class="container">
         <h1 class="git__title" data-reveal>Get in touch.</h1>
 
-        <p class="git__lead" data-reveal>
-          <span class="git__ink">Have a project in mind?</span>
-          <span class="git__muted"> Reach out to us, and we’ll discuss the best way to move forward.</span>
-        </p>
+        <div class="git__grid">
+          <p class="git__lead" data-reveal>
+            <span class="git__ink">Have a project in mind?</span>
+            <span class="git__muted"> Reach out to us, and we’ll discuss the best way to move forward.</span>
+          </p>
 
-        <form class="gform" action={ZAP} method="post" data-reveal>
-          <div class="gfield">
-            <input id="g-name" name="name" type="text" placeholder="Your name *" required autocomplete="name" />
-          </div>
-          <div class="gfield">
-            <input id="g-email" name="email" type="email" placeholder="Email *" required autocomplete="email" />
-          </div>
-          <div class="gfield gfield--area">
-            <textarea id="g-message" name="message" rows="4" placeholder="Your message"></textarea>
-          </div>
+          <form class="gform" action={ZAP} method="post" data-reveal>
+            <div class="gfield">
+              <input id="g-name" name="name" type="text" placeholder="Your name *" required autocomplete="name" />
+            </div>
+            <div class="gfield">
+              <input id="g-email" name="email" type="email" placeholder="Email *" required autocomplete="email" />
+            </div>
+            <div class="gfield gfield--area">
+              <textarea id="g-message" name="message" rows="4" placeholder="Your message"></textarea>
+            </div>
 
-          <label class="gupload">
-            <input type="file" name="presentation" accept=".pdf,.ppt,.pptx,.key,.doc,.docx" hidden />
-            <span class="gupload__plus" aria-hidden="true">+</span>
-            <span class="gupload__text">Upload your presentation</span>
-            <span class="gupload__file" data-file-name></span>
-          </label>
+            <label class="gupload">
+              <input type="file" name="presentation" accept=".pdf,.ppt,.pptx,.key,.doc,.docx" hidden />
+              <span class="gupload__plus" aria-hidden="true">+</span>
+              <span class="gupload__text">Upload your presentation</span>
+              <span class="gupload__file" data-file-name></span>
+            </label>
 
-          <button type="submit" class="gform__submit">Submit</button>
-          <p class="gform__status" data-form-status role="status" aria-live="polite"></p>
-        </form>
+            <button type="submit" class="gform__submit">
+              <span>Submit</span>
+              <span class="gform__dot" aria-hidden="true"></span>
+            </button>
+            <p class="gform__status" data-form-status role="status" aria-live="polite"></p>
+          </form>
+        </div>
       </div>
     </section>
   </main>
@@ -50,6 +55,7 @@ const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
     if (!form) return;
     const status = form.querySelector('[data-form-status]');
     const btn = form.querySelector('.gform__submit');
+    const btnText = btn.querySelector('span:first-child') || btn;
     const file = form.querySelector('input[type="file"]');
     const fileName = form.querySelector('[data-file-name]');
     if (file) file.addEventListener('change', () => {
@@ -59,8 +65,8 @@ const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
       e.preventDefault();
       const data = new FormData(form);
       btn.disabled = true;
-      const orig = btn.textContent;
-      btn.textContent = 'Sending…';
+      const orig = btnText.textContent;
+      btnText.textContent = 'Sending…';
       try {
         await fetch(form.action, { method: 'POST', mode: 'no-cors', body: data });
         form.reset();
@@ -70,7 +76,7 @@ const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
         status.textContent = 'Something went wrong. Email hello@v7.vc instead.';
       } finally {
         btn.disabled = false;
-        btn.textContent = orig;
+        btnText.textContent = orig;
       }
     });
   })();
@@ -89,10 +95,18 @@ const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
     letter-spacing: -0.06em;
     color: var(--ink);
   }
+  /* two-column: lead on the left, form on the right (matches original) */
+  .git__grid {
+    margin-top: clamp(48px, 7vw, 96px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
   .git__lead {
-    margin: clamp(48px, 7vw, 96px) auto 0;
-    max-width: 34ch;
-    text-align: center;
+    margin: 0;
+    max-width: 26ch;
+    text-align: left;
     font-family: var(--font-display-curved);
     font-size: clamp(1.4rem, 2.6vw, 2rem);
     line-height: 1.2;
@@ -102,8 +116,7 @@ const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
   .git__muted { color: rgba(10, 10, 10, 0.6); }
 
   .gform {
-    max-width: 920px;
-    margin: clamp(40px, 6vw, 72px) auto 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
   }
@@ -155,7 +168,10 @@ const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
   .gform__submit {
     align-self: flex-start;
     margin-top: clamp(32px, 5vw, 48px);
-    padding: 18px 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: 40px;
+    padding: 16px 16px 16px 34px;
     border-radius: 50px;
     background: var(--accent);
     color: #fff;
@@ -166,8 +182,19 @@ const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
     letter-spacing: -0.04em;
     transition: transform 0.3s var(--ease-out), filter 0.3s var(--ease-out);
   }
+  .gform__dot {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: #fff;
+    flex: none;
+  }
   .gform__submit:hover { transform: translateY(-2px); filter: brightness(1.06); }
   .gform__submit:disabled { opacity: 0.6; }
   .gform__status:empty { display: none; }
   .gform__status { margin-top: 14px; font-size: 0.95rem; color: var(--ink); }
+
+  @media (max-width: 860px) {
+    .git__grid { grid-template-columns: 1fr; gap: clamp(32px, 6vw, 48px); }
+    .git__lead { max-width: 34ch; }
+  }
 </style>

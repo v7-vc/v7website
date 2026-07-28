@@ -1,16 +1,20 @@
 ---
 import { projects } from '../data/projects';
+interface Props { standalone?: boolean; }
+const { standalone = false } = Astro.props;
 ---
-<section class="projects" id="projects">
+<section class={`projects${standalone ? ' projects--standalone' : ''}`} id="projects">
   <div class="container">
     <div class="projects__head">
-      <span class="projects__index" data-reveal>(8)</span>
+      {!standalone && <span class="projects__index" data-reveal>(8)</span>}
       <h2 class="projects__title" data-reveal>Projects.</h2>
-      <p class="projects__lead" data-reveal style="--reveal-delay:120ms">
-        We back visionaries bold enough to reshape entire industries. Our founders
-        don&rsquo;t just build companies, they spark revolutions. From daring ideas to
-        market-leading ventures, we invest where others won&rsquo;t.
-      </p>
+      {!standalone && (
+        <p class="projects__lead" data-reveal style="--reveal-delay:120ms">
+          We back visionaries bold enough to reshape entire industries. Our founders
+          don&rsquo;t just build companies, they spark revolutions. From daring ideas to
+          market-leading ventures, we invest where others won&rsquo;t.
+        </p>
+      )}
     </div>
 
     <ul class="projects__grid" data-reveal-group="">
@@ -19,6 +23,7 @@ import { projects } from '../data/projects';
           <a class="project__link" href={`/projects/${p.slug}`}>
             <span class="project__pill">{p.name}</span>
             <span class="project__tile">
+              <span class="project__cat">{p.category}</span>
               <img src={p.card} alt={`${p.name} — ${p.category}`} loading="lazy" width="1060" height="596" />
             </span>
           </a>
@@ -32,6 +37,15 @@ import { projects } from '../data/projects';
   .projects {
     background: var(--surface);
     padding-block: clamp(64px, 8vw, 110px) clamp(6px, 1vw, 10px);
+  }
+  /* standalone /projects page: big left-aligned title, no index, no lead */
+  .projects--standalone {
+    padding-block: clamp(120px, 18vw, 260px) clamp(6px, 1vw, 10px);
+  }
+  .projects--standalone .projects__head { margin-bottom: clamp(40px, 6vw, 72px); }
+  .projects--standalone .projects__title {
+    margin-left: 0;
+    text-align: left;
   }
 
   /* ---- head ---- */
@@ -50,19 +64,23 @@ import { projects } from '../data/projects';
     color: var(--ink);
   }
   .projects__title {
-    text-align: center;
+    text-align: left;
+    margin-left: 26%;
     font-family: var(--font-display-curved);
     font-weight: 400;
     font-size: clamp(2.4rem, 4.31vw, 3.875rem);
     line-height: 0.92;
     letter-spacing: -0.06em;
     color: var(--ink);
-    padding-top: 4px;
+    padding-top: 0;
   }
   .projects__lead {
-    width: min(310px, 80%);
-    margin-left: auto;
-    margin-top: 14px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 340px;
+    max-width: 32%;
+    margin: 0;
     font-family: var(--font-display-curved);
     font-weight: 400;
     font-size: 1.125rem;
@@ -93,11 +111,24 @@ import { projects } from '../data/projects';
     color: var(--ink);
   }
   .project__tile {
+    position: relative;
     display: block;
     aspect-ratio: 689 / 502;
     border-radius: 14px;
     overflow: hidden;
     background: var(--surface);
+  }
+  .project__cat {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 2;
+    font-family: var(--font-display);
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #fff;
+    pointer-events: none;
   }
   .project__tile img {
     width: 100%;
@@ -122,8 +153,8 @@ import { projects } from '../data/projects';
   @media (max-width: 760px) {
     .projects__head { min-height: 0; margin-bottom: 32px; }
     .projects__index { position: static; display: block; margin-bottom: 8px; }
-    .projects__title { text-align: left; }
-    .projects__lead { position: static; width: 100%; margin-top: 20px; }
+    .projects__title { text-align: left; margin-left: 0; padding-top: 0; }
+    .projects__lead { position: static; width: 100%; max-width: 100%; margin-top: 20px; }
     .projects__grid { grid-template-columns: 1fr; }
   }
 </style>

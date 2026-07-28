@@ -157,8 +157,8 @@ import { faqGroups } from '../data/faq';
     background: #fff;
   }
   .faq__icon span:last-child { transform: rotate(90deg); }
-  /* open: the plus rotates into an × (never a minus) */
-  .is-open .faq__icon { transform: rotate(45deg); }
+  /* open: the original keeps the "+" (it never turns into a minus or ×) */
+  .is-open .faq__icon { transform: none; }
 
   .faq__panel {
     max-height: 0;
