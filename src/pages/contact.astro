@@ -6,6 +6,9 @@ import Footer from '../components/Footer.astro';
 const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
 ---
 <Base title="V7 – Contact" description="Have a project in mind? Reach out to us, and we’ll discuss the best way to move forward.">
+  <div class="preloader" data-preloader aria-hidden="true">
+    <img class="preloader__logo" src="/assets/images/logo-v7.png" alt="" width="120" height="50" />
+  </div>
   <Header />
   <main>
     <section class="git">
@@ -62,6 +65,21 @@ const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
 
 <script is:inline>
   (() => {
+    const pre = document.querySelector('[data-preloader]');
+    if (!pre) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { pre.remove(); return; }
+    // 3 states: dark (initial) → intermediate (logo eases in) → wipe reveal
+    setTimeout(() => pre.classList.add('is-mid'), 460);
+    setTimeout(() => pre.classList.add('is-hiding'), 900);
+    pre.addEventListener('transitionend', (e) => {
+      if (e.propertyName === 'transform') pre.classList.add('is-done');
+    });
+    setTimeout(() => pre.classList.add('is-done'), 2200); // safety
+  })();
+</script>
+
+<script is:inline>
+  (() => {
     const form = document.querySelector('.gform');
     if (!form) return;
     const status = form.querySelector('[data-form-status]');
@@ -94,6 +112,39 @@ const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
 </script>
 
 <style>
+  /* Contact preloader: a dark full-screen panel that reveals the page with a
+     soft, slightly-springy wipe (matches the original Hero/PreLoader). */
+  .preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #0a0a0a;
+    display: grid;
+    place-items: center;
+    /* 3 states via clip-path: full → intermediate → revealed */
+    transform: translateY(0);
+    transition:
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.5s ease 0.55s;
+    will-change: transform;
+  }
+  .preloader__logo {
+    width: 120px; height: auto;
+    filter: invert(1);
+    opacity: 0.9;
+    transform: scale(1);
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  }
+  .preloader.is-mid .preloader__logo { transform: scale(0.82); opacity: 0.6; }
+  .preloader.is-hiding {
+    transform: translateY(-101%);
+    opacity: 0.85;
+  }
+  .preloader.is-done { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .preloader { display: none; }
+  }
+
   .git {
     background: var(--surface);
     padding-block: clamp(90px, 19.3vw, 278px) clamp(64px, 9vw, 120px);
