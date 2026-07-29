@@ -75,7 +75,7 @@ const { standalone = false } = Astro.props;
     margin-left: 26%;
     font-family: var(--font-display-curved);
     font-weight: 400;
-    font-size: clamp(2.4rem, 4.31vw, 3.875rem);
+    font-size: 3.875rem; /* fixed 62px like the original (was vw-clamp that shrank below 1438px) */
     line-height: 0.92;
     letter-spacing: -0.06em;
     color: var(--ink);
