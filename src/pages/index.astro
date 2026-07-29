@@ -25,3 +25,26 @@ import Footer from '../components/Footer.astro';
   </main>
   <Footer />
 </Base>
+
+<style is:global>
+  /* Hero-only scroll effect: the video panel stays pinned while the rest of the
+     page scrolls up and covers it — so the "fold" happens only while you scroll
+     through the hero, with no gaps (the covering sections are opaque). */
+  @media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
+    main > .hero {
+      position: sticky;
+      top: 0;
+      z-index: 0;
+    }
+    main > .projects,
+    main > .why,
+    main > .inv,
+    main > .about,
+    main > .team,
+    main > .faq,
+    main > .contact {
+      position: relative;
+      z-index: 1;
+    }
+  }
+</style>
