@@ -15,36 +15,66 @@ import Footer from '../components/Footer.astro';
   <Header />
   <main>
     <Hero />
-    <Projects />
-    <WhyChooseUs />
-    <Investments />
-    <About />
-    <Team />
-    <Faq />
-    <Contact />
+    <div class="after-hero">
+      <Projects />
+      <WhyChooseUs />
+      <Investments />
+      <About />
+      <Team />
+      <Faq />
+      <Contact />
+    </div>
   </main>
   <Footer />
 </Base>
 
 <style is:global>
-  /* Hero-only scroll effect: the video panel stays pinned while the rest of the
-     page scrolls up and covers it — so the "fold" happens only while you scroll
-     through the hero, with no gaps (the covering sections are opaque). */
+  /* Hero "провалювання" (pinned scrub):
+     The hero is pinned (sticky). Everything after it lives in one opaque layer
+     (.after-hero) that scrolls up and covers the hero — so there are never any
+     gaps between sections. While it's being covered, the hero sinks, shrinks and
+     tilts back in 3D (driven by JS below), so the first screen appears to fall
+     into the next block, exactly like the original. */
   @media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
     main > .hero {
       position: sticky;
       top: 0;
       z-index: 0;
+      transform-origin: 50% 34%;
+      will-change: transform, opacity;
     }
-    main > .projects,
-    main > .why,
-    main > .inv,
-    main > .about,
-    main > .team,
-    main > .faq,
-    main > .contact {
+    main > .after-hero {
       position: relative;
       z-index: 1;
+      background: var(--surface);
     }
   }
 </style>
+
+<script is:inline>
+  (() => {
+    const mq = window.matchMedia('(min-width: 861px)');
+    const hero = document.querySelector('main > .hero');
+    if (!hero) return;
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      if (!mq.matches) { hero.style.transform = ''; hero.style.opacity = ''; return; }
+      const h = hero.offsetHeight || window.innerHeight;
+      let p = window.scrollY / (h * 0.82);  // completes a touch before Projects fully covers
+      p = p < 0 ? 0 : p > 1 ? 1 : p;
+      hero.style.transform =
+        'perspective(1700px) ' +
+        'translateY(' + (p * 12).toFixed(1) + 'px) ' +
+        'scale(' + (1 - 0.085 * p).toFixed(4) + ') ' +
+        'rotateX(' + (p * 11).toFixed(2) + 'deg)';
+      // fade the first screen out as it tilts back, so it dissolves into the
+      // rising block instead of lingering as a shrunk panel
+      hero.style.opacity = (1 - 0.6 * p).toFixed(3);
+    };
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+  })();
+</script>
