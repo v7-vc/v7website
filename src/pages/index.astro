@@ -29,20 +29,23 @@ import Footer from '../components/Footer.astro';
 <style is:global>
   /* ---- Scroll "folding" stack ----
      Each section overlaps the previous with a rounded top + shadow (the card
-     look), and — on browsers with scroll-driven animations — physically
-     RECEDES (scales down + sinks) as the next section slides up over it, so it
-     feels like a deck of cards folding together while you scroll. No sticky
-     pinning, so tall sections (Projects/FAQ) never freeze or hide content. */
-  @media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
+     look). A tiny JS loop (below) then physically RECEDES each section — scales
+     it down, sinks it and dims it — as the next section slides up over it, so
+     the page reads as a deck of cards folding together while you scroll.
+     Done in JS so it works in every browser (no animation-timeline needed),
+     and no sticky pinning so tall sections never freeze or hide content. */
+  @media (min-width: 861px) {
     .stack > section {
       position: relative;
       background-clip: padding-box;
+      transform-origin: 50% 0%;
+      will-change: transform;
     }
     .stack > section + section {
       margin-top: -80px;
       border-top-left-radius: 48px;
       border-top-right-radius: 48px;
-      box-shadow: 0 -22px 54px rgba(10, 10, 10, 0.20);
+      box-shadow: 0 -22px 54px rgba(10, 10, 10, 0.22);
     }
     /* later panels stack above earlier ones so the fold direction is correct */
     .stack > .hero { z-index: 1; }
@@ -54,24 +57,59 @@ import Footer from '../components/Footer.astro';
     .stack > .faq { z-index: 7; }
     .stack > .contact { z-index: 8; }
   }
-
-  /* The motion: sections recede as they exit the top (get covered). */
-  @supports (animation-timeline: view()) {
-    @media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
-      .stack > section {
-        transform-origin: 50% 0%;
-        animation: stackRecede linear both;
-        animation-timeline: view();
-        /* animate over the last stretch of the section's time on screen,
-           i.e. while the following section is sliding up over it */
-        animation-range: cover 45% cover 100%;
-      }
-      /* first (hero) and last (contact) sections don't recede */
-      .stack > .hero { animation: none; }
-      .stack > .contact { animation: none; }
-    }
-  }
-  @keyframes stackRecede {
-    to { transform: scale(0.8) translateY(-48px); filter: brightness(0.72); }
-  }
 </style>
+
+<script is:inline>
+  (() => {
+    const mq = window.matchMedia('(min-width: 861px)');
+    const all = [...document.querySelectorAll('.stack > section')];
+    // hero (first) and contact (last) don't recede
+    const sections = all.filter((s) => !s.classList.contains('hero') && !s.classList.contains('contact'));
+    if (!sections.length) return;
+
+    let tops = [];
+    let heights = [];
+    const measure = () => {
+      tops = sections.map((s) => {
+        const prev = s.style.transform;
+        s.style.transform = 'none';
+        const top = s.getBoundingClientRect().top + window.scrollY;
+        s.style.transform = prev;
+        return top;
+      });
+      heights = sections.map((s) => s.offsetHeight);
+    };
+
+    const clear = () => sections.forEach((s) => { s.style.transform = ''; s.style.filter = ''; });
+
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      if (!mq.matches) { clear(); return; }
+      const sy = window.scrollY;
+      for (let i = 0; i < sections.length; i++) {
+        const vpTop = tops[i] - sy;                     // section top in the viewport
+        const h = heights[i] || 1;
+        let p = -vpTop / (h * 0.55);                    // 0 while on screen, →1 as it exits the top
+        p = p < 0 ? 0 : p > 1 ? 1 : p;
+        const scale = 1 - 0.18 * p;                     // 1 → 0.82
+        const ty = -64 * p;                             // sinks up to 64px
+        const bright = 1 - 0.32 * p;                    // dims to 0.68
+        const s = sections[i];
+        if (p === 0) { s.style.transform = ''; s.style.filter = ''; }
+        else {
+          s.style.transform = 'scale(' + scale.toFixed(4) + ') translateY(' + ty.toFixed(1) + 'px)';
+          s.style.filter = 'brightness(' + bright.toFixed(3) + ')';
+        }
+      }
+    };
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+
+    const init = () => { clear(); measure(); update(); };
+    init();
+    window.addEventListener('load', init);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    let rt;
+    window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(init, 150); }, { passive: true });
+  })();
+</script>
