@@ -61,16 +61,16 @@ import Footer from '../components/Footer.astro';
       ticking = false;
       if (!mq.matches) { hero.style.transform = ''; hero.style.opacity = ''; return; }
       const h = hero.offsetHeight || window.innerHeight;
-      let p = window.scrollY / (h * 0.82);  // completes a touch before Projects fully covers
+      let p = window.scrollY / (h * 0.9);
       p = p < 0 ? 0 : p > 1 ? 1 : p;
+      // Subtle 3D recede only — the video stays fully opaque (NO fade, so it
+      // never washes into light), and the opaque block below covers it as it
+      // scrolls up.
       hero.style.transform =
-        'perspective(1700px) ' +
-        'translateY(' + (p * 12).toFixed(1) + 'px) ' +
-        'scale(' + (1 - 0.085 * p).toFixed(4) + ') ' +
-        'rotateX(' + (p * 11).toFixed(2) + 'deg)';
-      // fade the first screen out as it tilts back, so it dissolves into the
-      // rising block instead of lingering as a shrunk panel
-      hero.style.opacity = (1 - 0.6 * p).toFixed(3);
+        'perspective(2000px) ' +
+        'scale(' + (1 - 0.045 * p).toFixed(4) + ') ' +
+        'rotateX(' + (p * 6).toFixed(2) + 'deg)';
+      hero.style.opacity = '';
     };
     const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
     update();
