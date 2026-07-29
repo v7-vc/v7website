@@ -149,7 +149,7 @@ import { faqGroups } from '../data/faq';
     background: #0a0a0a;
   }
   .faq__icon {
-    transition: transform 0.35s var(--ease-out);
+    transition: transform 0.45s var(--ease-out);
   }
   .faq__icon span {
     position: absolute;
@@ -157,8 +157,8 @@ import { faqGroups } from '../data/faq';
     background: #fff;
   }
   .faq__icon span:last-child { transform: rotate(90deg); }
-  /* open: the original keeps the "+" (it never turns into a minus or ×) */
-  .is-open .faq__icon { transform: none; }
+  /* open: the "+" spins a quarter turn and stays a "+" (plus → plus) */
+  .is-open .faq__icon { transform: rotate(90deg); }
 
   .faq__panel {
     max-height: 0;
