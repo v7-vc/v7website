@@ -37,11 +37,11 @@ import Footer from '../components/Footer.astro';
      into the next block, exactly like the original. */
   @media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
     main > .hero {
-      position: sticky;
-      top: 0;
+      position: relative;
       z-index: 0;
-      transform-origin: 50% 34%;
-      will-change: transform, opacity;
+      transform-origin: 50% 55%;
+      will-change: transform;
+      backface-visibility: hidden;
     }
     main > .after-hero {
       position: relative;
@@ -52,25 +52,27 @@ import Footer from '../components/Footer.astro';
 </style>
 
 <script is:inline>
+  /* Hero "book fold" — replicates the original's scroll-linked First-screen
+     transform (measured on v7.vc): the whole hero tilts back on the X axis
+     (rotateX → ~48.5°), sinks (translateY → ~180px) and narrows (scaleX → 0.95)
+     over the first ~600px of scroll, while the opaque block below rises to cover
+     it. Video stays fully opaque (no fade). Pure JS → works in every browser. */
   (() => {
     const mq = window.matchMedia('(min-width: 861px)');
     const hero = document.querySelector('main > .hero');
     if (!hero) return;
+    const CAP = 600;               // scroll distance over which the fold completes
     let ticking = false;
     const update = () => {
       ticking = false;
-      if (!mq.matches) { hero.style.transform = ''; hero.style.opacity = ''; return; }
-      const h = hero.offsetHeight || window.innerHeight;
-      let p = window.scrollY / (h * 0.9);
+      if (!mq.matches) { hero.style.transform = ''; return; }
+      let p = window.scrollY / CAP;
       p = p < 0 ? 0 : p > 1 ? 1 : p;
-      // Subtle 3D recede only — the video stays fully opaque (NO fade, so it
-      // never washes into light), and the opaque block below covers it as it
-      // scrolls up.
+      const rotateX = (48.5 * p).toFixed(2);
+      const ty = (180 * p).toFixed(1);
+      const sx = (1 - 0.05 * p).toFixed(4);
       hero.style.transform =
-        'perspective(2000px) ' +
-        'scale(' + (1 - 0.045 * p).toFixed(4) + ') ' +
-        'rotateX(' + (p * 6).toFixed(2) + 'deg)';
-      hero.style.opacity = '';
+        'perspective(9000px) translateY(' + ty + 'px) rotateX(' + rotateX + 'deg) scaleX(' + sx + ')';
     };
     const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
     update();
