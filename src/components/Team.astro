@@ -42,8 +42,8 @@ import { team } from '../data/team';
     background: #ffffff;
     border-radius: 40px 40px 0 0;
     padding-block: clamp(48px, 7vw, 88px) clamp(48px, 7vw, 80px);
-    /* original insets the panel content ~70px from the container edge */
-    padding-inline: clamp(20px, 5vw, 70px);
+    /* inset so the first member card lands at x≈112 @1309 (spec) */
+    padding-inline: clamp(24px, 5.8vw, 78px);
   }
   .team__title {
     font-family: var(--font-display-curved);
@@ -110,7 +110,8 @@ import { team } from '../data/team';
   }
   .member__role {
     position: absolute;
-    top: 14px; right: 14px;
+    /* spec: role text's right edge sits ~25px in from the card edge */
+    top: 14px; right: 25px;
     max-width: 60%;
     text-align: right;
     font-family: var(--font-display-curved);
@@ -137,10 +138,22 @@ import { team } from '../data/team';
   @media (max-width: 1000px) {
     .team__grid { grid-template-columns: repeat(3, 1fr); }
   }
-  @media (max-width: 620px) {
-    .team__grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 400px) {
-    .team__grid { grid-template-columns: 1fr; gap: 16px; }
+  /* Original phone: ONE centred 330×365 card per row; heading is a centred
+     290px block at 32px; name 24px inset 24, role 22px */
+  @media (max-width: 809px) {
+    /* avoid double inset (panel + container) — the centred 330 column handles x */
+    .team__panel { padding-inline: 0; }
+    .team__title {
+      max-width: 290px;
+      margin-inline: auto;
+      font-size: 2rem;
+      text-align: left;
+    }
+    .team__underline { margin-inline: auto; }
+    .team__grid { grid-template-columns: minmax(0, 330px); justify-content: center; }
+    .member__link { aspect-ratio: 330 / 365; }
+    .member__name { left: 24px; bottom: 20px; right: 24px; font-size: 1.5rem; }
+    .member__role { top: 24px; font-size: 1.375rem; }
+    .member:first-child .member__role { font-size: 1.375rem; }
   }
 </style>

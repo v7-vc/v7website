@@ -4,16 +4,29 @@
 # Auth: GitHub. Only accounts with WRITE access to the repo below can log in and
 # save changes — that is the "admin only" rule. No database, no server of ours.
 
+# --- Local testing (works NOW, no GitHub) -------------------------------------
+# `npx @sveltia/cms-proxy-server` in the project root, then open /admin — edits
+# write straight to the local files. Turn this off for the live GitHub backend.
+local_backend: true
+
+# --- Live GitHub backend --------------------------------------------------
+# The repo Vercel deploys from. Pushing to `main` triggers a rebuild, so a save
+# here becomes a live update.
+#
+# `base_url` stays commented until the Cloudflare Worker OAuth proxy is deployed
+# (code in workers/sveltia-oauth). Until then use the local backend above:
+# hosted /admin login is a documented later step — see docs/CMS-SETUP.md.
 backend:
   name: github
   repo: kostenkoelena500-prog/v7website
   branch: main
-  # After deploy, set base_url to your free Cloudflare Workers OAuth proxy:
   # base_url: https://YOUR-WORKER.workers.dev
 
 # Where images uploaded through the CMS are stored (committed to the repo).
-media_folder: "public/uploads"
-public_folder: "/uploads"
+# Points at the folder the existing `card`/`logo` paths already use, so the
+# picker shows current images and new uploads land beside them.
+media_folder: "public/assets/images"
+public_folder: "/assets/images"
 
 collections:
   - name: content
@@ -45,4 +58,31 @@ collections:
                   label: "Card image",
                   widget: image,
                   hint: "Wide branded image, ~1600×900px",
+                }
+              - {
+                  name: logo,
+                  label: "Brand logo",
+                  widget: image,
+                  required: false,
+                  hint: "Logo shown on the project detail page",
+                }
+              - {
+                  name: tagline,
+                  label: Tagline,
+                  widget: string,
+                  required: false,
+                  hint: "One-line headline on the project page",
+                }
+              - {
+                  name: industry,
+                  label: Industry,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  name: about,
+                  label: About,
+                  widget: text,
+                  required: false,
+                  hint: "Paragraph shown on the project detail page",
                 }

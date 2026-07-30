@@ -46,6 +46,16 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     padding: 6px 6px 0;
     background: var(--surface);
   }
+  /* Desktop, motion on: extend the first screen with a light area below the panel.
+     The panel folds ONTO this light background (its rounded bottom corners stay
+     visible) and the next block starts below it instead of covering the fold —
+     exactly like the original. 196px > the panel's 180px max downward travel, so
+     the next section can never overlap the folding panel; with the Projects
+     section's own top padding the heading lands ~viewport-height + 300px (doc
+     ~1200 at 900px tall), matching the original. */
+  @media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
+    .hero { padding-bottom: 230px; }
+  }
   .hero__panel {
     position: relative;
     height: var(--hero-h, calc(100svh - 68px));
@@ -54,6 +64,18 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     overflow: hidden;
     background: #0a0a0a;
     isolation: isolate;
+  }
+  /* Phone (<810px): the original does NOT make the hero full-height here — it is a
+     short fixed panel (~523px at 390w) with a 16px radius and ~2px inset. Full-
+     height on phone made the whole page ~250px too tall and felt un-adaptive. */
+  @media (max-width: 809px) {
+    .hero { padding: 2px 2px 0; }
+    .hero__panel {
+      height: auto;
+      aspect-ratio: 386 / 523;
+      min-height: 0;
+      border-radius: 16px;
+    }
   }
   .hero__video {
     position: absolute;
@@ -77,7 +99,9 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     z-index: 2;
     display: flex;
     align-items: flex-end;
-    padding: clamp(28px, 4vw, 60px);
+    /* horizontal padding tuned so the headline lands at x≈40 @1309 (spec),
+       matching the section gutter; vertical padding keeps the bottom anchor */
+    padding: clamp(28px, 4vw, 60px) clamp(22px, 2.6vw, 40px);
   }
   .hero__title {
     font-family: var(--font-display-curved);
@@ -87,12 +111,21 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     letter-spacing: -0.04em;
     color: #ffffff;
   }
+  /* Original phone (<810): headline is a fixed 37px / 350px block, centred in
+     the panel (x=193 @736, x=20 @390) */
+  @media (max-width: 809px) {
+    .hero__content { padding-inline: 18px; }
+    .hero__title {
+      font-size: 2.3125rem;
+      width: 100%;
+      max-width: 350px;
+      margin-inline: auto;
+    }
+  }
   .hero__accent > span {
     font-family: var(--font-display-curved);
     color: #f55397;
   }
-
-  /* Staggered heading lines (left-anchored staircase), like the original */
-  .hero__title .reveal-line:nth-child(2) { margin-left: 1.3em; }
-  .hero__title .reveal-line:nth-child(3) { margin-left: 3em; }
+  /* Original headline is left-aligned — all three lines share x=40 (spec),
+     no staircase. */
 </style>

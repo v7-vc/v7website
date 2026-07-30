@@ -38,10 +38,35 @@ const ogImage = new URL('/og.png', Astro.site ?? 'https://v7.vc').href;
     <link rel="preload" href="/fonts/Marund-Corner.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin />
   </head>
-  <body>
+  <body class="v7-enter">
     <slot />
     <script>
       import '../scripts/motion.ts';
+      import '../scripts/forms.ts';
+    </script>
+    <script is:inline>
+      /* Page transition: play the exit animation, then navigate. The enter
+         animation is pure CSS (body.v7-enter, server-rendered). Only intercepts
+         plain left-clicks on same-origin, same-tab links to another path. */
+      (() => {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+        document.addEventListener('click', (e) => {
+          if (reduce.matches) return;
+          if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          const a = e.target.closest && e.target.closest('a[href]');
+          if (!a) return;
+          if (a.target === '_blank' || a.hasAttribute('download')) return;
+          let url;
+          try { url = new URL(a.href, location.href); } catch { return; }
+          if (url.origin !== location.origin) return;
+          // ignore in-page anchors / same page
+          if (url.pathname === location.pathname) return;
+          e.preventDefault();
+          document.body.classList.remove('v7-enter');
+          document.body.classList.add('v7-exit');
+          setTimeout(() => { window.location.href = url.href; }, 540);
+        });
+      })();
     </script>
   </body>
 </html>

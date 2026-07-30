@@ -73,6 +73,14 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
+/* Original's phone breakpoint (<810) uses a fixed 20px side gutter at every
+   width — not a fluid one (spec: FAQ./Projects./titles all sit at x=20 @736). */
+@media (max-width: 809px) {
+  :root {
+    --gutter: 20px;
+  }
+}
+
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; padding: 0; }
@@ -193,4 +201,31 @@ ul { list-style: none; }
     filter: none !important;
     transition: none !important;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Page transition (Home ↔ project pages ↔ Contact), matching the original:
+   masked-wipe + fade, the outgoing page fades to 0.1 and slides up 30%, then
+   the incoming page fades in — sequential, 0.55s each, custom overshoot ease.
+   (Exact Framer spec: exit opacity 1→0.1 / translateY 0→-30%; enter opacity
+   0→1; easing cubic-bezier(0.96,-0.02,0.38,1.01); durations 0.55s.)
+   Done with full page loads so Lenis/reveal/fold scripts always init fresh.
+--------------------------------------------------------------------------- */
+@keyframes v7-page-enter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes v7-page-exit {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0.1; transform: translateY(-30vh); }
+}
+/* incoming page: fades in on first paint (class is server-rendered) */
+body.v7-enter { animation: v7-page-enter 0.55s cubic-bezier(0.96, -0.02, 0.38, 1.01) both; }
+/* outgoing page: slides up + fades before navigation */
+body.v7-exit {
+  animation: v7-page-exit 0.55s cubic-bezier(0.96, -0.02, 0.38, 1.01) both;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  body.v7-enter, body.v7-exit { animation: none; }
 }

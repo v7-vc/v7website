@@ -1,0 +1,12 @@
+name = "v7-sveltia-oauth"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# Restrict which site origin the proxy will post the token back to.
+# Set to your admin site origin(s), comma-separated. Leave "*" only for testing.
+[vars]
+ALLOWED_ORIGINS = "https://v7website.vercel.app"
+
+# Secrets (do NOT put these here — set them with wrangler secret put):
+#   npx wrangler secret put GITHUB_CLIENT_ID
+#   npx wrangler secret put GITHUB_CLIENT_SECRET

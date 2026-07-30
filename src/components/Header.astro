@@ -42,11 +42,19 @@
     from { opacity: 0; transform: translateY(-40px); }
     to   { opacity: 1; transform: none; }
   }
+  /* nav links are centred with translate(-50%,-50%); their drop keyframe must
+     preserve that offset or they lose centring and shift ~30px right on land */
+  @keyframes navDrop {
+    from { opacity: 0; transform: translate(-50%, calc(-50% - 40px)); }
+    to   { opacity: 1; transform: translate(-50%, -50%); }
+  }
   @media (prefers-reduced-motion: no-preference) {
     .logo,
-    .nav__link,
     .burger {
       animation: headerDrop var(--spring-duration, 1.15s) var(--spring, ease-out) both;
+    }
+    .nav__link {
+      animation: navDrop var(--spring-duration, 1.15s) var(--spring, ease-out) both;
     }
     .logo { animation-delay: 40ms; }
     .nav__link:first-child { animation-delay: 110ms; }

@@ -1,5 +1,5 @@
 ---
-const year = 2026;
+const year = 2025; // matches the original's footer verbatim
 ---
 <footer class="footer">
   <div class="footer__main">
@@ -34,5 +34,13 @@ const year = 2026;
     font-size: 0.875rem;
     line-height: 1.3;
     letter-spacing: -0.04em;
+  }
+  /* Original phone: © sits in the centred 350 column, inset 16, at 16px */
+  @media (max-width: 809px) {
+    .footer__bar .container {
+      max-width: 350px;
+      padding-inline: 16px;
+    }
+    .footer__bar span { font-size: 1rem; }
   }
 </style>

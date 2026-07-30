@@ -1,5 +1,5 @@
 ---
-const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
+import { FORM_ENDPOINT, FORM_KEY, FORM_PROVIDER, FORM_CONFIGURED } from '../config/form';
 const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
 ---
 <section class="contact" id="contact">
@@ -9,7 +9,9 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
 
     <div class="container contact__inner">
       <div class="contact__grid">
-        <form class="cform" action={ZAP} method="post">
+        <form class="cform" action={FORM_ENDPOINT} method="post" data-contact-form data-provider={FORM_PROVIDER}>
+          {FORM_CONFIGURED && <input type="hidden" name="access_key" value={FORM_KEY} />}
+          <input type="checkbox" name="botcheck" class="cform__botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <img class="cform__logo" src="/assets/images/logo-v7.png" alt="V7" width="80" height="33" />
           <div class="field">
             <label for="name">Your name*</label>
@@ -37,11 +39,11 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
 
           <div class="contact__cols">
             <div class="contact__col" data-reveal>
-              <span class="contact__tag">&#8627; For Founders</span>
+              <span class="contact__tag"><span class="contact__tag-arrow" aria-hidden="true">&#8627;</span>For Founders</span>
               <p>Submit your project for our review and potential investment.</p>
             </div>
             <div class="contact__col" data-reveal style="--reveal-delay:100ms">
-              <span class="contact__tag">&#8627; For CEOs</span>
+              <span class="contact__tag"><span class="contact__tag-arrow" aria-hidden="true">&#8627;</span>For CEOs</span>
               <p>We&rsquo;re looking for exceptional CEOs. Lead a venture with us.</p>
             </div>
           </div>
@@ -51,31 +53,7 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
   </div>
 </section>
 
-<script is:inline>
-  (() => {
-    const form = document.querySelector('.cform');
-    if (!form) return;
-    const status = form.querySelector('[data-form-status]');
-    const btn = form.querySelector('.cform__submit');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const data = new FormData(form);
-      btn.disabled = true;
-      const original = btn.textContent;
-      btn.textContent = 'Sending…';
-      try {
-        await fetch(form.action, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(data) });
-        form.reset();
-        status.textContent = 'Thanks — we’ll be in touch soon.';
-      } catch {
-        status.textContent = 'Something went wrong. Email hello@v7.vc instead.';
-      } finally {
-        btn.disabled = false;
-        btn.textContent = original;
-      }
-    });
-  })();
-</script>
+{/* submission handled by src/scripts/forms.ts (imported in Base.astro) */}
 
 <style>
   .contact {
@@ -90,14 +68,16 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     overflow: hidden;
     background: #0a0a0a;
     isolation: isolate;
-    padding: clamp(40px, 6vw, 80px);
+    /* spec: form card sits ~25px from the panel edge (label x=95), so the
+       horizontal padding is much tighter than the vertical */
+    padding: clamp(40px, 6vw, 72px) clamp(20px, 1.95vw, 26px);
   }
   .contact__video {
     position: absolute;
     inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    filter: grayscale(1) brightness(0.5) contrast(1.05);
+    filter: grayscale(1) brightness(0.72) contrast(1.02);
     z-index: 0;
   }
   .contact__scrim {
@@ -105,15 +85,18 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     inset: 0;
     z-index: 1;
     background:
-      linear-gradient(to right, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.5) 55%, rgba(10,10,10,0.75) 100%);
+      linear-gradient(to right, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.32) 55%, rgba(10,10,10,0.5) 100%);
   }
   .contact__inner { position: relative; z-index: 2; padding: 0; }
 
+  /* form (fixed ~374px, left) + info column starting at ~50% (title x=657 @1309).
+     The wide gap is what places the info block at mid-panel like the original. */
   .contact__grid {
     display: grid;
-    grid-template-columns: minmax(300px, 388px) 1fr;
-    gap: clamp(40px, 7vw, 120px);
-    align-items: start;
+    grid-template-columns: 374px 1fr;
+    column-gap: clamp(40px, 17vw, 221px);
+    row-gap: 40px;
+    align-items: stretch;
   }
 
   /* form card */
@@ -166,9 +149,29 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
   .cform__submit:disabled { opacity: 0.6; }
   .cform__status:empty { display: none; }
   .cform__status { font-size: 0.85rem; color: var(--ink); }
+  .cform__status[data-state='error'] { color: #b3123f; }
+  /* honeypot — off-screen for humans, still fillable by bots */
+  .cform__botcheck {
+    position: absolute;
+    left: -9999px;
+    width: 1px; height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
 
   /* info */
-  .contact__info { color: #fff; padding-top: 8px; }
+  /* distribute the copy over the full panel height like the original:
+     title + lead sit at the top, the divider + tags are anchored to the bottom */
+  .contact__info {
+    color: #fff;
+    padding-block: 8px 4px;
+    /* nudged right of the spec position (657) by request */
+    padding-left: 28px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100%;
+  }
   .contact__title {
     font-family: var(--font-display-curved);
     font-weight: 400;
@@ -178,9 +181,10 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     color: #fff;
   }
   .contact__lead {
-    margin-top: clamp(24px, 4vw, 48px);
+    /* larger gap so the lead sits ~1/3 down the panel like the original */
+    margin-top: clamp(40px, 6.6vw, 95px);
     font-family: var(--font-display-curved);
-    font-size: clamp(1.4rem, 2.2vw, 2rem);
+    font-size: clamp(1.4rem, 3.95vw, 2rem);
     line-height: 1.2;
     letter-spacing: -0.04em;
     color: #fff;
@@ -188,12 +192,14 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
   .contact__divider {
     border: none;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
-    margin: clamp(28px, 4vw, 44px) 0;
+    /* auto top margin pushes the divider + tags to the bottom of the panel */
+    margin: auto 0 clamp(24px, 3vw, 36px);
   }
+  /* col1 (For Founders) at title x=657; col2 (For CEOs) lands at ~940 (spec) */
   .contact__cols {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(24px, 4vw, 56px);
+    grid-template-columns: 283px 1fr;
+    gap: 0;
   }
   .contact__tag {
     display: block;
@@ -204,6 +210,9 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     letter-spacing: -0.04em;
     color: var(--accent);
   }
+  /* original: the ↳ arrow is its own element; label text starts ~40px after the
+     column edge (arrow glyph + 13px gap) */
+  .contact__tag-arrow { margin-right: 13px; }
   .contact__col p {
     font-family: var(--font-display-curved);
     font-size: 1.25rem;
@@ -212,10 +221,27 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     max-width: 22ch;
   }
 
-  @media (max-width: 860px) {
-    .contact__grid { grid-template-columns: 1fr; }
+  /* Original phone: one centred 350px column; the COPY comes first ("Let's
+     talk." → lead → tags), the white form card (350×516, padding 30) last */
+  @media (max-width: 809px) {
+    .contact__grid {
+      display: flex;
+      flex-direction: column;
+      max-width: 350px;
+      margin-inline: auto;
+      row-gap: 40px;
+    }
+    .contact__info { order: -1; }
+    .cform { padding: 30px; }
     .contact__cols { grid-template-columns: 1fr; gap: 28px; }
-    .contact__panel { padding: clamp(24px, 6vw, 40px); border-radius: 28px; }
+    /* original phone: the dark panel is FULL-BLEED (0..viewport), square-edged,
+       content inset 20; "Let's talk." sits ~134px below the panel top */
+    .contact { padding: 0; }
+    .contact__panel { padding: 134px 20px 40px; border-radius: 0; }
+    /* stacked: no free space to distribute, so restore a normal divider gap */
+    .contact__info { min-height: 0; padding-left: 0; }
+    .contact__divider { margin-top: clamp(28px, 6vw, 40px); }
+    .contact__lead { margin-top: clamp(20px, 4vw, 32px); }
   }
   /* Skip the heavy background video on phones (saves ~30 MB); keep the dark panel + scrim. */
   @media (max-width: 640px) {

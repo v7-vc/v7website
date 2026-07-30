@@ -3,25 +3,20 @@ import { faqGroups } from '../data/faq';
 ---
 <section class="faq" id="faq">
   <div class="container">
-    <!-- Desktop: one pinned aside for the whole section, label swaps in place -->
-    <div class="faq__layout" data-faq-layout>
-      <aside class="faq__aside">
-        <h2 class="faq__title" data-reveal>FAQ.</h2>
-        <div class="faq__labels">
-          {faqGroups.map((group, gi) => (
-            <h3 class={`faq__group-title${gi === 0 ? ' is-active' : ''}`} data-faq-label={gi}>
-              {group.title}
-            </h3>
-          ))}
-        </div>
-      </aside>
+    <h2 class="faq__title" data-reveal>FAQ.</h2>
 
-      <div class="faq__items">
-        {faqGroups.map((group, gi) => (
-          <div class="faq__list" data-faq-list={gi}>
+    <div class="faq__groups">
+      {faqGroups.map((group, gi) => (
+        <div class={`faq__group${gi === 1 ? ' faq__group--light' : ''}`}>
+          <div class="faq__group-head">
+            <h3 class="faq__group-title" data-reveal>{group.title}</h3>
+            <span class="faq__group-underline" data-reveal style="--reveal-delay:140ms"></span>
+          </div>
+
+          <div class="faq__group-list">
             {group.items.map((item, ii) => (
-              <div class={`faq__item${gi === 0 && ii === 0 ? ' is-open' : ''}`} data-faq-item data-reveal>
-                <button class="faq__trigger" data-faq-trigger aria-expanded={gi === 0 && ii === 0 ? 'true' : 'false'}>
+              <div class={`faq__item${ii === 0 ? ' is-open' : ''}`} data-faq-item data-reveal>
+                <button class="faq__trigger" data-faq-trigger aria-expanded={ii === 0 ? 'true' : 'false'}>
                   <span class="faq__q">{item.q}</span>
                   <span class="faq__icon" aria-hidden="true"><span></span><span></span></span>
                 </button>
@@ -31,52 +26,17 @@ import { faqGroups } from '../data/faq';
               </div>
             ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   </div>
 </section>
-
-<script is:inline>
-  (() => {
-    const layout = document.querySelector('[data-faq-layout]');
-    if (!layout) return;
-    const labels = [...layout.querySelectorAll('[data-faq-label]')];
-    const lists = [...layout.querySelectorAll('[data-faq-list]')];
-    if (!labels.length || !lists.length) return;
-
-    let active = 0;
-    const update = () => {
-      const probe = window.innerHeight * 0.4;
-      let idx = 0;
-      lists.forEach((list, i) => {
-        if (list.getBoundingClientRect().top <= probe) idx = i;
-      });
-      if (idx !== active) {
-        active = idx;
-        labels.forEach((l, i) => l.classList.toggle('is-active', i === idx));
-      }
-    };
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update, { passive: true });
-  })();
-</script>
 
 <style>
   .faq {
     background: var(--surface);
     padding-block: clamp(64px, 9vw, 120px);
   }
-  .faq__layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(32px, 5vw, 80px);
-    align-items: start;
-  }
-
-  /* Pinned for the entire FAQ section */
-  .faq__aside { position: sticky; top: 90px; align-self: start; }
   .faq__title {
     font-family: var(--font-display-curved);
     font-weight: 400;
@@ -84,28 +44,31 @@ import { faqGroups } from '../data/faq';
     line-height: 0.92;
     letter-spacing: -0.06em;
     color: var(--ink);
-    margin-bottom: 28px;
+    margin-bottom: clamp(28px, 3.4vw, 44px);
   }
-  .faq__labels { position: relative; min-height: clamp(5.5rem, 9vw, 8.2rem); }
+
+  .faq__groups { display: flex; flex-direction: column; gap: clamp(48px, 7vw, 96px); }
+
+  /* Each group: static label (left) beside its questions (right) — no sticky,
+     no swap. The label sits at the top of its own question block, like the original. */
+  /* label (left) + questions (right). The questions column begins at ~50% so the
+     card text lands at x≈684 @1309 (spec); a wide gap pushed it ~33px too far right. */
+  .faq__group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    align-items: start;
+  }
   .faq__group-title {
-    position: absolute;
-    inset: 0 auto auto 0;
     font-family: var(--font-display-curved);
     font-weight: 400;
-    font-size: clamp(1.6rem, 2.64vw, 2.375rem);
+    font-size: clamp(1.6rem, 4.69vw, 2.375rem);
     line-height: 1.1;
     letter-spacing: -0.05em;
     color: #090909;
-    max-width: 14ch;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
-    pointer-events: none;
+    max-width: 380px; /* spec: "For Investors (LPs / Angels / Co-Investors)" wraps to 2 lines in 380px */
   }
-  .faq__group-title.is-active { opacity: 1; transform: none; }
-  /* underline sits right under the active label */
-  .faq__group-title::after {
-    content: '';
+  .faq__group-underline {
     display: block;
     width: 100%;
     max-width: 270px;
@@ -114,9 +77,13 @@ import { faqGroups } from '../data/faq';
     margin-top: 22px;
   }
 
-  .faq__items { display: flex; flex-direction: column; }
-  .faq__list { display: flex; flex-direction: column; gap: 12px; }
-  .faq__list + .faq__list { margin-top: clamp(48px, 6vw, 80px); }
+  .faq__group-list { display: flex; flex-direction: column; gap: 12px; }
+
+  /* Original renders the "For Investors (LPs / Angels / Co-Investors)" block in
+     Marund Curved LIGHT (300) — questions and answers only; the group title
+     stays 400, same as the Founders block. */
+  .faq__group--light .faq__q,
+  .faq__group--light .faq__panel p { font-weight: 300; }
 
   .faq__item {
     background: #fff;
@@ -147,8 +114,6 @@ import { faqGroups } from '../data/faq';
     width: 40px; height: 40px;
     border-radius: 50%;
     background: #0a0a0a;
-  }
-  .faq__icon {
     transition: transform 0.45s var(--ease-out);
   }
   .faq__icon span {
@@ -166,8 +131,8 @@ import { faqGroups } from '../data/faq';
     transition: max-height 0.45s var(--ease-out);
   }
   .faq__panel p {
+    /* spec: answer text spans the card minus insets (~561px @1309) — no ch cap */
     padding: 0 30px 30px;
-    max-width: 52ch;
     font-family: var(--font-display-curved);
     font-size: 1.125rem;
     line-height: 1.4;
@@ -175,13 +140,12 @@ import { faqGroups } from '../data/faq';
     color: rgba(10, 10, 10, 0.6);
   }
 
-  @media (max-width: 860px) {
-    .faq__layout { grid-template-columns: 1fr; }
-    .faq__aside { position: static; }
-    .faq__labels { min-height: 0; }
-    /* on mobile both labels shown inline, one under another is confusing —
-       show only the active one, stacked flow */
-    .faq__group-title { position: static; }
-    .faq__group-title:not(.is-active) { display: none; }
+  /* Original phone: label above questions; title 28px; card insets 20px
+     (question x=40, answer x=40 w=652 @736) */
+  @media (max-width: 809px) {
+    .faq__group { grid-template-columns: 1fr; gap: 20px; }
+    .faq__group-title { max-width: 380px; font-size: 1.75rem; }
+    .faq__trigger { padding: 24px 20px; }
+    .faq__panel p { padding: 0 20px 24px; }
   }
 </style>

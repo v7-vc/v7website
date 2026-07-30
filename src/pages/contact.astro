@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
+import { FORM_ENDPOINT, FORM_KEY, FORM_PROVIDER, FORM_CONFIGURED } from '../config/form';
 ---
 <Base title="V7 – Contact" description="Have a project in mind? Reach out to us, and we’ll discuss the best way to move forward.">
   <div class="preloader" data-preloader aria-hidden="true">
@@ -24,7 +24,9 @@ const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
           </div>
 
           <div class="git__col-form">
-          <form class="gform" action={ZAP} method="post" data-reveal>
+          <form class="gform" action={FORM_ENDPOINT} method="post" enctype="multipart/form-data" data-contact-form data-provider={FORM_PROVIDER} data-reveal>
+            {FORM_CONFIGURED && <input type="hidden" name="access_key" value={FORM_KEY} />}
+            <input type="checkbox" name="botcheck" class="gform__botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <div class="gfield">
               <label class="gfield__label" for="g-name">Your name *</label>
               <input id="g-name" name="name" type="text" required autocomplete="name" />
@@ -78,38 +80,7 @@ const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
   })();
 </script>
 
-<script is:inline>
-  (() => {
-    const form = document.querySelector('.gform');
-    if (!form) return;
-    const status = form.querySelector('[data-form-status]');
-    const btn = form.querySelector('.gform__submit');
-    const btnText = btn.querySelector('span:first-child') || btn;
-    const file = form.querySelector('input[type="file"]');
-    const fileName = form.querySelector('[data-file-name]');
-    if (file) file.addEventListener('change', () => {
-      fileName.textContent = file.files?.[0] ? file.files[0].name : '';
-    });
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const data = new FormData(form);
-      btn.disabled = true;
-      const orig = btnText.textContent;
-      btnText.textContent = 'Sending…';
-      try {
-        await fetch(form.action, { method: 'POST', mode: 'no-cors', body: data });
-        form.reset();
-        fileName.textContent = '';
-        status.textContent = 'Thanks — we’ll be in touch soon.';
-      } catch {
-        status.textContent = 'Something went wrong. Email hello@v7.vc instead.';
-      } finally {
-        btn.disabled = false;
-        btnText.textContent = orig;
-      }
-    });
-  })();
-</script>
+{/* submission + file-name display handled by src/scripts/forms.ts (Base.astro) */}
 
 <style>
   /* Contact preloader: a dark full-screen panel that reveals the page with a
@@ -152,7 +123,7 @@ const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
   .git__title {
     font-family: var(--font-display-curved);
     font-weight: 400;
-    font-size: clamp(4rem, 10.28vw, 9.25rem);
+    font-size: clamp(4rem, 12.33vw, 9.25rem);
     line-height: 0.96;
     letter-spacing: -0.06em;
     color: var(--ink);
@@ -280,6 +251,15 @@ const ZAP = 'https://hooks.zapier.com/hooks/catch/24172971/u6x858o/';
   .gform__submit:disabled { opacity: 0.85; cursor: not-allowed; }
   .gform__status:empty { display: none; }
   .gform__status { margin-top: 14px; font-size: 0.9rem; color: var(--ink); }
+  .gform__status[data-state='error'] { color: #b3123f; }
+  /* honeypot — off-screen for humans, still fillable by bots */
+  .gform__botcheck {
+    position: absolute;
+    left: -9999px;
+    width: 1px; height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
 
   @media (max-width: 809px) {
     .git__grid { flex-direction: column; gap: 40px; margin-top: 24px; }
