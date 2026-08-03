@@ -17,10 +17,8 @@ import { FORM_ENDPOINT, FORM_KEY, FORM_PROVIDER, FORM_CONFIGURED } from '../conf
 
         <div class="git__grid">
           <div class="git__col-lead">
-            <p class="git__lead" data-reveal>
-              <span class="git__ink">Have a project in mind?</span>
-              <span class="git__muted"> Reach out to us, and we’ll discuss the best way to move forward.</span>
-            </p>
+            {/* original: 18 literal leading spaces (pre-wrap) indent the first line */}
+            <p class="git__lead" data-reveal><span class="git__ink">{'                  '}Have a project in mind?</span><span class="git__muted"> Reach out to us, and we&rsquo;ll discuss the best way to move forward.</span></p>
           </div>
 
           <div class="git__col-form">
@@ -120,6 +118,10 @@ import { FORM_ENDPOINT, FORM_KEY, FORM_PROVIDER, FORM_CONFIGURED } from '../conf
     background: var(--surface);
     padding-block: clamp(90px, 19.3vw, 278px) clamp(64px, 9vw, 120px);
   }
+  /* Original desktop: H1 top fixed at 340px (278 + 62px header) */
+  @media (min-width: 1200px) {
+    .git { padding-top: 278px; }
+  }
   .git__title {
     font-family: var(--font-display-curved);
     font-weight: 400;
@@ -140,9 +142,8 @@ import { FORM_ENDPOINT, FORM_KEY, FORM_PROVIDER, FORM_CONFIGURED } from '../conf
   .git__col-form { flex: 1 0 0; min-width: 0; }
   .git__lead {
     margin: 0;
-    /* Original block is 550px wide; our Marund Curved renders narrower, so we
-       reduce max-width to reproduce the original's line-1 break ("…Reach"). */
-    max-width: 435px;
+    max-width: 550px; /* original block width; the 18 literal spaces set line 1's break */
+    white-space: pre-wrap;
     text-align: left;
     font-family: var(--font-display-curved);
     font-size: 2rem;         /* 32px */

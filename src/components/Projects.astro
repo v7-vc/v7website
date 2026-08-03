@@ -9,11 +9,7 @@ const { standalone = false } = Astro.props;
       {!standalone && <span class="projects__index" data-reveal>({projects.length})</span>}
       <h2 class="projects__title" data-reveal>Projects.</h2>
       {!standalone && (
-        <p class="projects__lead" data-reveal style="--reveal-delay:120ms">
-          We back visionaries bold enough to reshape entire industries. Our founders
-          don&rsquo;t just build companies, they spark revolutions. From daring ideas to
-          market-leading ventures, we invest where others won&rsquo;t.
-        </p>
+        <p class="projects__lead" data-reveal style="--reveal-delay:120ms"><span class="projects__lead-indent" aria-hidden="true">{'                  '}</span>We back visionaries bold enough to reshape entire industries. Our founders don&rsquo;t just build companies, they spark revolutions. From daring ideas to market-leading ventures, we invest where others won&rsquo;t.</p>
       )}
     </div>
 
@@ -41,6 +37,11 @@ const { standalone = false } = Astro.props;
     background: var(--surface);
     padding-block: clamp(64px, 8vw, 110px) clamp(6px, 1vw, 10px);
   }
+  /* Desktop: the original's hero-panel-bottom → heading gap is a fixed 306px;
+     230px of it is the hero's light fold area, so the section adds 76px. */
+  @media (min-width: 861px) {
+    .projects { padding-top: 76px; }
+  }
   /* standalone /projects page: big left-aligned title, no index, no lead.
      Original <main> has padding-top:340px with a 62px fixed header; our header
      is in-flow (62px) so we use 278px to land the title at the same 340px. */
@@ -61,9 +62,12 @@ const { standalone = false } = Astro.props;
   /* ---- head ---- */
   .projects__head {
     position: relative;
-    /* Original leaves a large gap (~269px heading→first card) so the cards only
-       appear well after the hero fold. Matches v7.vc measured at 1440w. */
     margin-bottom: clamp(64px, 12.6vw, 182px);
+  }
+  /* Original desktop: heading-top → first card = 308px fixed (title is 57 tall,
+     so 251px below the head block); the lead ends 81px above the cards. */
+  @media (min-width: 1200px) {
+    .projects__head { margin-bottom: 251px; }
   }
   .projects__index {
     position: absolute;
@@ -74,6 +78,7 @@ const { standalone = false } = Astro.props;
     line-height: 1.3;
     letter-spacing: -0.04em;
     color: var(--ink);
+    opacity: 0.6; /* original renders the counter muted */
   }
   .projects__title {
     text-align: left;
@@ -104,6 +109,13 @@ const { standalone = false } = Astro.props;
     line-height: 1.4;
     letter-spacing: -0.04em;
     color: var(--ink);
+  }
+  /* original: the DESKTOP lead has no first-line indent; the PHONE variant
+     carries 18 literal leading spaces — shown only there */
+  .projects__lead-indent { display: none; }
+  @media (max-width: 809px) {
+    .projects__lead { white-space: pre-wrap; }
+    .projects__lead-indent { display: inline; }
   }
 
   /* ---- grid ---- */

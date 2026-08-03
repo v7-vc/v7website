@@ -26,11 +26,8 @@ const stats = [
       </div>
 
       <div class="why__right">
-        <p class="why__para" data-reveal>
-          We don&rsquo;t just support founders. We breathe life into their ideas. With a proven
-          track record, a battle-tested growth engine, and weekly co-creation sessions, we act
-          like oxygen: always there, always essential.
-        </p>
+        {/* the original indents the first line with 17 literal spaces (pre-wrap) */}
+        <p class="why__para" data-reveal>{'                 '}We don&rsquo;t just support founders. We breathe life into their ideas. With a proven track record, a battle-tested growth engine, and weekly co-creation sessions, we act like oxygen: always there, always essential.</p>
 
         <div class="why__stats" data-reveal-group="">
           {stats.map((s, i) => (
@@ -131,8 +128,7 @@ const stats = [
     line-height: 1.3;
     letter-spacing: -0.04em;
     color: var(--ink);
-    /* original indents the first line ~72px (17 leading spaces + pre-wrap) */
-    text-indent: 72px;
+    white-space: pre-wrap; /* renders the 17 literal leading spaces, as the original */
   }
   /* stats: spec label columns start at x=696/920/1110 @1309 → fixed grid tracks
      (224px, 190px) from the 40px inset; NOT an even-gap flex row */
@@ -168,7 +164,7 @@ const stats = [
     .why__title { font-size: 2rem; }
     .why__body { grid-template-columns: 1fr; }
     .why__photo { width: 100%; aspect-ratio: auto; height: 603px; }
-    .why__para { align-self: flex-start; text-indent: 0; max-width: 550px; }
+    .why__para { align-self: flex-start; max-width: 550px; }
     .why__stats {
       display: flex;
       flex-direction: column;
