@@ -1,4 +1,5 @@
 ---
+import { projects } from '../data/projects';
 ---
 <header class="header" data-header>
   <div class="header__inner">
@@ -7,7 +8,7 @@
     </a>
 
     <nav class="nav" aria-label="Primary">
-      <a href="/projects" class="nav__link">Projects<sup>8</sup></a>
+      <a href="/projects" class="nav__link">Projects<sup>{projects.length}</sup></a>
       <a href="/contact" class="nav__link">Contact</a>
     </nav>
 

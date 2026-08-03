@@ -6,7 +6,7 @@ const { standalone = false } = Astro.props;
 <section class={`projects${standalone ? ' projects--standalone' : ''}`} id="projects">
   <div class="container">
     <div class="projects__head">
-      {!standalone && <span class="projects__index" data-reveal>(8)</span>}
+      {!standalone && <span class="projects__index" data-reveal>({projects.length})</span>}
       <h2 class="projects__title" data-reveal>Projects.</h2>
       {!standalone && (
         <p class="projects__lead" data-reveal style="--reveal-delay:120ms">
