@@ -171,7 +171,8 @@ const stats = [
     .why__eyebrow { position: static; margin-bottom: 22px; }
     .why__title, .why__underline { margin-left: 0; }
     .why__title { font-size: 2rem; }
-    .why__body { grid-template-columns: 1fr; }
+    /* reference @390: photo bottom 4490 → paragraph top 4541 = 51px */
+    .why__body { grid-template-columns: 1fr; row-gap: 51px; }
     .why__photo { width: 100%; aspect-ratio: auto; height: 603px; }
     .why__para { align-self: flex-start; max-width: 550px; }
     .why__stats {
