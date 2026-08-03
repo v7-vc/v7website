@@ -25,7 +25,12 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
             <label for="message">Message</label>
             <textarea id="message" name="message" rows="3" placeholder="Your message"></textarea>
           </div>
-          <button type="submit" class="cform__submit">Submit</button>
+          <button type="submit" class="cform__submit">
+            <span class="btnswap">
+              <span class="btnswap__rest">Submit</span>
+              <span class="btnswap__hover" aria-hidden="true">Submit</span>
+            </span>
+          </button>
           <p class="cform__status" data-form-status role="status" aria-live="polite"></p>
         </form>
 
@@ -132,17 +137,15 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
   }
   .field input::placeholder, .field textarea::placeholder { color: #999999; }
   .field input:focus, .field textarea:focus { outline: none; border-color: var(--ink); background: #fff; }
+  /* original: Marund 20px label at rest, Inter 600 slides in on hover (.btnswap) */
   .cform__submit {
     margin-top: 4px;
     height: 58px;
+    display: grid;
+    place-items: center;
     border-radius: 50px;
     background: var(--accent);
     color: #fff;
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: 1.125rem;
-    line-height: 1.2;
-    letter-spacing: -0.04em;
     transition: filter 0.3s var(--ease-out), transform 0.3s var(--ease-out);
   }
   .cform__submit:hover { filter: brightness(1.06); transform: translateY(-2px); }

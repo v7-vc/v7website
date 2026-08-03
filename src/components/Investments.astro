@@ -16,7 +16,12 @@ const grain = '/assets/images/grain.png';
           Looking for teams with early revenue traction and unstoppable ambition.
         </p>
         <p class="inv__stage" data-reveal style="--reveal-delay:200ms">From Seed Stage to Series A</p>
-        <a href="#contact" class="inv__cta" data-reveal style="--reveal-delay:280ms">Get started</a>
+        <a href="#contact" class="inv__cta" data-reveal style="--reveal-delay:280ms">
+          <span class="btnswap" aria-hidden="false">
+            <span class="btnswap__rest">Get started</span>
+            <span class="btnswap__hover" aria-hidden="true">Get started</span>
+          </span>
+        </a>
       </div>
 
       <div class="inv__cats" data-reveal style="--reveal-delay:160ms">
@@ -121,21 +126,19 @@ const grain = '/assets/images/grain.png';
     letter-spacing: -0.04em;
     color: #ffffff;
   }
+  /* Original button: two stacked labels — Marund Curved 20px visible at rest,
+     Inter 600 18px slides in on hover (verified on the live site). */
   .inv__cta {
     align-self: flex-start;
     margin-top: clamp(48px, 6.6vw, 95px);
-    padding: 18px 30px;
+    padding: 17px 30px;
     border-radius: 50px;
     background: var(--accent);
     color: #fff;
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: 1.125rem;
-    line-height: 1.2;
-    letter-spacing: -0.04em;
     transition: transform 0.3s var(--ease-out), filter 0.3s var(--ease-out);
   }
   .inv__cta:hover { transform: translateY(-2px); filter: brightness(1.06); }
+  /* label-swap styles live in global.css (.btnswap) — shared with the forms */
 
   .inv__cats { margin-top: clamp(60px, 9.4vw, 135px); }
   .inv__catsLabel {

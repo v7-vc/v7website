@@ -85,13 +85,13 @@ const { standalone = false } = Astro.props;
     letter-spacing: -0.06em;
     color: var(--ink);
     padding-top: 0;
-    /* raise the word so it sits high next to (8) / the lead, like the original */
-    transform: translateY(-60px);
+    /* original top-aligns the heading with the "(8)" index (both y equal —
+       measured live); no vertical offset */
   }
   .projects__lead {
     position: absolute;
-    /* original drops the lead ~76px below the heading top (measured on v7.vc) */
-    top: 36px;
+    /* original drops the lead 76px below the heading top (measured live) */
+    top: 76px;
     /* spec @1309: lead box 985..1294 — overhangs our container's right edge by
        21px (original insets it 15px from the viewport, not 36) */
     right: -21px;

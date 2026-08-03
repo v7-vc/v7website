@@ -31,7 +31,8 @@ function setStatus(el: HTMLElement | null, kind: StatusKind, text: string) {
 async function submitForm(form: HTMLFormElement) {
   const status = form.querySelector<HTMLElement>('[data-form-status]');
   const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-  const label = btn?.querySelector('span') ?? btn;
+  // dual-label buttons (.btnswap) keep "Sending…" on the resting label only
+  const label = btn?.querySelector('.btnswap__rest') ?? btn?.querySelector('span') ?? btn;
   const fileInput = form.querySelector<HTMLInputElement>('input[type="file"]');
   const fileName = form.querySelector<HTMLElement>('[data-file-name]');
   const legacy = form.dataset.provider !== 'web3forms';

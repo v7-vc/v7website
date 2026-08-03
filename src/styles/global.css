@@ -229,3 +229,37 @@ body.v7-exit {
 @media (prefers-reduced-motion: reduce) {
   body.v7-enter, body.v7-exit { animation: none; }
 }
+
+/* --- button label swap (matches the original's two stacked labels) ---------
+   At rest the label is Marund Curved 20px; on hover it slides up and an
+   Inter 600 18px copy slides in — verified on the live v7.vc buttons. */
+.btnswap {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+.btnswap__rest,
+.btnswap__hover {
+  display: block;
+  transition: transform 0.35s var(--ease-out);
+  font-family: var(--font-display-curved);
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  text-align: center;
+  color: inherit;
+}
+.btnswap__hover {
+  position: absolute;
+  inset: 0;
+  transform: translateY(110%);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.35;
+}
+@media (hover: hover) {
+  :where(a, button):hover > .btnswap .btnswap__rest { transform: translateY(-110%); }
+  :where(a, button):hover > .btnswap .btnswap__hover { transform: translateY(0); }
+}

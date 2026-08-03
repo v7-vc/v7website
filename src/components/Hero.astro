@@ -16,10 +16,13 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     <div class="hero__scrim" aria-hidden="true"></div>
 
     <div class="hero__content">
+      {/* The original indents lines 2/3 with literal leading spaces (6 and 14)
+          rendered via white-space: pre-wrap — replicated verbatim so the
+          staircase scales with the font at every breakpoint. */}
       <h1 class="hero__title">
         <span class="reveal-line" style="--reveal-delay:500ms"><span>Turning improbable</span></span>
-        <span class="reveal-line" style="--reveal-delay:640ms"><span>visions into</span></span>
-        <span class="reveal-line hero__accent" style="--reveal-delay:740ms"><span>(unstoppable ventures)</span></span>
+        <span class="reveal-line" style="--reveal-delay:640ms"><span>{'      '}visions into</span></span>
+        <span class="reveal-line hero__accent" style="--reveal-delay:740ms"><span>{'              '}(unstoppable ventures)</span></span>
       </h1>
     </div>
   </div>
@@ -111,6 +114,14 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     letter-spacing: -0.04em;
     color: #ffffff;
   }
+  /* Desktop breakpoint (≥1200) renders the original's leading-space staircase;
+     below that the original's tablet/phone variants drop the indents, and with
+     normal white-space the leading spaces collapse to nothing. pre-wrap goes on
+     the inner spans only — on the container it would also render the whitespace
+     between the line elements as extra blank lines. */
+  @media (min-width: 1200px) {
+    .hero__title .reveal-line > span { white-space: pre-wrap; }
+  }
   /* Original phone (<810): headline is a fixed 37px / 350px block, centred in
      the panel (x=193 @736, x=20 @390) */
   @media (max-width: 809px) {
@@ -126,6 +137,4 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     font-family: var(--font-display-curved);
     color: #f55397;
   }
-  /* Original headline is left-aligned — all three lines share x=40 (spec),
-     no staircase. */
 </style>
