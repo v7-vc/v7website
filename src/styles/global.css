@@ -175,6 +175,9 @@ ul { list-style: none; }
 [data-reveal-child].is-visible {
   opacity: 1;
   transform: none;
+  /* release the compositor layer once settled — keeping will-change on every
+     revealed element is what made scrolling stutter */
+  will-change: auto;
 }
 
 /* hero heading lines: slide up 170px (250px for the accent line), as in Framer */
@@ -191,7 +194,7 @@ ul { list-style: none; }
 }
 .reveal-line:nth-child(3) > span { transform: translateY(250px); }
 .is-visible .reveal-line > span,
-.reveal-line.is-visible > span { opacity: 1; transform: none; }
+.reveal-line.is-visible > span { opacity: 1; transform: none; will-change: auto; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

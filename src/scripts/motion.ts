@@ -7,8 +7,8 @@ let lenis: Lenis | null = null;
 function initSmoothScroll() {
   if (reduceMotion) return;
   lenis = new Lenis({
-    lerp: 0.07,
-    wheelMultiplier: 0.9,
+    lerp: 0.1,
+    wheelMultiplier: 1,
     smoothWheel: true,
     syncTouch: true,
     touchMultiplier: 1.4,

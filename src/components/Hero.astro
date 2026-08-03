@@ -3,16 +3,10 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
 ---
 <section class="hero" id="top">
   <div class="hero__panel">
-    <video
-      class="hero__video"
-      src={video}
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="auto"
-      aria-hidden="true"
-    ></video>
+    <video class="hero__video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+      <source src="/assets/media/hero-800.mp4" type="video/mp4" media="(max-width: 809px)" />
+      <source src={video} type="video/mp4" />
+    </video>
     <div class="hero__scrim" aria-hidden="true"></div>
 
     <div class="hero__content">

@@ -18,11 +18,13 @@ const { standalone = false } = Astro.props;
         <li class="project" data-reveal-child>
           <a class="project__link" href={`/projects/${p.slug}`}>
             <span class="project__pill">
-              <span class="project__name">{p.name}</span>
+              <span class="project__swap">
+                <span class="project__name">{p.name}</span>
+                <span class="project__cat">{p.category}</span>
+              </span>
               <span class="project__dots" aria-hidden="true"><span></span><span></span><span></span></span>
             </span>
             <span class="project__tile">
-              <span class="project__cat">{p.category}</span>
               <img src={p.card} alt={`${p.name} — ${p.category}`} loading="lazy" width="1060" height="596" />
             </span>
           </a>
@@ -55,9 +57,8 @@ const { standalone = false } = Astro.props;
     /* original keeps the title at a fixed 62px across all breakpoints */
     font-size: 3.875rem;
   }
-  /* On /projects the original hides the category tag at rest (revealed on hover
-     inside the pill), so it is not shown as a persistent overlay here. */
-  /* category hover-reveal behavior is shared with the homepage grid */
+  /* The category lives inside the pill (stacked on the name) on both the
+     homepage grid and /projects — never as an overlay on the image. */
 
   /* ---- head ---- */
   .projects__head {
@@ -77,8 +78,8 @@ const { standalone = false } = Astro.props;
     font-size: 1.25rem;
     line-height: 1.3;
     letter-spacing: -0.04em;
-    color: var(--ink);
-    opacity: 0.6; /* original renders the counter muted */
+    color: #000000; /* reference #97 text colour */
+    opacity: 0.6; /* wrapper #96 carries opacity 0.6 */
   }
   .projects__title {
     text-align: left;
@@ -139,17 +140,35 @@ const { standalone = false } = Astro.props;
     letter-spacing: -0.04em;
     color: #000;
   }
-  /* three pink dots on the right of the pill, revealed on hover (like the original) */
+  /* Reference: the project name and its category share one box (both at
+     x=59.99 y=1266.36 inside the pill). The category is overlaid on the name
+     and is #ffffff, so it reads as invisible against the white pill — the
+     original never shows it at rest or on hover (verified in .shots). It is
+     stacked here rather than painted over the image so the DOM matches. */
+  .project__swap { position: relative; display: inline-block; }
+  .project__cat {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    color: #ffffff;
+    pointer-events: none;
+  }
+  /* three dots on the right of the pill, revealed on hover.
+     Reference geometry: 8px circles, 3px apart (x=598.6/609.5/620.5, container
+     30px wide), right-aligned against the pill's 24px padding. In the DOM they
+     are #ffffff (invisible on the white pill at rest); the original's hover
+     shot shows them pink, so they fade in with the accent colour. */
   .project__dots {
     margin-left: auto;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 3px;
     opacity: 0;
     transition: opacity 0.3s var(--ease-out);
   }
   .project__dots span {
-    width: 7px; height: 7px;
+    width: 8px; height: 8px;
     border-radius: 50%;
     background: var(--accent);
   }
@@ -165,24 +184,6 @@ const { standalone = false } = Astro.props;
     padding: 4px;
     overflow: hidden;
     background: #ffffff;
-  }
-  .project__cat {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 2;
-    font-family: var(--font-display);
-    font-size: 18px;
-    line-height: 1.2;
-    letter-spacing: -0.04em;
-    color: #fff;
-    pointer-events: none;
-    /* original hides the category at rest; it fades in on hover */
-    opacity: 0;
-    transition: opacity 0.35s var(--ease-out);
-  }
-  @media (hover: hover) {
-    .project__link:hover .project__cat { opacity: 1; }
   }
   .project__tile img {
     width: 100%;

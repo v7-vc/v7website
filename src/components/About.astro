@@ -9,7 +9,7 @@
       </span>
 
       <div class="about__content">
-        <img class="about__logo" src="/assets/images/logo-v7.png" alt="" width="87" height="36" data-reveal />
+        <img class="about__logo" src="/assets/images/logo-v7.png" alt="" width="87" height="24" data-reveal />
         <h2 class="about__title" data-reveal style="--reveal-delay:80ms">
           <span class="about__ink">Traditional funds move slow.</span>
           <span class="about__muted">We don&rsquo;t.</span>
@@ -54,7 +54,16 @@
     font-family: var(--font-body);
   }
   .about__content { margin-left: clamp(0px, 25%, 343px); }
-  .about__logo { width: 87px; height: auto; margin-bottom: 26px; }
+  /* reference #426: img box 87x24, object-fit contain (same asset/box as the
+     header logo); wrapper gap logo→title is 20px */
+  .about__logo {
+    display: block;
+    width: 87px;
+    height: 24px;
+    object-fit: contain;
+    object-position: left center;
+    margin-bottom: 20px;
+  }
   .about__title {
     font-family: var(--font-display-curved);
     font-weight: 400;
@@ -66,23 +75,25 @@
   .about__ink { color: #090909; }
   /* original: "We don't." always starts its own line */
   .about__muted { display: block; color: rgba(0, 0, 0, 0.6); }
+  /* reference #435: 168x3 at every breakpoint (a 40vw cap would shrink it to
+     156px at 390, where the original still measures 168) */
   .about__underline {
     display: block;
-    width: 230px;
-    max-width: 40vw;
+    width: 168px;
     height: 3px;
     background: var(--accent);
     margin-top: 30px;
   }
   .about__para {
-    margin-top: 40px;
+    /* reference wrapper #427 gap: underline→paragraph is 30px */
+    margin-top: 30px;
     max-width: 550px;
     white-space: pre-wrap; /* renders the 17 literal leading spaces, as the original */
     font-family: var(--font-display-curved);
     font-size: 1.25rem;
     line-height: 1.3;
     letter-spacing: -0.04em;
-    color: var(--ink);
+    color: #000000; /* reference #437 */
   }
 
   @media (max-width: 809px) {

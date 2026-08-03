@@ -3,12 +3,13 @@ import { faqGroups } from '../data/faq';
 ---
 <section class="faq" id="faq">
   <div class="container">
-    <h2 class="faq__title" data-reveal>FAQ.</h2>
-
     <div class="faq__groups">
       {faqGroups.map((group, gi) => (
         <div class={`faq__group${gi === 1 ? ' faq__group--light' : ''}`}>
+          {/* "FAQ." lives INSIDE the first group's left column, so the first
+              question card starts at exactly the title's top edge. */}
           <div class="faq__group-head">
+            {gi === 0 && <h2 class="faq__title" data-reveal>FAQ.</h2>}
             <h3 class="faq__group-title" data-reveal>{group.title}</h3>
             <span class="faq__group-underline" data-reveal style="--reveal-delay:140ms"></span>
           </div>
@@ -37,6 +38,25 @@ import { faqGroups } from '../data/faq';
     background: var(--surface);
     padding-block: clamp(64px, 9vw, 120px);
   }
+
+  /* The original ships the two blocks as two sections in a stack with a 168px
+     gap (40px on phone/tablet). */
+  .faq__groups { display: flex; flex-direction: column; gap: 168px; }
+
+  /* label (left) + questions (right), 4px apart → two 616.55px columns @1309,
+     so the question cards start at x=656.5. The label sits at the top of its
+     own question block, like the original — no sticky, no swap. */
+  .faq__group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    align-items: start;
+  }
+  .faq__group-head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .faq__title {
     font-family: var(--font-display-curved);
     font-weight: 400;
@@ -44,20 +64,7 @@ import { faqGroups } from '../data/faq';
     line-height: 0.92;
     letter-spacing: -0.06em;
     color: var(--ink);
-    margin-bottom: clamp(28px, 3.4vw, 44px);
-  }
-
-  .faq__groups { display: flex; flex-direction: column; gap: clamp(48px, 7vw, 96px); }
-
-  /* Each group: static label (left) beside its questions (right) — no sticky,
-     no swap. The label sits at the top of its own question block, like the original. */
-  /* label (left) + questions (right). The questions column begins at ~50% so the
-     card text lands at x≈684 @1309 (spec); a wide gap pushed it ~33px too far right. */
-  .faq__group {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    align-items: start;
+    margin-bottom: 30px;
   }
   .faq__group-title {
     font-family: var(--font-display-curved);
@@ -71,13 +78,14 @@ import { faqGroups } from '../data/faq';
   .faq__group-underline {
     display: block;
     width: 100%;
-    max-width: 270px;
+    max-width: 200px;
     height: 3px;
     background: var(--accent);
-    margin-top: 22px;
+    margin-top: 30px;
   }
 
-  .faq__group-list { display: flex; flex-direction: column; gap: 12px; }
+  /* cards are stacked 4px apart */
+  .faq__group-list { display: flex; flex-direction: column; gap: 4px; }
 
   /* Original renders the "For Investors (LPs / Angels / Co-Investors)" block in
      Marund Curved LIGHT (300) — questions and answers only; the group title
@@ -95,9 +103,8 @@ import { faqGroups } from '../data/faq';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
     text-align: left;
-    padding: 28px 30px;
+    padding: 26px;
   }
   .faq__q {
     font-family: var(--font-display-curved);
@@ -106,19 +113,22 @@ import { faqGroups } from '../data/faq';
     letter-spacing: -0.04em;
     color: var(--ink);
   }
+  /* Reference icon is an 18×18 image: a #0a0a0a disc with a white 8×2 plus,
+     18px clear of the question — not a 40×40 button. */
   .faq__icon {
     position: relative;
     flex: none;
     display: grid;
     place-items: center;
-    width: 40px; height: 40px;
+    width: 18px; height: 18px;
+    margin-left: 18px;
     border-radius: 50%;
     background: #0a0a0a;
     transition: transform 0.45s var(--ease-out);
   }
   .faq__icon span {
     position: absolute;
-    width: 14px; height: 1.6px;
+    width: 8px; height: 2px;
     background: #fff;
   }
   .faq__icon span:last-child { transform: rotate(90deg); }
@@ -131,8 +141,8 @@ import { faqGroups } from '../data/faq';
     transition: max-height 0.45s var(--ease-out);
   }
   .faq__panel p {
-    /* spec: answer text spans the card minus insets (~561px @1309) — no ch cap */
-    padding: 0 30px 30px;
+    /* spec: answer text spans the card minus 28px insets (~561px @1309) */
+    padding: 0 28px 28px;
     font-family: var(--font-display-curved);
     font-size: 1.125rem;
     line-height: 1.4;
@@ -140,12 +150,15 @@ import { faqGroups } from '../data/faq';
     color: rgba(10, 10, 10, 0.6);
   }
 
-  /* Original phone: label above questions; title 28px; card insets 20px
-     (question x=40, answer x=40 w=652 @736) */
+  /* Original phone/tablet: label above questions (40px apart); title 28px;
+     underline 168×2 at 18px; card insets 20px */
   @media (max-width: 809px) {
-    .faq__group { grid-template-columns: 1fr; gap: 20px; }
+    .faq__groups { gap: 40px; }
+    .faq__group { grid-template-columns: 1fr; gap: 40px; }
+    .faq__title { margin-bottom: 22px; }
     .faq__group-title { max-width: 380px; font-size: 1.75rem; }
-    .faq__trigger { padding: 24px 20px; }
-    .faq__panel p { padding: 0 20px 24px; }
+    .faq__group-underline { max-width: 168px; height: 2px; margin-top: 18px; }
+    .faq__trigger { padding: 20px; }
+    .faq__panel p { padding: 0 20px 20px; }
   }
 </style>

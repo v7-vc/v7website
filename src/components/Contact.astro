@@ -4,7 +4,10 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
 ---
 <section class="contact" id="contact">
   <div class="contact__panel">
-    <video class="contact__video" src={video} poster="/assets/images/vrhxHFTuxnCduP4nljUulqZcuQ.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+    <video class="contact__video" poster="/assets/images/vrhxHFTuxnCduP4nljUulqZcuQ.jpg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="/assets/media/hero-800.mp4" type="video/mp4" media="(max-width: 809px)" />
+      <source src={video} type="video/mp4" />
+    </video>
     <div class="contact__scrim" aria-hidden="true"></div>
 
     <div class="container contact__inner">
@@ -12,18 +15,21 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
         <form class="cform" action={FORM_ENDPOINT} method="post" data-contact-form data-provider={FORM_PROVIDER}>
           {FORM_CONFIGURED && <input type="hidden" name="access_key" value={FORM_KEY} />}
           <input type="checkbox" name="botcheck" class="cform__botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
-          <img class="cform__logo" src="/assets/images/logo-v7.png" alt="V7" width="80" height="33" />
-          <div class="field">
-            <label for="name">Your name*</label>
-            <input id="name" name="name" type="text" placeholder="John Doe" required autocomplete="name" />
-          </div>
-          <div class="field">
-            <label for="email">E-mail*</label>
-            <input id="email" name="email" type="email" placeholder="hello@site.com" required autocomplete="email" />
-          </div>
-          <div class="field">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="3" placeholder="Your message"></textarea>
+          <img class="cform__logo" src="/assets/images/logo-v7.png" alt="V7" width="87" height="24" />
+          <div class="cform__fields">
+            <div class="field">
+              <label for="name">Your name*</label>
+              <input id="name" name="name" type="text" placeholder="John Doe" required autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="email">E-mail*</label>
+              <input id="email" name="email" type="email" placeholder="hello@site.com" required autocomplete="email" />
+            </div>
+            <div class="field">
+              {/* original uses a THIRD single-line input here, not a textarea */}
+              <label for="message">Message</label>
+              <input id="message" name="message" type="text" placeholder="Your message" />
+            </div>
           </div>
           <button type="submit" class="cform__submit">
             <span class="btnswap">
@@ -74,47 +80,54 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     overflow: hidden;
     background: #191919;
     isolation: isolate;
-    /* spec: form card sits ~25px from the panel edge (label x=95), so the
-       horizontal padding is much tighter than the vertical */
-    padding: clamp(40px, 6vw, 72px) clamp(20px, 4.3vw, 56px);
+    /* spec @1309: form card left edge x=54.7 → 48.7px in from the panel edge
+       (panel starts at 6), which puts the card's 40px padding at label x=94.7 */
+    padding: clamp(40px, 6vw, 72px) clamp(20px, 3.72vw, 48.7px);
   }
+  /* spec: the video wrapper is filter:grayscale(1) + opacity:0.5 over the
+     #191919 panel — that alone is the darkening, there is no gradient scrim */
   .contact__video {
     position: absolute;
     inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    filter: grayscale(1) brightness(0.72) contrast(1.02);
+    filter: grayscale(1);
+    opacity: 0.5;
     z-index: 0;
   }
+  /* spec: a 5%-opacity grain texture, the panel's only overlay */
   .contact__scrim {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background:
-      linear-gradient(to right, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.32) 55%, rgba(10,10,10,0.5) 100%);
+    background-image: url('/assets/images/rR6HYXBrMmX4cRpXfXUOvpvpB0.png');
+    opacity: 0.05;
   }
   .contact__inner { position: relative; z-index: 2; padding: 0; }
 
-  /* form (fixed ~374px, left) + info column starting at ~50% (title x=657 @1309).
-     The wide gap is what places the info block at mid-panel like the original. */
+  /* spec @1309: form card 388 wide at x=54.7; info column title at x=657, which
+     the client nudges +28 to 685. 54.7 + 388 + 214.3 + 28 (info pad) = 685. */
   .contact__grid {
     display: grid;
-    grid-template-columns: 374px 1fr;
-    column-gap: clamp(40px, 17vw, 221px);
+    grid-template-columns: 388px 1fr;
+    column-gap: clamp(40px, 16.37vw, 214.3px);
     row-gap: 40px;
     align-items: stretch;
   }
 
-  /* form card */
+  /* form card — spec: 388x518.6, padding 40, radius 18, column gap 30 */
   .cform {
     background: #fff;
-    border-radius: 14px;
-    padding: clamp(24px, 2.5vw, 34px);
+    border-radius: 18px;
+    padding: 40px;
     display: grid;
-    gap: 18px;
+    gap: 30px;
   }
-  .cform__logo { width: 80px; height: auto; margin-bottom: 6px; }
-  .field { display: grid; gap: 8px; }
+  /* spec: an 87x24 frame with object-fit:contain; our source shares the
+     original's 2.39 aspect, so the mark renders 57.4x24 centred, as it does live */
+  .cform__logo { width: 87px; height: 24px; object-fit: contain; }
+  .cform__fields { display: grid; gap: 16px; }
+  .field { display: grid; gap: 12px; }
   .field label {
     font-family: var(--font-display-curved);
     font-size: 0.875rem;
@@ -122,9 +135,11 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     letter-spacing: -0.04em;
     color: #090909;
   }
-  .field input, .field textarea {
+  /* spec: 58px box, padding 12px 12px 12px 16px, #f5f5f5, radius 10 */
+  .field input {
     width: 100%;
-    padding: 14px 16px;
+    height: 58px;
+    padding: 12px 12px 12px 16px;
     background: var(--surface);
     border: 1px solid transparent;
     border-radius: 10px;
@@ -133,14 +148,12 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     line-height: 1.2;
     letter-spacing: -0.04em;
     color: var(--ink);
-    resize: vertical;
     transition: border-color 0.3s var(--ease-out), background 0.3s var(--ease-out);
   }
-  .field input::placeholder, .field textarea::placeholder { color: #999999; }
-  .field input:focus, .field textarea:focus { outline: none; border-color: var(--ink); background: #fff; }
+  .field input::placeholder { color: #999999; }
+  .field input:focus { outline: none; border-color: var(--ink); background: #fff; }
   /* original: Marund 20px label at rest, Inter 600 slides in on hover (.btnswap) */
   .cform__submit {
-    margin-top: 4px;
     height: 58px;
     display: grid;
     place-items: center;
@@ -185,8 +198,8 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     color: #fff;
   }
   .contact__lead {
-    /* larger gap so the lead sits ~1/3 down the panel like the original */
-    margin-top: clamp(40px, 6.6vw, 95px);
+    /* spec: the title block and the lead block are 94px apart */
+    margin-top: 94px;
     font-family: var(--font-display-curved);
     font-size: clamp(1.4rem, 3.95vw, 2rem);
     line-height: 1.2;
@@ -196,8 +209,8 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
   .contact__divider {
     border: none;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
-    /* auto top margin pushes the divider + tags to the bottom of the panel */
-    margin: auto 0 clamp(24px, 3vw, 36px);
+    /* spec: the lead → divider → tags stack is a 60px-gap flex column */
+    margin: 60px 0;
   }
   /* col1 (For Founders) at title x=657; col2 (For CEOs) lands at ~940 (spec) */
   .contact__cols {
@@ -205,18 +218,28 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     grid-template-columns: 283px 1fr;
     gap: 0;
   }
+  /* spec: 31.2px tall row, 20px above the paragraph */
   .contact__tag {
-    display: block;
-    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
     font-family: var(--font-display-curved);
     font-size: 1.625rem;
     line-height: 1.2;
     letter-spacing: -0.04em;
     color: var(--accent);
   }
-  /* original: the ↳ arrow is its own element; label text starts ~40px after the
-     column edge (arrow glyph + 13px gap) */
-  .contact__tag-arrow { margin-right: 13px; }
+  /* spec: the ↳ arrow is a 25x25 icon with a 16px gap, so the label text
+     starts exactly 41px into the column */
+  .contact__tag-arrow {
+    flex: 0 0 25px;
+    width: 25px;
+    height: 25px;
+    display: grid;
+    place-items: center;
+    line-height: 1;
+  }
   .contact__col p {
     font-family: var(--font-display-curved);
     font-size: 1.25rem;
@@ -242,15 +265,17 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
        content inset 20; "Let's talk." sits ~134px below the panel top */
     .contact { padding: 0; }
     .contact__panel { padding: 134px 20px 40px; border-radius: 0; }
-    /* stacked: no free space to distribute, so restore a normal divider gap */
+    /* stacked: the desktop 60/60 rhythm is too airy in one narrow column */
     .contact__info { min-height: 0; padding-left: 0; }
-    .contact__divider { margin-top: clamp(28px, 6vw, 40px); }
+    .contact__divider { margin: clamp(28px, 6vw, 40px) 0 clamp(24px, 3vw, 36px); }
     .contact__lead { margin-top: clamp(20px, 4vw, 32px); }
   }
   /* Skip the heavy background video on phones (saves ~30 MB); keep the dark panel + scrim. */
   @media (max-width: 640px) {
     .contact__video { display: none; }
+    /* the scrim stands in for the video here, so it is opaque rather than grain */
     .contact__scrim {
+      opacity: 1;
       background: linear-gradient(to bottom, #141414 0%, #0a0a0a 100%);
     }
   }
