@@ -165,6 +165,9 @@ const stats = [
      stack vertically, anchored 122px from the VIEWPORT's right edge (x=474 @736,
      x=128 @390 — both = right anchor, container gutter 20 → margin-right 102). */
   @media (max-width: 809px) {
+    /* reference @390: last card bottom 3593 → "Why choose us" 3633 = 40px.
+       The Projects section already contributes 6px, so this adds 34. */
+    .why { padding-block: 34px clamp(72px, 10vw, 140px); }
     .why__eyebrow { position: static; margin-bottom: 22px; }
     .why__title, .why__underline { margin-left: 0; }
     .why__title { font-size: 2rem; }
