@@ -253,13 +253,18 @@ body.v7-exit {
 .btnswap__hover {
   position: absolute;
   inset: 0;
-  transform: translateY(110%);
+  /* the alternate label sits ABOVE the visible one, so both slide DOWN on
+     hover — the direction the original uses */
+  transform: translateY(-110%);
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 1.125rem;
   line-height: 1.35;
 }
 @media (hover: hover) {
-  :where(a, button):hover > .btnswap .btnswap__rest { transform: translateY(-110%); }
-  :where(a, button):hover > .btnswap .btnswap__hover { transform: translateY(0); }
+  :where(a, button):hover .btnswap__rest { transform: translateY(110%); }
+  :where(a, button):hover .btnswap__hover { transform: translateY(0); }
 }
+/* small pill buttons (Website / All projects): 18px Marund at rest, 12px Inter on hover */
+.btnswap--sm .btnswap__rest { font-size: 1.125rem; line-height: 1.2; }
+.btnswap--sm .btnswap__hover { font-size: 0.75rem; line-height: 1.8; letter-spacing: -0.04em; }

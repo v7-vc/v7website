@@ -35,14 +35,24 @@ const next = projects.filter((p) => p.slug !== project.slug).slice(0, 5);
           </div>
         </div>
 
+        {project.logo && (
+          <div class="pj__row pj__row--logo" data-reveal>
+            <span class="pj__spacer" aria-hidden="true"></span>
+            <img class="pj__logo" src={project.logo} alt={project.name} loading="eager" />
+          </div>
+        )}
+
         <div class="pj__row pj__row--about" data-reveal>
           <span class="pj__label"><span class="pj__plus" aria-hidden="true">+</span> About</span>
           <div class="pj__aboutCol">
-            {project.logo && <img class="pj__logo" src={project.logo} alt={project.name} loading="eager" />}
             <p class="pj__about">{project.about}</p>
             {project.url && (
               <a class="pj__site" href={project.url} target="_blank" rel="noopener noreferrer">
-                Website <span class="pj__dot" aria-hidden="true"></span>
+                <span class="btnswap btnswap--sm">
+                  <span class="btnswap__rest">Website</span>
+                  <span class="btnswap__hover" aria-hidden="true">Website</span>
+                </span>
+                <span class="pj__dot" aria-hidden="true"></span>
               </a>
             )}
           </div>
@@ -54,7 +64,13 @@ const next = projects.filter((p) => p.slug !== project.slug).slice(0, 5);
       <div class="container">
         <div class="pjnext__head" data-reveal>
           <h2 class="pjnext__title">Next projects.</h2>
-          <a class="pjnext__all" href="/projects">All projects<span class="pjnext__dot" aria-hidden="true"></span></a>
+          <a class="pjnext__all" href="/projects">
+            <span class="btnswap btnswap--sm">
+              <span class="btnswap__rest">All projects</span>
+              <span class="btnswap__hover" aria-hidden="true">All projects</span>
+            </span>
+            <span class="pjnext__dot" aria-hidden="true"></span>
+          </a>
         </div>
         <ul class="pjnext__grid" data-reveal-group="">
           {next.map((p) => (
@@ -111,10 +127,18 @@ const next = projects.filter((p) => p.slug !== project.slug).slice(0, 5);
     margin: clamp(48px, 6.9vw, 100px) 0 0;
   }
   .pj__row--industry { margin-top: 23px; }
-  .pj__row--about { margin-top: clamp(80px, 12.5vw, 180px); }
+  /* Original right column order: logo (its own row) → About row → Website button.
+     Measured identical on zeely and elephants: Industry text bottom → logo 87px,
+     logo bottom → About 180px. */
+  .pj__row--logo { margin-top: clamp(48px, 6.7vw, 87px); }
+  .pj__row--about { margin-top: clamp(80px, 13.8vw, 180px); }
   @media (min-width: 1200px) {
     .pj__divider { margin-top: 100px; }
-    .pj__row--about { margin-top: 321px; }
+    .pj__row--logo { margin-top: 87px; }
+    .pj__row--about { margin-top: 180px; }
+    /* Website button bottom → "Next projects." is 180px in the original */
+    .pj { padding-bottom: 90px; }
+    .pjnext { padding-top: 90px; }
   }
 
   .pj__label {
@@ -157,8 +181,10 @@ const next = projects.filter((p) => p.slug !== project.slug).slice(0, 5);
   .pj__tagline { max-width: 630px; }
   .pj__industry { font-size: 1.125rem; line-height: 1.4; }
 
-  .pj__aboutCol { display: flex; flex-direction: column; gap: clamp(28px, 4vw, 48px); }
-  .pj__logo { width: clamp(120px, 12vw, 170px); height: auto; object-fit: contain; align-self: flex-start; }
+  /* about text → Website button gap is a fixed 100px in the original */
+  .pj__aboutCol { display: flex; flex-direction: column; gap: clamp(40px, 7.6vw, 100px); }
+  /* original: a fixed 114×54 logo frame, artwork contained inside */
+  .pj__logo { width: 114px; height: 54px; object-fit: contain; object-position: left center; align-self: flex-start; }
   .pj__about {
     font-family: var(--font-display-curved);
     font-size: clamp(1.5rem, 3.95vw, 2rem);
@@ -176,11 +202,6 @@ const next = projects.filter((p) => p.slug !== project.slug).slice(0, 5);
     border-radius: 50px;
     background: var(--accent);
     color: #fff;
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: 0.75rem;
-    line-height: 1;
-    letter-spacing: -0.04em;
     transition: transform 0.3s var(--ease-out), filter 0.3s var(--ease-out);
   }
   .pj__site:hover { transform: translateY(-2px); filter: brightness(1.06); }
@@ -212,10 +233,6 @@ const next = projects.filter((p) => p.slug !== project.slug).slice(0, 5);
     border-radius: 50px;
     background: var(--accent);
     color: #fff;
-    font-weight: 600;
-    font-size: 0.75rem;
-    line-height: 1;
-    letter-spacing: -0.04em;
     transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
   }
   .pjnext__dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; flex: none; }
