@@ -126,7 +126,7 @@ const next = projects.filter((p) => p.slug !== project.slug).slice(0, 5);
     border-top: 1px solid rgb(226, 226, 226); /* exact from the Framer project */
     margin: clamp(48px, 6.9vw, 100px) 0 0;
   }
-  .pj__row--industry { margin-top: 23px; }
+  .pj__row--industry { margin-top: 22px; }
   /* Original right column order: logo (its own row) → About row → Website button.
      Measured identical on zeely and elephants: Industry text bottom → logo 87px,
      logo bottom → About 180px. */
@@ -136,6 +136,7 @@ const next = projects.filter((p) => p.slug !== project.slug).slice(0, 5);
     .pj__divider { margin-top: 100px; }
     .pj__row--logo { margin-top: 87px; }
     .pj__row--about { margin-top: 180px; }
+    .pj__aboutCol { gap: 100px; }
     /* Website button bottom → "Next projects." is 180px in the original */
     .pj { padding-bottom: 90px; }
     .pjnext { padding-top: 90px; }
@@ -165,7 +166,7 @@ const next = projects.filter((p) => p.slug !== project.slug).slice(0, 5);
   /* Industry row: label sits in the right column, value pushed to the far right */
   .pj__industryRow {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     gap: 24px;
   }
@@ -209,9 +210,15 @@ const next = projects.filter((p) => p.slug !== project.slug).slice(0, 5);
 
   /* ---- next projects ---- */
   .pjnext { background: var(--surface); padding-block: clamp(48px, 7vw, 100px) clamp(6px, 1vw, 10px); }
+  /* declared after the base rule so the desktop value actually wins */
+  @media (min-width: 1200px) {
+    .pjnext { padding-block: 90px clamp(6px, 1vw, 10px); }
+    /* original: title top → card grid top = 216px */
+    .pjnext__head { margin-bottom: 159px; }
+  }
   .pjnext__head {
     display: flex;
-    align-items: center;
+    align-items: flex-end; /* the pill bottom-aligns to the 62px title row */
     justify-content: space-between;
     gap: 24px;
     margin-bottom: clamp(32px, 5vw, 56px);
@@ -255,20 +262,23 @@ const next = projects.filter((p) => p.slug !== project.slug).slice(0, 5);
     font-size: 1.125rem;
     line-height: 1.2;
     letter-spacing: -0.04em;
-    color: var(--ink);
+    color: #000;
   }
+  /* original: white frame with the image inset 4px (617×451 outer, 609×443 img) */
   .project__tile {
     position: relative;
     display: block;
-    aspect-ratio: 689 / 502;
+    aspect-ratio: 682 / 499.32;
     border-radius: 18px;
+    padding: 4px;
     overflow: hidden;
-    background: var(--surface);
+    background: #ffffff;
   }
   .project__tile img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 16px;
     transition: transform 0.7s var(--ease-out), filter 0.5s var(--ease-out);
   }
   .project:not(.is-visible) .project__tile img { filter: blur(14px); }

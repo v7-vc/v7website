@@ -63,19 +63,20 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
 <style>
   .contact {
     background: var(--surface);
-    padding: 0 var(--gutter) clamp(40px, 6vw, 80px);
+    /* original insets the panel just 6px from the viewport */
+    padding: 0 6px clamp(40px, 6vw, 80px);
   }
   .contact__panel {
     position: relative;
-    max-width: var(--container);
+    max-width: none;
     margin-inline: auto;
-    border-radius: 40px;
+    border-radius: 25px;
     overflow: hidden;
-    background: #0a0a0a;
+    background: #191919;
     isolation: isolate;
     /* spec: form card sits ~25px from the panel edge (label x=95), so the
        horizontal padding is much tighter than the vertical */
-    padding: clamp(40px, 6vw, 72px) clamp(20px, 1.95vw, 26px);
+    padding: clamp(40px, 6vw, 72px) clamp(20px, 4.3vw, 56px);
   }
   .contact__video {
     position: absolute;
@@ -191,7 +192,6 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     line-height: 1.2;
     letter-spacing: -0.04em;
     color: #fff;
-    opacity: 0.6; /* original renders this lead muted (measured live) */
   }
   .contact__divider {
     border: none;
