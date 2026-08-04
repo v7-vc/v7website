@@ -20,9 +20,14 @@ import { projects } from '../data/projects';
 
 <div class="menu" id="mobile-menu" data-menu>
   <nav class="menu__nav" aria-label="Menu">
-    <a href="/">Home</a>
-    <a href="/projects">Projects</a>
-    <a href="/contact">Contact</a>
+    {[['/', 'Home'], ['/projects', 'Projects'], ['/contact', 'Contact']].map(([href, label]) => (
+      <a href={href}>
+        <span class="menuswap">
+          <span class="menuswap__rest">{label}</span>
+          <span class="menuswap__hover" aria-hidden="true">{label}</span>
+        </span>
+      </a>
+    ))}
   </nav>
   <a class="menu__email" href="mailto:hello@v7.vc">hello@v7.vc</a>
 </div>
@@ -169,16 +174,45 @@ import { projects } from '../data/projects';
   }
   :global(html.menu-open) .menu { opacity: 1; visibility: visible; transform: none; }
   :global(html.menu-open) { overflow: hidden; }
-  .menu__nav { display: flex; flex-direction: column; gap: 14px; }
+  /* Reference: the items are CENTRED (each centre = 653 against a 654.5
+     viewport centre) and every one carries two stacked 60px labels — Marund
+     Curved at rest, Inter 90px below it — so hovering slides both UP. No
+     colour change. */
+  .menu__nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
   .menu__nav a {
     font-family: var(--font-display-curved);
     font-size: clamp(2.5rem, 12vw, 3.75rem);
     line-height: 1.2;
     letter-spacing: -0.06em;
     color: #0a0a0a;
-    transition: color 0.25s var(--ease-out);
   }
-  .menu__nav a:hover { color: var(--accent); }
+  .menuswap {
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+  .menuswap__rest,
+  .menuswap__hover {
+    display: block;
+    text-align: center;
+    transition: transform 0.45s var(--ease-out);
+  }
+  .menuswap__hover {
+    position: absolute;
+    inset: 0;
+    transform: translateY(110%);
+    font-family: var(--font-body);
+    font-weight: 400;
+  }
+  @media (hover: hover) {
+    .menu__nav a:hover .menuswap__rest { transform: translateY(-110%); }
+    .menu__nav a:hover .menuswap__hover { transform: translateY(0); }
+  }
   .menu__email {
     font-family: var(--font-display-curved);
     font-size: clamp(1.2rem, 5vw, 2.125rem);
@@ -192,7 +226,9 @@ import { projects } from '../data/projects';
     /* the logo box stays 87x24 at every breakpoint (mobile extract @390: 87x24) */
   }
   @media (min-width: 641px) {
-    /* keep the overlay usable on desktop too, but it is opened only via the burger */
-    .menu { justify-content: center; align-items: flex-start; }
+    /* the overlay works on desktop too (opened via the burger). Children stay
+       full-width so .menu__nav can centre its items while the e-mail stays
+       flush left, as in the original. */
+    .menu { justify-content: center; }
   }
 </style>
