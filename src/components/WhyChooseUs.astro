@@ -182,7 +182,9 @@ const stats = [
       gap: 22px;
       margin-left: 0;
       align-self: flex-end;
-      margin-right: 102px;
+      /* the card's own 24px padding eats into the right anchor, so trim the
+         margin by the same amount to keep the labels at x=474 @736 / 128 @390 */
+      margin-right: 72px;
     }
     .stat__label { max-width: 140px; } /* phone spec block = 140 wide */
   }
