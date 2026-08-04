@@ -98,9 +98,11 @@ const { standalone = false } = Astro.props;
     position: absolute;
     /* original drops the lead 76px below the heading top (measured live) */
     top: 76px;
-    /* spec @1309: lead box 985..1294 — overhangs our container's right edge by
-       21px (original insets it 15px from the viewport, not 36) */
-    right: -21px;
+    /* spec @1309 puts the lead at 985..1294, overhanging the container's right
+       edge by 21px (the original insets it just 15px from the viewport).
+       By request it is pulled 36px LEFT of that — a deliberate deviation from
+       the original — so it clears the gutter instead of hugging the edge. */
+    right: 15px;
     width: 309px;
     max-width: 32%;
     margin: 0;
@@ -146,10 +148,16 @@ const { standalone = false } = Astro.props;
      original never shows it at rest or on hover (verified in .shots). It is
      stacked here rather than painted over the image so the DOM matches. */
   .project__swap { position: relative; display: inline-block; }
+  /* The name must paint ABOVE the category: the category is absolutely
+     positioned and comes later in the DOM, so without this it was drawn over
+     the name in white and ate chunks out of the letters (visible as a ghosted
+     "Zeely" on the cards). White-on-white keeps it invisible either way. */
+  .project__name { position: relative; z-index: 1; }
   .project__cat {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 0;
     white-space: nowrap;
     color: #ffffff;
     pointer-events: none;

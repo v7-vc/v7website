@@ -45,27 +45,31 @@ const ogImage = new URL('/og.png', Astro.site ?? 'https://v7.vc').href;
       import '../scripts/forms.ts';
     </script>
     <script is:inline>
-      /* Page transition: play the exit animation, then navigate. The enter
-         animation is pure CSS (body.v7-enter, server-rendered). Only intercepts
-         plain left-clicks on same-origin, same-tab links to another path. */
+      /* Navigation speed. Measured on the live v7.vc: a click commits the next
+         page in ~130ms with NO exit animation — the transition you see is the
+         new page's entrance (body.v7-enter + the per-element reveals). We match
+         that: links navigate natively, nothing is intercepted or delayed.
+
+         All we add is warming the target on pointerdown, so the download starts
+         a beat before the click resolves. Astro's own prefetch covers hover;
+         this covers touch, where there is no hover to act on. */
       (() => {
-        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-        document.addEventListener('click', (e) => {
-          if (reduce.matches) return;
-          if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        const warmed = new Set();
+        const warm = (e) => {
           const a = e.target.closest && e.target.closest('a[href]');
-          if (!a) return;
-          if (a.target === '_blank' || a.hasAttribute('download')) return;
+          if (!a || a.target === '_blank' || a.hasAttribute('download')) return;
           let url;
           try { url = new URL(a.href, location.href); } catch { return; }
-          if (url.origin !== location.origin) return;
-          // ignore in-page anchors / same page
-          if (url.pathname === location.pathname) return;
-          e.preventDefault();
-          document.body.classList.remove('v7-enter');
-          document.body.classList.add('v7-exit');
-          setTimeout(() => { window.location.href = url.href; }, 540);
-        });
+          if (url.origin !== location.origin || url.pathname === location.pathname) return;
+          if (warmed.has(url.href)) return;
+          warmed.add(url.href);
+          const l = document.createElement('link');
+          l.rel = 'prefetch';
+          l.href = url.href;
+          document.head.appendChild(l);
+        };
+        document.addEventListener('pointerdown', warm, { passive: true });
+        document.addEventListener('touchstart', warm, { passive: true });
       })();
     </script>
   </body>

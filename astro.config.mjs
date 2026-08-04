@@ -8,5 +8,9 @@ export default defineConfig({
   // line (plus adding the domain in Vercel).
   site: 'https://v7.vc',
   integrations: [sitemap()],
+  // Warm every internal link on hover/touch, so by the time the 0.55s exit
+  // animation finishes the next page is already in cache and swaps instantly
+  // instead of starting its download only after the animation.
+  prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   server: { host: true, port: 4321 },
 });

@@ -1,5 +1,6 @@
 ---
-const year = 2025; // matches the original's footer verbatim
+// built-in year, so it can't go stale the way a hardcoded one does
+const year = new Date().getFullYear();
 ---
 <footer class="footer">
   <div class="footer__main">

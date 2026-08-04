@@ -64,6 +64,7 @@ async function submitForm(form: HTMLFormElement) {
   }
 
   const original = label?.textContent ?? 'Submit';
+  form.dataset.sending = 'true';
   if (btn) btn.disabled = true;
   if (label) label.textContent = 'Sending…';
   setStatus(status, 'pending', '');
@@ -103,9 +104,36 @@ async function submitForm(form: HTMLFormElement) {
     setStatus(status, 'error', 'Something went wrong — please email hello@v7.vc.');
     console.error('[forms] Submission failed:', err);
   } finally {
+    delete form.dataset.sending;
     if (btn) btn.disabled = false;
     if (label) label.textContent = original;
+    // a sent form has just been reset, so let the gate disable the button again
+    form.dispatchEvent(new Event('input', { bubbles: true }));
   }
+}
+
+/**
+ * Keeps the submit button inactive until the form's required fields are valid.
+ * Opt-in per form via `data-validate-gate`, so adding it to one form can't
+ * silently change the look of the others.
+ *
+ * Native validity is the source of truth (required + `type="email"` format),
+ * so the rules live in the markup rather than being duplicated here.
+ */
+function initValidityGate(form: HTMLFormElement) {
+  if (!form.hasAttribute('data-validate-gate')) return;
+  const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+  if (!btn) return;
+
+  const sync = () => {
+    // never fight the "Sending…" state — that disable is owned by submitForm()
+    if (form.dataset.sending === 'true') return;
+    btn.disabled = !form.checkValidity();
+  };
+
+  form.addEventListener('input', sync);
+  form.addEventListener('change', sync);
+  sync();
 }
 
 export function initForms() {
@@ -125,6 +153,8 @@ export function initForms() {
       e.preventDefault();
       void submitForm(form);
     });
+
+    initValidityGate(form);
   });
 }
 

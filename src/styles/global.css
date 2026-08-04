@@ -207,30 +207,23 @@ ul { list-style: none; }
 }
 
 /* ---------------------------------------------------------------------------
-   Page transition (Home ↔ project pages ↔ Contact), matching the original:
-   masked-wipe + fade, the outgoing page fades to 0.1 and slides up 30%, then
-   the incoming page fades in — sequential, 0.55s each, custom overshoot ease.
-   (Exact Framer spec: exit opacity 1→0.1 / translateY 0→-30%; enter opacity
-   0→1; easing cubic-bezier(0.96,-0.02,0.38,1.01); durations 0.55s.)
-   Done with full page loads so Lenis/reveal/fold scripts always init fresh.
+   Page transition (Home ↔ project pages ↔ Contact).
+
+   The live v7.vc was measured clicking through: the next page commits in ~130ms
+   and there is NO exit animation — what reads as a "transition" is the incoming
+   page's entrance. So the outgoing half was dropped (it only added 0.55s of
+   dead wait before the request even started); links now navigate natively and
+   the incoming page fades in with the original's overshoot ease.
+   Full page loads, so Lenis/reveal/fold scripts always init fresh.
 --------------------------------------------------------------------------- */
 @keyframes v7-page-enter {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
-@keyframes v7-page-exit {
-  from { opacity: 1; transform: translateY(0); }
-  to   { opacity: 0.1; transform: translateY(-30vh); }
-}
 /* incoming page: fades in on first paint (class is server-rendered) */
 body.v7-enter { animation: v7-page-enter 0.55s cubic-bezier(0.96, -0.02, 0.38, 1.01) both; }
-/* outgoing page: slides up + fades before navigation */
-body.v7-exit {
-  animation: v7-page-exit 0.55s cubic-bezier(0.96, -0.02, 0.38, 1.01) both;
-  pointer-events: none;
-}
 @media (prefers-reduced-motion: reduce) {
-  body.v7-enter, body.v7-exit { animation: none; }
+  body.v7-enter { animation: none; }
 }
 
 /* --- button label swap (matches the original's two stacked labels) ---------
@@ -257,17 +250,16 @@ body.v7-exit {
   position: absolute;
   inset: 0;
   /* the alternate label sits ABOVE the visible one, so both slide DOWN on
-     hover — the direction the original uses */
+     hover — the direction the original uses.
+     By request the two labels are TYPOGRAPHICALLY IDENTICAL: the label used to
+     switch to Inter 600 at a different size, which read as the font changing
+     mid-press. It is now the same face/size/weight, so hovering only slides. */
   transform: translateY(-110%);
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 1.125rem;
-  line-height: 1.35;
 }
 @media (hover: hover) {
   :where(a, button):hover .btnswap__rest { transform: translateY(110%); }
   :where(a, button):hover .btnswap__hover { transform: translateY(0); }
 }
-/* small pill buttons (Website / All projects): 18px Marund at rest, 12px Inter on hover */
-.btnswap--sm .btnswap__rest { font-size: 1.125rem; line-height: 1.2; }
-.btnswap--sm .btnswap__hover { font-size: 0.75rem; line-height: 1.8; letter-spacing: -0.04em; }
+/* small pill buttons (Website / All projects) — both labels stay identical */
+.btnswap--sm .btnswap__rest,
+.btnswap--sm .btnswap__hover { font-size: 1.125rem; line-height: 1.2; }

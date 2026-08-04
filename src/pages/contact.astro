@@ -22,7 +22,7 @@ import { FORM_ENDPOINT, FORM_KEY, FORM_PROVIDER, FORM_CONFIGURED } from '../conf
           </div>
 
           <div class="git__col-form">
-          <form class="gform" action={FORM_ENDPOINT} method="post" enctype="multipart/form-data" data-contact-form data-provider={FORM_PROVIDER} data-reveal>
+          <form class="gform" action={FORM_ENDPOINT} method="post" enctype="multipart/form-data" data-contact-form data-validate-gate data-provider={FORM_PROVIDER} data-reveal>
             {FORM_CONFIGURED && <input type="hidden" name="access_key" value={FORM_KEY} />}
             <input type="checkbox" name="botcheck" class="gform__botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <div class="gfield">
@@ -116,11 +116,13 @@ import { FORM_ENDPOINT, FORM_KEY, FORM_PROVIDER, FORM_CONFIGURED } from '../conf
 
   .git {
     background: var(--surface);
-    padding-block: clamp(90px, 19.3vw, 278px) clamp(64px, 9vw, 120px);
+    padding-block: clamp(72px, 10vw, 120px) clamp(64px, 9vw, 120px);
   }
-  /* Original desktop: H1 top fixed at 340px (278 + 62px header) */
+  /* The original parks the H1 at 340px (278 + 62px header), which pushes the
+     whole form below the fold. By request the page is compressed so the form —
+     Submit included — is visible the moment you land: H1 top 114 (52 + header). */
   @media (min-width: 1200px) {
-    .git { padding-top: 278px; }
+    .git { padding-top: 52px; }
   }
   .git__title {
     font-family: var(--font-display-curved);
@@ -248,8 +250,13 @@ import { FORM_ENDPOINT, FORM_KEY, FORM_PROVIDER, FORM_CONFIGURED } from '../conf
     background: #fff;
     opacity: 0.9;
   }
-  .gform__submit:hover { filter: brightness(1.04); }
-  .gform__submit:disabled { opacity: 0.85; cursor: not-allowed; }
+  .gform__submit:hover:not(:disabled) { filter: brightness(1.04); }
+  /* inactive until the required fields are valid — the original's resting state
+     is the accent at 0.6 (measured off the reference: per-channel α .59/.63/.64) */
+  .gform__submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  /* same look before JS binds the gate (and for no-JS users, who keep a
+     clickable button so native validation can still report the empty fields) */
+  .gform:has(:invalid) .gform__submit { opacity: 0.6; }
   .gform__status:empty { display: none; }
   .gform__status { margin-top: 14px; font-size: 0.9rem; color: var(--ink); }
   .gform__status[data-state='error'] { color: #b3123f; }
