@@ -183,7 +183,7 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     color: #fff;
     padding-block: 8px 4px;
     /* nudged right of the spec position (657) by request */
-    padding-left: 28px;
+    padding-left: 48px;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -208,7 +208,10 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
   }
   .contact__divider {
     border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    /* shorter than the column and a touch more visible, per the original */
+    width: 562px;
+    max-width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.35);
     /* spec: the lead → divider → tags stack is a 60px-gap flex column */
     margin: 60px 0;
   }
