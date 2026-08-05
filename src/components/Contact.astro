@@ -255,6 +255,17 @@ const video = '/assets/media/dOgk0Vxkcux0KWiIAWgeNGdfs.mp4';
     max-width: 22ch;
   }
 
+  /* 810–1199 keeps the two-column desktop layout, but the desktop numbers
+     (388px card + a 283px tag column + the 88px info inset) are wider than the
+     panel there and pushed the page into horizontal scroll. Tighten the insets
+     so it fits; below 810 the stacked layout takes over. */
+  @media (min-width: 810px) and (max-width: 1199px) {
+    .contact__grid { column-gap: 40px; }
+    .contact__info { padding-left: 24px; }
+    .contact__cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
+    .contact__divider { width: 100%; }
+  }
+
   /* Original phone: one centred 350px column; the COPY comes first ("Let's
      talk." → lead → tags), the white form card (350×516, padding 30) last */
   @media (max-width: 809px) {

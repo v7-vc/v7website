@@ -164,6 +164,14 @@ const stats = [
      603px height (697×603 @736, 351×603 @390); para stays 550 max; the stats
      stack vertically, anchored 122px from the VIEWPORT's right edge (x=474 @736,
      x=128 @390 — both = right anchor, container gutter 20 → margin-right 102). */
+  /* 810–1199: the stats card needs 485px (224+190 tracks + 71 padding) but the
+     two-column body only leaves it half the container there, which pushed the
+     page into horizontal scroll. Stack the body so the card gets full width and
+     can keep its desktop tracks. */
+  @media (min-width: 810px) and (max-width: 1199px) {
+    .why__body { grid-template-columns: 1fr; row-gap: 51px; }
+  }
+
   @media (max-width: 809px) {
     /* reference @390: last card bottom 3593 → "Why choose us" 3633 = 40px.
        The Projects section already contributes 6px, so this adds 34. */
