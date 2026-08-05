@@ -19,7 +19,7 @@ local_backend: true
 backend:
   name: github
   repo: v7-vc/v7website
-  branch: main
+  branch: staging
   # base_url: https://YOUR-WORKER.workers.dev
 
 # Where images uploaded through the CMS are stored (committed to the repo).
