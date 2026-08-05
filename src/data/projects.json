@@ -87,17 +87,6 @@
       "tagline": "ALICE Technologies is an AI-powered construction scheduling platform that helps large infrastructure and commercial projects optimize schedules, reduce costs, and accelerate delivery through generative simulation technology.",
       "industry": "Construction AI",
       "about": "ALICE Technologies is building the AI operating system for construction planning. Its patented generative simulation engine automatically evaluates millions of scheduling scenarios, enabling project teams to optimize timelines, reduce costs, and improve resource allocation. Trusted by leading global contractors and consultants, ALICE helps deliver large-scale infrastructure and commercial projects faster, more efficiently, and with lower execution risk."
-    },
-    {
-      "name": "Test Startup",
-      "category": "Fintech",
-      "slug": "test-startup",
-      "url": "https://example.com",
-      "card": "/assets/images/e7LsMUNDr5WdmPtjNoFnXCEWTmM.png",
-      "logo": "",
-      "tagline": "",
-      "industry": "",
-      "about": ""
     }
   ]
 }
