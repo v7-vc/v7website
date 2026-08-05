@@ -18,7 +18,7 @@ local_backend: true
 # hosted /admin login is a documented later step — see docs/CMS-SETUP.md.
 backend:
   name: github
-  repo: kostenkoelena500-prog/v7website
+  repo: v7-vc/v7website
   branch: main
   # base_url: https://YOUR-WORKER.workers.dev
 

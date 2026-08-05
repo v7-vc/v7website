@@ -35,7 +35,7 @@
 робить commit у репозиторій, сайт пересобирається.
 
 **Тільки адмін:** увійти й зберегти можуть лише GitHub-акаунти з доступом на запис
-до репозиторію `kostenkoelena500-prog/v7website`. Стороння людина навіть залогінитись не зможе.
+до репозиторію `v7-vc/v7website`. Стороння людина навіть залогінитись не зможе.
 
 **Повністю безкоштовно:** немає власного сервера/бекенду/бази — усе на безкоштовних
 тарифах GitHub + хостинг (Vercel / Netlify / Cloudflare Pages).
@@ -58,7 +58,7 @@ GitHub-логін потребує крихітного безкоштовног
    ```yaml
    backend:
      name: github
-     repo: kostenkoelena500-prog/v7website
+     repo: v7-vc/v7website
      branch: main
      base_url: https://xxxx.workers.dev
    ```

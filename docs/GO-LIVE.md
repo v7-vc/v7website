@@ -34,12 +34,12 @@ end-to-end locally, form ships in the safe legacy mode.
 
 ## 3. Git auto-deploy (needs one click by the repo owner)
 
-- [ ] Elena: github.com/kostenkoelena500-prog/v7website → Settings →
+- [ ] Elena: github.com/v7-vc/v7website → Settings →
   Integrations → GitHub Apps → install/Configure **Vercel** → grant access to
   `v7website`. (Blocked for us: the repo is private and our account has
   `push` but not `admin`.)
 - [ ] Then from this repo:
-  `npx vercel git connect https://github.com/kostenkoelena500-prog/v7website.git --yes`
+  `npx vercel git connect https://github.com/v7-vc/v7website.git --yes`
   (the explicit URL matters — this workspace is a git worktree, plain
   `git connect` fails with "No local Git repository found").
 - [ ] Vercel → confirm Production Branch = `main`.

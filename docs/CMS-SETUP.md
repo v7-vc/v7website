@@ -40,7 +40,7 @@ up on the homepage grid and on `/projects/<slug>` after a rebuild.
 ```yaml
 backend:
   name: github
-  repo: kostenkoelena500-prog/v7website
+  repo: v7-vc/v7website
   branch: main
 media_folder: "public/assets/images"   # where card/logo images already live
 public_folder: "/assets/images"
@@ -49,7 +49,7 @@ public_folder: "/assets/images"
 Remaining steps, each needing an action from the repo/Vercel owner:
 
 ### 1. Push the current code to `main` — **needs the owner's GitHub token**
-`origin` is `https://github.com/kostenkoelena500-prog/v7website.git` (HTTPS), so
+`origin` is `https://github.com/v7-vc/v7website.git` (HTTPS), so
 the push needs credentials. Reconcile with `origin/main` first; never force-push
 over unknown history.
 
@@ -57,7 +57,7 @@ over unknown history.
 - `npx vercel git connect` from the project root (`.vercel/` already links the
   project `v7website`).
 - If Vercel cannot see the repo, install the **Vercel GitHub app** on
-  `kostenkoelena500-prog/v7website` (repo Settings → Integrations) — a one-time
+  `v7-vc/v7website` (repo Settings → Integrations) — a one-time
   click by the repo owner — then retry.
 - Confirm the project's **Production Branch = `main`**.
 - After this, every commit (including ones the CMS makes) auto-deploys. That
