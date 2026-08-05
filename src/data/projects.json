@@ -1,92 +1,103 @@
 {
   "projects": [
     {
-      "slug": "zeely",
       "name": "Zeely",
       "category": "Digital",
-      "card": "/assets/images/e7LsMUNDr5WdmPtjNoFnXCEWTmM.png",
+      "slug": "zeely",
       "url": "https://zeely.ai",
+      "card": "/assets/images/e7LsMUNDr5WdmPtjNoFnXCEWTmM.png",
+      "logo": "/assets/images/4jnuLcjdsNFFErmUdzlkN6zFtE.png",
       "tagline": "Zeely - Mobile-First Growth Platform for Small Businesses",
       "industry": "Martech",
-      "about": "Zeely is a mobile-first platform that helps entrepreneurs and small businesses launch and grow their online presence. By combining AI-powered website building, marketing automation, and real-time analytics, Zeely makes it easy to create, scale, and manage your brand - all in one app.",
-      "logo": "/assets/images/4jnuLcjdsNFFErmUdzlkN6zFtE.png"
+      "about": "Zeely is a mobile-first platform that helps entrepreneurs and small businesses launch and grow their online presence. By combining AI-powered website building, marketing automation, and real-time analytics, Zeely makes it easy to create, scale, and manage your brand - all in one app."
     },
     {
-      "slug": "elephants-inc.",
       "name": "Elephants",
       "category": "Payments",
-      "card": "/assets/images/rToBhvUR9rgAAC51V2sUptO0Zf0.png",
+      "slug": "elephants-inc.",
       "url": "https://elephants.inc/",
+      "card": "/assets/images/rToBhvUR9rgAAC51V2sUptO0Zf0.png",
+      "logo": "/assets/images/9BEUP5ihA3xH6ngdEahC0FUyYa8.png",
       "tagline": "Elephants is an AI-native cross-border finance platform that combines USD virtual accounts, global payment rails, corporate cards, accounting integrations, and an AI financial agent into one operating system for emerging-market SMEs.",
       "industry": "Fintech",
-      "about": "Elephants is building the financial operating system for globally connected SMEs. The platform unifies USD virtual accounts, fiat and stablecoin payment rails, corporate cards, accounting integrations, and AI-powered financial operations into a single workspace. Designed for businesses underserved by traditional banks, Elephants simplifies international payments, treasury management, and financial workflows while enabling companies to scale across borders.",
-      "logo": "/assets/images/9BEUP5ihA3xH6ngdEahC0FUyYa8.png"
+      "about": "Elephants is building the financial operating system for globally connected SMEs. The platform unifies USD virtual accounts, fiat and stablecoin payment rails, corporate cards, accounting integrations, and AI-powered financial operations into a single workspace. Designed for businesses underserved by traditional banks, Elephants simplifies international payments, treasury management, and financial workflows while enabling companies to scale across borders."
     },
     {
-      "slug": "umai",
       "name": "Umai",
       "category": "Hospitality",
-      "card": "/assets/images/LVPf4A9dBBwtYiUeQfTPBnie2ek.png",
+      "slug": "umai",
       "url": "https://www.umai.io",
+      "card": "/assets/images/LVPf4A9dBBwtYiUeQfTPBnie2ek.png",
+      "logo": "/assets/images/bGIeoDhdr2cr8VA5uk2Tb1VQk.png",
       "tagline": "UMAI is a smart, all-in-one SaaS platform for restaurants and hospitality venues, offering reservation and table management, marketing automation, e‑commerce, and guest feedback solutions — all designed to streamline operations and drive revenue.",
       "industry": "Hospitality SaaS",
-      "about": "UMAI is a hospitality operating system that turns every booking into a data-driven growth engine. In one sleek dashboard you manage reservations, optimize table flow, run loyalty campaigns, sell events and take-away orders, and track real-time performance - all for a flat fee, zero “per-cover” costs, and instant ROI.",
-      "logo": "/assets/images/bGIeoDhdr2cr8VA5uk2Tb1VQk.png"
+      "about": "UMAI is a hospitality operating system that turns every booking into a data-driven growth engine. In one sleek dashboard you manage reservations, optimize table flow, run loyalty campaigns, sell events and take-away orders, and track real-time performance - all for a flat fee, zero “per-cover” costs, and instant ROI."
     },
     {
-      "slug": "blossom",
       "name": "Blossom",
       "category": "Digital Health",
-      "card": "/assets/images/q0ehGyd9f9lptfGTFnZKgfGmdA.png",
+      "slug": "blossom",
       "url": "https://www.joinblossomhealth.com/",
+      "card": "/assets/images/q0ehGyd9f9lptfGTFnZKgfGmdA.png",
+      "logo": "/assets/images/h9iqrDqDB9BDMWNa9W0GsUiDM.png",
       "tagline": "Blossom is an AI-powered psychiatry practice platform that combines clinical operations, payer contracting, scheduling, documentation, and revenue cycle management into one integrated system. Built specifically for mental health providers, it helps psychiatric practices scale efficiently while improving access to quality care.",
       "industry": "Digital Health",
-      "about": "Blossom is building the operating system for modern psychiatry practices. Its all-in-one platform combines AI clinical tooling with practice management, credentialing, insurance contracting, billing, scheduling, and revenue cycle management. By simplifying administrative workflows and expanding in-network access through national payer agreements, Blossom enables clinicians to spend more time with patients while operating more profitable and scalable practices.",
-      "logo": "/assets/images/h9iqrDqDB9BDMWNa9W0GsUiDM.png"
+      "about": "Blossom is building the operating system for modern psychiatry practices. Its all-in-one platform combines AI clinical tooling with practice management, credentialing, insurance contracting, billing, scheduling, and revenue cycle management. By simplifying administrative workflows and expanding in-network access through national payer agreements, Blossom enables clinicians to spend more time with patients while operating more profitable and scalable practices."
     },
     {
-      "slug": "brand-protection",
       "name": "E Gamers World",
       "category": "Esports",
-      "card": "/assets/images/WSLfWHk4fnrXiWhhJBDMwO0nIX4.png",
+      "slug": "brand-protection",
       "url": "https://egamersworld.com/news",
+      "card": "/assets/images/WSLfWHk4fnrXiWhhJBDMwO0nIX4.png",
+      "logo": "/assets/images/EgGbmsasUdcBkZKXlLky6U0qoro.png",
       "tagline": "E Gamers World is a go-to media hub for the global esports community",
       "industry": "Esports",
-      "about": "With millions of monthly visitors, EGamersWorld bridges casual fans and pro analysts alike. It combines structured data, engaging content, and rich insights to unpack the fast-moving world of competitive gaming. Whether you're following your favorite team or breaking down match stats, EGW is the trusted source at the heart of esports and tech.",
-      "logo": "/assets/images/EgGbmsasUdcBkZKXlLky6U0qoro.png"
+      "about": "With millions of monthly visitors, EGamersWorld bridges casual fans and pro analysts alike. It combines structured data, engaging content, and rich insights to unpack the fast-moving world of competitive gaming. Whether you're following your favorite team or breaking down match stats, EGW is the trusted source at the heart of esports and tech."
     },
     {
-      "slug": "leafio",
       "name": "Leafio",
       "category": "AI",
-      "card": "/assets/images/84UMjUfB0RAykPmyswB06Q6nSs.png",
+      "slug": "leafio",
       "url": "https://www.leafio.ai",
+      "card": "/assets/images/84UMjUfB0RAykPmyswB06Q6nSs.png",
+      "logo": "/assets/images/Z6J8GJrQ59sdfD5j729DPzcW5JY.png",
       "tagline": "AI-powered solutions transforming the retail and supply chain world.",
       "industry": "SaaS/Retail tech",
-      "about": "Leafio.ai is reshaping retail with AI-powered supply chain solutions. From demand forecasting to inventory optimization and automated decision-making, Leafio helps retailers boost efficiency, cut stockouts, and unlock smarter operations.",
-      "logo": "/assets/images/Z6J8GJrQ59sdfD5j729DPzcW5JY.png"
+      "about": "Leafio.ai is reshaping retail with AI-powered supply chain solutions. From demand forecasting to inventory optimization and automated decision-making, Leafio helps retailers boost efficiency, cut stockouts, and unlock smarter operations."
     },
     {
-      "slug": "mental-health-supplements",
       "name": "Present Perfect",
       "category": "Mental Health",
-      "card": "/assets/images/ruQfjITiDk98qPadjXxPZff8v0.png",
+      "slug": "mental-health-supplements",
       "url": "https://present-perfect.com/products/present-perfect?view=sales-page-1",
+      "card": "/assets/images/ruQfjITiDk98qPadjXxPZff8v0.png",
+      "logo": "/assets/images/KT5kuM83tLJOggrGxw9IFnjldLI.png",
       "tagline": "Present Perfect is a modern mental wellness brand creating safe, natural supplements for focus, calm, and clarity.",
       "industry": "Heath&Wellness",
-      "about": "Present Perfect is a neuro-wellness brand creating natural, fast-acting mental health solutions, without the side effects of traditional pharmaceuticals. Built around Amanita Muscaria, a naturally calming mushroom, our over-the-counter products help reduce anxiety, sharpen focus, and support emotional balance.",
-      "logo": "/assets/images/KT5kuM83tLJOggrGxw9IFnjldLI.png"
+      "about": "Present Perfect is a neuro-wellness brand creating natural, fast-acting mental health solutions, without the side effects of traditional pharmaceuticals. Built around Amanita Muscaria, a naturally calming mushroom, our over-the-counter products help reduce anxiety, sharpen focus, and support emotional balance."
     },
     {
-      "slug": "alice-technologies",
       "name": "Alice Technologies",
       "category": "ConTech",
-      "card": "/assets/images/gwRtRKTiddN5HeBp5I2cD1A.png",
+      "slug": "alice-technologies",
       "url": "https://www.alicetechnologies.com/home",
+      "card": "/assets/images/gwRtRKTiddN5HeBp5I2cD1A.png",
+      "logo": "/assets/images/vjR6vt1FolQcCdGY2E9mrDwGuSI.png",
       "tagline": "ALICE Technologies is an AI-powered construction scheduling platform that helps large infrastructure and commercial projects optimize schedules, reduce costs, and accelerate delivery through generative simulation technology.",
       "industry": "Construction AI",
-      "about": "ALICE Technologies is building the AI operating system for construction planning. Its patented generative simulation engine automatically evaluates millions of scheduling scenarios, enabling project teams to optimize timelines, reduce costs, and improve resource allocation. Trusted by leading global contractors and consultants, ALICE helps deliver large-scale infrastructure and commercial projects faster, more efficiently, and with lower execution risk.",
-      "logo": "/assets/images/vjR6vt1FolQcCdGY2E9mrDwGuSI.png"
+      "about": "ALICE Technologies is building the AI operating system for construction planning. Its patented generative simulation engine automatically evaluates millions of scheduling scenarios, enabling project teams to optimize timelines, reduce costs, and improve resource allocation. Trusted by leading global contractors and consultants, ALICE helps deliver large-scale infrastructure and commercial projects faster, more efficiently, and with lower execution risk."
+    },
+    {
+      "name": "Test Startup",
+      "category": "Fintech",
+      "slug": "test-startup",
+      "url": "https://example.com",
+      "card": "/assets/images/e7LsMUNDr5WdmPtjNoFnXCEWTmM.png",
+      "logo": "",
+      "tagline": "",
+      "industry": "",
+      "about": ""
     }
   ]
 }
