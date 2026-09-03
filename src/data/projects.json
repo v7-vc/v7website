@@ -87,6 +87,17 @@
       "tagline": "ALICE Technologies is an AI-powered construction scheduling platform that helps large infrastructure and commercial projects optimize schedules, reduce costs, and accelerate delivery through generative simulation technology.",
       "industry": "Construction AI",
       "about": "ALICE Technologies is building the AI operating system for construction planning. Its patented generative simulation engine automatically evaluates millions of scheduling scenarios, enabling project teams to optimize timelines, reduce costs, and improve resource allocation. Trusted by leading global contractors and consultants, ALICE helps deliver large-scale infrastructure and commercial projects faster, more efficiently, and with lower execution risk."
+    },
+    {
+      "name": "Berry Street",
+      "category": "Virtual Nutrition Care",
+      "slug": "mental-health",
+      "url": "https://www.berrystreet.co/",
+      "card": "/assets/images/Group 33.png",
+      "logo": "/assets/images/berry-street-logo.png",
+      "tagline": "Berry Street is a digital nutrition care platform that connects patients with registered dietitians for personalized, insurance-covered virtual nutrition therapy, while providing practitioners with the infrastructure to build and grow their private practices.",
+      "industry": "Digital Health",
+      "about": "Berry Street is building the infrastructure for accessible, insurance-covered nutrition care. Its platform matches patients with registered dietitians for personalized, one-on-one virtual therapy across areas including metabolic health, digestive conditions, eating disorders, women’s health, and general wellness. For providers, Berry Street manages insurance credentialing, eligibility verification, billing, claims, referrals, scheduling, and administrative workflows, allowing independent dietitians to focus on patient care and scale their practices. With more than 1,250 insurance plans accepted and a network serving over 200,000 patients, Berry Street aims to make evidence-based nutrition therapy more accessible and affordable across the United States."
     }
   ]
 }
