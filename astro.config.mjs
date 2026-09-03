@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import optimizeImages from './src/integrations/optimize-images.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -7,7 +8,7 @@ export default defineConfig({
   // sitemap all derive from it. Going live on the real domain = change this
   // line (plus adding the domain in Vercel).
   site: 'https://v7.vc',
-  integrations: [sitemap()],
+  integrations: [sitemap(), optimizeImages()],
   // Warm every internal link on hover/touch, so by the time the 0.55s exit
   // animation finishes the next page is already in cache and swaps instantly
   // instead of starting its download only after the animation.
