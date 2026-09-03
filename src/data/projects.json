@@ -98,6 +98,17 @@
       "tagline": "Berry Street is a digital nutrition care platform that connects patients with registered dietitians for personalized, insurance-covered virtual nutrition therapy, while providing practitioners with the infrastructure to build and grow their private practices.",
       "industry": "Digital Health",
       "about": "Berry Street is building the infrastructure for accessible, insurance-covered nutrition care. Its platform matches patients with registered dietitians for personalized, one-on-one virtual therapy across areas including metabolic health, digestive conditions, eating disorders, women’s health, and general wellness. For providers, Berry Street manages insurance credentialing, eligibility verification, billing, claims, referrals, scheduling, and administrative workflows, allowing independent dietitians to focus on patient care and scale their practices. With more than 1,250 insurance plans accepted and a network serving over 200,000 patients, Berry Street aims to make evidence-based nutrition therapy more accessible and affordable across the United States."
+    },
+    {
+      "name": "V7 labs",
+      "category": "AI Workflow Automation",
+      "slug": "ai-workflow-automation",
+      "url": "https://www.v7labs.com/",
+      "card": "/assets/images/Group 35.png",
+      "logo": "/assets/images/LsdsdBKd8yPruAwWSLBReC1U.avif",
+      "tagline": "V7 Labs is an enterprise AI platform that automates complex, document-heavy workflows across private markets, insurance, and real estate, helping teams process information faster, reduce errors, and make more informed decisions.",
+      "industry": "Enterprise AI",
+      "about": "V7 Labs is building an AI-powered operating layer for complex institutional workflows. Through its V7 Go platform, the company enables private-market investors, insurers, and real estate firms to automate processes such as deal screening, due diligence, investment memo generation, portfolio reporting, underwriting, policy review, and claims processing. Its platform combines workflow agents, document automation, contextual knowledge, integrations, and enterprise controls to turn large volumes of unstructured data into reliable, production-ready outputs. V7 Labs also operates Darwin, an AI-assisted data annotation platform that helps organizations create high-quality training datasets for computer vision and frontier AI models."
     }
   ]
 }
