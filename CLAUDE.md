@@ -45,3 +45,13 @@ two projects share a `slug`. Report what shipped afterwards.
 ```bash
 git push origin <previous-main-sha>:main --force-with-lease
 ```
+
+## Images
+
+The CMS ships whatever the client uploads, so `public/assets/images/` holds
+full-resolution exports. `src/integrations/optimize-images.mjs` resizes and
+re-encodes them into `dist/` at build time — sources are never modified.
+
+If the client reports images looking soft, raise `MAX_WIDTH` there (or remove
+the resize) and rebuild; the originals are still in the repo, so quality comes
+straight back.
