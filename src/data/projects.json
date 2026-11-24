@@ -109,6 +109,17 @@
       "tagline": "V7 Labs is an enterprise AI platform that automates complex, document-heavy workflows across private markets, insurance, and real estate, helping teams process information faster, reduce errors, and make more informed decisions.",
       "industry": "Enterprise AI",
       "about": "V7 Labs is building an AI-powered operating layer for complex institutional workflows. Through its V7 Go platform, the company enables private-market investors, insurers, and real estate firms to automate processes such as deal screening, due diligence, investment memo generation, portfolio reporting, underwriting, policy review, and claims processing. Its platform combines workflow agents, document automation, contextual knowledge, integrations, and enterprise controls to turn large volumes of unstructured data into reliable, production-ready outputs. V7 Labs also operates Darwin, an AI-assisted data annotation platform that helps organizations create high-quality training datasets for computer vision and frontier AI models."
+    },
+    {
+      "name": "Prometheus",
+      "category": "Physical AI",
+      "slug": "prometheus",
+      "url": "",
+      "card": "/assets/images/Group 37.png",
+      "logo": "/assets/images/P R O M E T H E U S (1).png",
+      "tagline": "Prometheus is a frontier physical AI lab building an \"artificial general engineer\" — AI that automates the full design-to-manufacturing pipeline for complex physical products.",
+      "industry": "Deep Tech / AI",
+      "about": "Prometheus is building AI for the physical economy. Founded in November 2025 by Jeff Bezos and Vik Bajaj (ex-Google X, Verily), the lab treats engineering and manufacturing as one end-to-end problem: designing and producing complex physical products such as engines, semiconductors and new compounds, and compressing development cycles that today take a decade into one or two years. Instead of scaling language models on existing text, Prometheus generates its own proprietary physics and engineering data. The team of around 150 people across the US, London and Zurich includes researchers from OpenAI, DeepMind, NVIDIA and Google."
     }
   ]
 }
